@@ -83,31 +83,6 @@ Players sign up with email and password. Their username starts as the part of th
 A finished daily game is posted to the leaderboard automatically when signed in. Results are submitted by the client, so they can be faked by a determined player.
 To skip the confirmation email while testing, turn off "Confirm email" under Authentication > Providers > Email.
 
-## The prospect pool
-
-`src/data/prospects.ts` holds eight real prospects from the 2023, 2024 and 2025 drafts. The daily
-puzzle cycles through all eight before repeating.
-
-| Prospect | Pos | Draft |
-|---|---|---|
-| Xavier Worthy | WR | 2024, Round 1, Pick 28 |
-| Quinyon Mitchell | CB | 2024, Round 1, Pick 22 |
-| Ashton Jeanty | RB | 2025, Round 1, Pick 6 |
-| Shemar Stewart | EDGE | 2025, Round 1, Pick 17 |
-| Shedeur Sanders | QB | 2025, Round 5, Pick 144 |
-| Brock Bowers | TE | 2024, Round 1, Pick 13 |
-| Jack Campbell | LB | 2023, Round 1, Pick 18 |
-| Puka Nacua | WR | 2023, Round 5, Pick 177 |
-
-- **Measurables and testing** come from NFL Scouting Combine results, cross-checked against
-  MockDraftable. Jeanty and Sanders did not test, so a prospect-specific clue fills their testing step.
-- **Draft slot, college and headshots** come from ESPN’s athlete API. `headshotUrl` points at ESPN’s
-  transparent cut-out PNG; the game renders it with `filter: brightness(0)` for the silhouette and
-  removes the filter on game over. Any transparent PNG works; an opaque photo would black out to a
-  rectangle.
-- **Scouting excerpts are placeholders.** They are original stand-in text, not Draft Bible text.
-  The footer credits The NFL Draft Bible for every excerpt, so replace them with the licensed
-  excerpts before launch.
 
 ### Adding or replacing prospects
 
