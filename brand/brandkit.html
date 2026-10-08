@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Who's That Prospect? Brand kit</title>
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --paper: #f6f1e6;
+        --paper-2: #ece5d6;
+        --panel: #fffdf8;
+        --ink: #1a1b22;
+        --ink-2: #44454d;
+        --muted: #76736b;
+        --orange: #e2622b;
+        --gold: #f2b630;
+        --gold-soft: #fcebbd;
+        --turf: #23845a;
+        --sky: #2f6fd6;
+        --red: #d6423a;
+        --manila: #f6e4b8;
+        --display: 'Clash Display', sans-serif;
+        --body: 'Geist', sans-serif;
+        --mono: 'Geist Mono', monospace;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { background: #111216; }
+      #board {
+        width: 1600px;
+        height: 1000px;
+        padding: 26px;
+        background: #17181d;
+        display: grid;
+        grid-template-columns: 1.15fr 1fr 1.15fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 14px;
+        font-family: var(--body);
+        color: var(--ink);
+      }
+      .p { position: relative; overflow: hidden; border-radius: 10px; }
+      .tag {
+        position: absolute; left: 18px; bottom: 14px;
+        font: 500 10px/1 var(--mono); letter-spacing: 0.16em; text-transform: uppercase;
+        color: var(--muted);
+      }
+      .tag.r { left: auto; right: 18px; }
+      .on-dark .tag { color: rgba(246, 241, 230, 0.45); }
+
+      /* 1. Cover */
+      .cover { background: var(--paper); display: grid; place-items: center; }
+      .cover .stack { display: flex; align-items: center; gap: 26px; }
+      .wordmark { display: inline-flex; flex-direction: column; font-family: var(--display); font-weight: 600; text-transform: uppercase; line-height: 0.88; letter-spacing: -0.035em; }
+      .wordmark .top { font-size: 0.4em; font-weight: 500; letter-spacing: 0.01em; color: var(--turf); margin-bottom: 0.14em; }
+      .wordmark .q { color: var(--orange); }
+
+      /* 2. Construction */
+      .construct { background: var(--ink); }
+      .construct .grid {
+        position: absolute; inset: 0;
+        background-image: linear-gradient(rgba(246,241,230,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(246,241,230,0.06) 1px, transparent 1px);
+        background-size: 24px 24px;
+      }
+      .construct svg { position: absolute; inset: 0; margin: auto; }
+      .anno { position: absolute; font: 500 11px/1 var(--mono); letter-spacing: 0.08em; color: var(--gold); }
+
+      /* 3. Digital */
+      .digital { background: var(--sky); display: grid; place-items: center; }
+      .browser { width: 82%; background: var(--panel); border: 2px solid var(--ink); border-radius: 8px; box-shadow: 5px 5px 0 var(--ink); overflow: hidden; }
+      .chrome { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: var(--paper-2); border-bottom: 2px solid var(--ink); }
+      .dots { display: flex; gap: 5px; }
+      .dots i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ink); display: block; }
+      .url { flex: 1; display: flex; align-items: center; gap: 7px; height: 24px; padding: 0 10px; border-radius: 999px; background: var(--panel); border: 1.5px solid var(--ink); font: 500 11px/1 var(--mono); }
+      .site { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+      .q-label { font: 600 17px/1 var(--display); letter-spacing: -0.02em; }
+      .bar { display: flex; gap: 8px; align-items: center; }
+      .input { flex: 1; height: 40px; border: 2px solid var(--ink); border-radius: 4px; box-shadow: 3px 3px 0 var(--ink); display: flex; align-items: center; padding: 0 12px; color: var(--muted); font: 400 14px var(--body); }
+      .pill { display: inline-flex; align-items: center; gap: 10px; height: 40px; padding: 0 4px 0 16px; border: 2px solid var(--ink); border-radius: 999px; background: var(--orange); box-shadow: 3px 3px 0 var(--ink); font: 600 14px var(--body); }
+      .orb { width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font: 600 14px var(--body); }
+
+      /* 4. Tagline */
+      .tagline { background: var(--orange); display: flex; align-items: center; padding: 0 34px; }
+      .tagline h2 { font: 600 58px/0.95 var(--display); letter-spacing: -0.04em; }
+
+      /* 5. Color */
+      .color { background: var(--paper); display: grid; grid-template-columns: repeat(7, 1fr); }
+      .sw { position: relative; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 0 38px 10px; font: 500 10px/1.35 var(--mono); letter-spacing: 0.04em; }
+      .sw b { display: block; font: 600 12px/1.2 var(--body); letter-spacing: 0; margin-bottom: 2px; }
+      .sw.light { color: var(--ink); }
+      .sw.dark { color: #fff; }
+
+      /* 6. Type */
+      .type { background: var(--panel); padding: 26px 26px 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 26px; align-content: start; }
+      .aa { grid-row: span 3; font: 600 128px/0.82 var(--display); letter-spacing: -0.05em; }
+      .spec { display: flex; flex-direction: column; gap: 3px; padding-top: 6px; }
+      .spec .n { font: 500 10px/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+      .spec .s1 { font: 600 24px/1 var(--display); letter-spacing: -0.03em; }
+      .spec .s2 { font: 500 17px/1.2 var(--body); }
+      .spec .s3 { font: 500 13px/1.2 var(--mono); letter-spacing: 0.1em; }
+
+      /* 7. Physical */
+      .physical { background: var(--manila); display: grid; place-items: center; }
+      .tcard { width: 210px; transform: rotate(-4deg); background: var(--panel); border: 2px solid var(--ink); border-radius: 6px; box-shadow: 6px 6px 0 var(--ink); padding: 9px; }
+      .tcard .ph { aspect-ratio: 600 / 436; background: var(--gold); border: 2px solid var(--ink); border-radius: 3px; overflow: hidden; }
+      .tcard img { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; filter: brightness(0); display: block; }
+      .tcard .meta { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 2px 1px; }
+      .tcard .nm { font: 600 20px/1 var(--display); letter-spacing: 0.06em; color: var(--orange); }
+      .tcard .pos { font: 500 10px/1 var(--mono); letter-spacing: 0.14em; }
+      .sticker { position: absolute; right: 13%; top: 16%; width: 74px; height: 74px; border-radius: 50%; background: var(--red); border: 2px solid var(--ink); color: #fff; display: grid; place-items: center; text-align: center; font: 600 15px/0.95 var(--display); transform: rotate(10deg); box-shadow: 3px 3px 0 var(--ink); }
+
+      /* 8. Image direction */
+      .image { background: var(--gold); }
+      .image img { position: absolute; left: 50%; bottom: 0; height: 112%; transform: translateX(-46%); filter: brightness(0); }
+      .image .halftone { position: absolute; inset: 0; background-image: radial-gradient(rgba(242,182,48,0.9) 1.1px, transparent 1.4px); background-size: 7px 7px; mix-blend-mode: normal; -webkit-mask-image: linear-gradient(180deg, transparent 35%, #000 100%); mask-image: linear-gradient(180deg, transparent 35%, #000 100%); }
+      .image .tag { color: var(--ink); top: 16px; bottom: auto; }
+
+      /* 9. System detail */
+      .system { background: var(--paper); padding: 22px 24px; display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto auto; gap: 16px 18px; align-content: center; }
+      .ticks { display: flex; gap: 6px; }
+      .ticks i { width: 26px; height: 11px; border: 2px solid var(--ink); border-radius: 999px; display: block; }
+      .ticks .w { background: var(--red); }
+      .ticks .c { background: var(--turf); }
+      .toast { grid-column: 1; justify-self: start; display: inline-flex; align-items: center; gap: 10px; height: 36px; padding: 0 6px 0 14px; border: 2px solid var(--ink); border-radius: 999px; background: var(--gold); box-shadow: 3px 3px 0 rgba(26,27,34,0.25); font: 600 13px var(--body); }
+      .toast span { width: 24px; height: 24px; border-radius: 50%; background: rgba(26,27,34,0.14); display: grid; place-items: center; font-size: 12px; }
+      .field { grid-column: 1; align-self: start; display: grid; grid-template-columns: 74px auto; align-items: center; gap: 12px; padding-top: 8px; border-top: 2px solid var(--ink); }
+      .field .l { font: 500 10px/1 var(--mono); letter-spacing: 0.14em; color: var(--muted); }
+      .field .v { font: 600 26px/1.1 var(--display); letter-spacing: -0.02em; padding: 0 4px; background-image: linear-gradient(transparent 55%, rgba(47,111,214,0.28) 55%, rgba(47,111,214,0.28) 94%, transparent 94%); justify-self: start; }
+      .stamp { grid-column: 2; grid-row: 1 / span 3; align-self: center; display: inline-flex; flex-direction: column; align-items: center; padding: 10px 14px 8px; border: 3px solid var(--turf); border-radius: 10px; color: var(--turf); background: var(--panel); transform: rotate(-6deg); font: 600 36px/1 var(--display); letter-spacing: -0.03em; }
+      .stamp small { font: 500 9px/1 var(--mono); letter-spacing: 0.2em; margin-top: 5px; }
+    </style>
+  </head>
+  <body>
+    <main id="board">
+      <!-- 1. Cover -->
+      <section class="p cover">
+        <div class="stack">
+          <svg class="mark" width="132" height="132" viewBox="0 0 120 120" aria-label="Who's That Prospect? mark">
+            <g transform="rotate(-3 60 60)">
+              <rect x="19" y="29" width="88" height="64" rx="5" fill="#1a1b22" />
+              <rect x="13" y="23" width="88" height="64" rx="5" fill="#f2b630" stroke="#1a1b22" stroke-width="4" />
+              <path d="M45 43 A13 13 0 1 1 63 55 Q57 58 57 64 V67" fill="none" stroke="#1a1b22" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round" />
+              <g transform="rotate(-28 57 78)">
+                <ellipse cx="57" cy="78" rx="6.4" ry="4.1" fill="#1a1b22" />
+                <path d="M53.6 78 H60.4" stroke="#f2b630" stroke-width="1.1" stroke-linecap="round" />
+              </g>
+            </g>
+          </svg>
+          <span class="wordmark" style="font-size: 54px"><span class="top">Who’s that</span><span>Prospect<span class="q">?</span></span></span>
+        </div>
+        <span class="tag">Identity</span><span class="tag r">2026</span>
+      </section>
+
+      <!-- 2. Construction -->
+      <section class="p construct on-dark">
+        <div class="grid"></div>
+        <svg width="300" height="230" viewBox="0 0 120 92">
+          <g transform="translate(0 -14) rotate(-3 60 60)">
+            <rect x="19" y="29" width="88" height="64" rx="5" fill="none" stroke="rgba(246,241,230,0.35)" stroke-width="0.6" stroke-dasharray="2 2" />
+            <rect x="13" y="23" width="88" height="64" rx="5" fill="none" stroke="#f6f1e6" stroke-width="1.2" />
+            <circle cx="58" cy="43" r="13" fill="none" stroke="rgba(242,182,48,0.7)" stroke-width="0.5" stroke-dasharray="1.5 1.5" />
+            <path d="M57 14 V96 M4 55 H112" stroke="rgba(246,241,230,0.18)" stroke-width="0.4" />
+            <path d="M45 43 A13 13 0 1 1 63 55 Q57 58 57 64 V67" fill="none" stroke="#f6f1e6" stroke-width="1.2" stroke-linecap="round" />
+            <g transform="rotate(-28 57 78)"><ellipse cx="57" cy="78" rx="6.4" ry="4.1" fill="none" stroke="#f2b630" stroke-width="1.2" /><path d="M53.6 78 H60.4" stroke="#f2b630" stroke-width="0.8" /></g>
+          </g>
+        </svg>
+        <span class="anno" style="left: 22px; top: 22px">-3° tilt</span>
+        <span class="anno" style="right: 22px; top: 22px">6 px ink offset</span>
+        <span class="anno" style="right: 22px; bottom: 40px">dot = football</span>
+        <span class="tag">Mark construction</span>
+      </section>
+
+      <!-- 3. Digital -->
+      <section class="p digital">
+        <div class="browser">
+          <div class="chrome">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="url">
+              <svg width="14" height="14" viewBox="0 0 120 120"><g transform="rotate(-3 60 60)"><rect x="13" y="23" width="88" height="64" rx="5" fill="#f2b630" stroke="#1a1b22" stroke-width="8" /><path d="M45 43 A13 13 0 1 1 63 55 Q57 58 57 64 V67" fill="none" stroke="#1a1b22" stroke-width="11" stroke-linecap="round" /></g></svg>
+              whosthatprospect.com
+            </span>
+          </div>
+          <div class="site">
+            <span class="wordmark" style="font-size: 26px"><span class="top">Who’s that</span><span>Prospect<span class="q">?</span></span></span>
+            <span class="q-label">Who’s the prospect?</span>
+            <div class="bar"><span class="input">Type a full name…</span><span class="pill">Guess <span class="orb">→</span></span></div>
+          </div>
+        </div>
+        <span class="tag" style="color: rgba(255,255,255,0.7)">Web</span>
+      </section>
+
+      <!-- 4. Tagline -->
+      <section class="p tagline">
+        <h2>Six guesses.<br />One prospect.</h2>
+        <span class="tag" style="color: rgba(26,27,34,0.6)">Tagline</span>
+      </section>
+
+      <!-- 5. Color -->
+      <section class="p color">
+        <div class="sw light" style="background: var(--orange)"><b>Pigskin</b>E2622B</div>
+        <div class="sw light" style="background: var(--gold)"><b>Field gold</b>F2B630</div>
+        <div class="sw dark" style="background: var(--turf)"><b>Turf</b>23845A</div>
+        <div class="sw dark" style="background: var(--sky)"><b>Jersey</b>2F6FD6</div>
+        <div class="sw dark" style="background: var(--red)"><b>End zone</b>D6423A</div>
+        <div class="sw light" style="background: var(--manila)"><b>Card</b>F6E4B8</div>
+        <div class="sw dark" style="background: var(--ink)"><b>Ink</b>1A1B22</div>
+        <span class="tag" style="color: rgba(255,255,255,0.75)">Color</span>
+      </section>
+
+      <!-- 6. Type -->
+      <section class="p type">
+        <span class="aa">Aa</span>
+        <div class="spec"><span class="n">Display</span><span class="s1">Clash Display</span></div>
+        <div class="spec"><span class="n">Body</span><span class="s2">Geist, for clues and copy</span></div>
+        <div class="spec"><span class="n">Labels</span><span class="s3">GEIST MONO 0123</span></div>
+        <span class="tag">Type</span>
+      </section>
+
+      <!-- 7. Physical -->
+      <section class="p physical">
+        <div class="tcard">
+          <div class="ph"><img src="https://a.espncdn.com/i/headshots/nfl/players/full/4890973.png" alt="" referrerpolicy="no-referrer" /></div>
+          <div class="meta"><span class="nm">No. 7</span><span class="pos">RB</span></div>
+        </div>
+        <span class="sticker">3/6<br />solved</span>
+        <span class="tag">Print</span>
+      </section>
+
+      <!-- 8. Image direction -->
+      <section class="p image">
+        <img src="https://a.espncdn.com/i/headshots/nfl/players/full/4685562.png" alt="" referrerpolicy="no-referrer" />
+        <div class="halftone"></div>
+        <span class="tag">Imagery</span>
+      </section>
+
+      <!-- 9. System detail -->
+      <section class="p system">
+        <div class="ticks"><i class="w"></i><i class="w"></i><i class="c"></i><i></i><i></i><i></i></div>
+        <span class="toast">New clue: height and weight. <span>✕</span></span>
+        <div class="field"><span class="l">HEIGHT</span><span class="v">6’1”</span></div>
+        <span class="stamp">3/6<small>SOLVED</small></span>
+        <span class="tag">Components</span>
+      </section>
+    </main>
+  </body>
+</html>
