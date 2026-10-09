@@ -19,12 +19,10 @@
   --redact: #1a1b22;
 
   /* One accent: pigskin orange. Everything else is warm neutral. */
-  /* NFL Draft colors: navy #013369 (primary) and light blue #0080c5 (headshot + logo card) */
-  --accent: #013369;
+  --accent: #2f6fd6; /* primary blue (matches the logo) */
   --accent-ink: var(--accent);
-  --draft-blue: #0080c5;
-  --accent-soft: #c5dadf; /* draft light blue at ~20% on paper */
-  --accent-tint: #dde5e3; /* draft light blue at ~10% on paper */
+  --accent-soft: #cad4e2; /* primary blue at ~22% on paper */
+  --accent-tint: #e0e3e4; /* primary blue at ~11% on paper */
 
   /* Status only (never decoration): a correct guess / a miss */
   --ok: #3d7a59;
@@ -49,7 +47,7 @@
   --red-soft: var(--bad-soft);
   --manila: #efe7d6;
   --page-bg: #f6f1e6;
-  --photo-gold: var(--draft-blue); /* headshot backdrop: NFL Draft light blue */
+  --photo-gold: #a9d6f5; /* headshot backdrop: light blue (was yellow #f2b630) */
 
   /* Layers */
   --z-raised: 3;
@@ -391,7 +389,7 @@ blockquote {
   }
 
   .btn--primary:hover {
-    background: #0b4688;
+    background: #2862c2;
   }
 
   .btn--ghost:hover {
@@ -416,12 +414,12 @@ blockquote {
 
 .btn--primary {
   background: var(--orange);
-  color: #fff;
+  color: var(--ink);
 }
 
 .btn--primary .btn__orb {
-  background: #fff;
-  color: var(--accent);
+  background: var(--ink);
+  color: #fff;
 }
 
 .btn--ghost {

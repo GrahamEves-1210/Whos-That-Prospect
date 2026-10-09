@@ -7,7 +7,7 @@ interface Props {
 }
 
 /* Single-accent palette: pigskin orange, its soft tint, ink and paper */
-const COLORS = ['#013369', '#0080c5', '#c5dadf', '#1a1b22', '#fffdf9', '#efe7d6'];
+const COLORS = ['#2f6fd6', '#2f6fd6', '#cad4e2', '#1a1b22', '#fffdf9', '#efe7d6'];
 
 /** Lightweight CSS confetti — no canvas, auto-cleans after the animation. */
 export function Confetti({ fire, count = 120 }: Props) {
