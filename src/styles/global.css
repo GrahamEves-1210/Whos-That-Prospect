@@ -964,6 +964,8 @@ blockquote {
     padding-top: 7px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    /* second shadow fills the 3px gap at the seam with the sheet's right shadow */
+    box-shadow: var(--shadow-sm), 3px 0 0 var(--shadow-ink);
   }
   /* Closing: the bar re-forms while the sheet sinks into it (top line back, corners round off smoothly)
      instead of snapping back when the sheet unmounts. */
@@ -1171,26 +1173,32 @@ blockquote {
     animation: scrim-in 0.3s var(--ease) both;
     -webkit-tap-highlight-color: transparent;
   }
-  /* The sheet sits directly on the nav bar: same width, no gap, no seam. */
+  /* The sheet sits directly on the nav bar: same width, no gap, no seam.
+     .drawer is a fixed window that clips at the bar's top edge; the sheet (.drawer__inner) slides
+     up out of the bar and back down into it. Transform-only, so phones animate it on the GPU. */
   .drawer {
     position: fixed;
     z-index: var(--z-sheet);
     left: 0.75rem;
-    right: 0.75rem;
+    right: calc(0.75rem - 3px);
     bottom: calc(0.9rem + env(safe-area-inset-bottom) + 3.2rem + 12px);
     margin: 0;
+    padding-right: 3px; /* room for the sheet's right shadow inside the clip */
     max-height: calc(100dvh - 7rem - env(safe-area-inset-bottom) - env(safe-area-inset-top));
     overflow-y: auto;
     overscroll-behavior: contain;
+    animation: none;
+  }
+  .drawer__inner {
     border: 2px solid var(--ink);
     border-bottom: 0;
     border-radius: 1.75rem 1.75rem 0 0;
     background: var(--paper);
     box-shadow: 3px 0 0 var(--shadow-ink);
-    animation: liquid-up 0.38s cubic-bezier(0.32, 0.72, 0, 1) both;
+    animation: sheet-rise 0.38s cubic-bezier(0.32, 0.72, 0, 1) both;
   }
-  .drawer--closing {
-    animation: liquid-up 0.3s cubic-bezier(0.4, 0, 0.6, 1) reverse both;
+  .drawer--closing .drawer__inner {
+    animation: sheet-sink 0.3s cubic-bezier(0.4, 0, 0.7, 1) both;
   }
   .drawer--closing ~ .drawer-scrim,
   .drawer-scrim:has(+ .drawer--closing) {
@@ -1224,6 +1232,18 @@ blockquote {
 }
 
 /* Grows up out of the nav bar's top edge */
+@keyframes sheet-rise {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes sheet-sink {
+  to {
+    transform: translateY(100%);
+  }
+}
+
 @keyframes liquid-up {
   from {
     clip-path: inset(100% 0 0 0 round 1.75rem 1.75rem 0 0);
@@ -3625,10 +3645,10 @@ td.board-table__num {
   .toolbar {
     transition-duration: 0.26s !important;
   }
-  .drawer {
+  .drawer__inner {
     animation-duration: 0.38s !important;
   }
-  .drawer--closing {
+  .drawer--closing .drawer__inner {
     animation-duration: 0.3s !important;
   }
   .drawer__inner > * {
