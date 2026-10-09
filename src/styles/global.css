@@ -830,15 +830,10 @@ blockquote {
   color: var(--ink);
 }
 
+/* Phones: no room in the header, so the countdown is hidden */
 @media (max-width: 700px) {
-  .header {
-    flex-wrap: wrap;
-  }
   .header__clock {
-    position: static;
-    width: 100%;
-    justify-content: center;
-    margin-top: 0.35rem;
+    display: none;
   }
 }
 
