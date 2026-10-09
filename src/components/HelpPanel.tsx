@@ -33,6 +33,7 @@ export function HelpPanel(_props: Props) {
             </a>
             .
           </p>
+          <p className="help__note">Who’s That Prospect? is a fan-made game and is not affiliated with or endorsed by the NFL.</p>
         </div>
         <div>
           <h4 className="help__subtitle">What each miss unlocks</h4>

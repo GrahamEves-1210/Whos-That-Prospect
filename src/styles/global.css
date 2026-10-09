@@ -810,6 +810,38 @@ blockquote {
   }
 }
 
+/* Countdown to the next prospect: above the nav bar on desktop, its own line under the logo on phones */
+.header__clock {
+  position: absolute;
+  right: 0.25rem;
+  top: calc(1.25rem + var(--logo-h) * 0.715 - var(--toolbar-h) - 1.9rem);
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.header__clock .countdown {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+@media (max-width: 700px) {
+  .header {
+    flex-wrap: wrap;
+  }
+  .header__clock {
+    position: static;
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.35rem;
+  }
+}
+
 /* Desktop: sits in the header and scrolls away with it. Phones: docked to the bottom (below). */
 .toolbar {
   position: absolute;
@@ -2344,6 +2376,18 @@ main:focus {
   text-indent: -0.4em; /* hang the opening quote mark */
 }
 
+/* Notepad: quotes handwritten on faint rules, one under every line (line-height 1.65 = 1.65em) */
+.excerpt__quote p {
+  font-family: 'Kalam', var(--font-body);
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: 0;
+  color: #23336b;
+  background-image: linear-gradient(to bottom, transparent calc(100% - 1px), rgba(47, 111, 214, 0.22) calc(100% - 1px));
+  background-size: 100% 1.65em;
+}
+
 .excerpt--new {
   animation: reveal-up 0.6s var(--ease-pop);
 }
@@ -2382,10 +2426,10 @@ main:focus {
 
 .result {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
   align-items: center;
-  gap: 1.5rem 2.25rem;
-  padding: 1.15rem 1.5rem;
+  gap: 1.75rem 2.75rem;
+  padding: 1.6rem 2rem 1.6rem 1.75rem;
 }
 
 .result--won {
@@ -2396,27 +2440,188 @@ main:focus {
   background: var(--red-soft);
 }
 
+/* --- Pick card: the slip a team hands in on draft day --- */
+.slip {
+  --team: var(--ink);
+  --team-2: var(--ink-2);
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem 1.25rem 1.25rem;
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  background: #fffefb;
+  box-shadow: var(--shadow-sm);
+  animation: reveal-up 0.6s var(--ease-pop) both;
+}
+
+.slip__logo {
+  display: block;
+  width: 8.6rem;
+  height: auto;
+  margin: 0 auto 1rem;
+}
+
+.draft-logo__year {
+  font-family: var(--font-display);
+  font-size: 31px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  fill: #fff;
+}
+
+.slip__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+/* Like the printed card: each line starts right after its label and runs to the right edge */
+.slip__row {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) auto;
+  align-items: end;
+  column-gap: 0.3rem;
+  min-height: 2.05rem;
+}
+
+.slip__label {
+  padding-bottom: 0;
+  font-family: Carlito, Calibri, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: #1f1f22;
+  -webkit-text-stroke: 0.35px currentColor;
+  /* Slightly flattened, like the printed card */
+  transform: scaleY(0.88);
+  transform-origin: center bottom;
+  white-space: nowrap;
+}
+
+/* The rule sits on the printed text's baseline (lifted by the label's descender space) */
+.slip__line {
+  position: relative;
+  min-width: 0;
+  margin-bottom: 0.36rem;
+  border-bottom: 1px solid #1f1f22;
+}
+
+/* Ballpoint handwriting */
+.slip__pen {
+  display: block;
+  min-height: 1.6rem;
+  /* Handwriting stays put while the rule moves up, so it sits just on the line */
+  margin-bottom: -0.6rem;
+  position: relative;
+  top: -0.02rem;
+  padding: 0 0.35rem;
+  overflow: hidden;
+  font-family: 'Nanum Pen Script', var(--font-body);
+  font-size: 1.85rem;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #1f1f22;
+  -webkit-text-stroke: 0.7px currentColor; /* felt-tip weight */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Last and first written over their own (last) / (first) captions */
+.slip__pen--split {
+  display: flex;
+  justify-content: space-around;
+  gap: 0.5em;
+}
+
+.slip__under {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.55rem;
+  line-height: 1.3;
+  color: var(--ink-2);
+}
+
+.slip__row:has(.slip__under) {
+  margin-bottom: 0.6rem;
+}
+
+.slip__aside {
+  padding: 0 0 0 0.25rem;
+  transform: scaleY(0.88);
+  transform-origin: center bottom;
+  font-family: Carlito, Calibri, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: #1f1f22;
+  -webkit-text-stroke: 0.35px currentColor;
+  white-space: nowrap;
+}
+
+/* Team nickname in the team's color, slab wordmark style */
+.slip__team {
+  margin: 1.1rem 0 0;
+  font-family: 'Alfa Slab One', Georgia, serif;
+  font-size: 2.9rem;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--team);
+}
+
+@media (max-width: 480px) {
+  .slip {
+    padding: 1rem 1rem 1.15rem;
+  }
+  .slip__row {
+    min-height: 2.1rem;
+  }
+  .slip__label,
+  .slip__aside {
+    font-size: 0.95rem;
+  }
+  .slip__pen {
+    font-size: 1.6rem;
+    padding: 0 0.2rem;
+  }
+  .slip__pen--split {
+    font-size: 1.45rem;
+  }
+}
+
+.result__head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Score stamp */
 .stamp {
   display: inline-flex;
+  flex: none;
   flex-direction: column;
   align-items: center;
-  padding: 0.6rem 0.95rem 0.5rem;
+  padding: 0.45rem 0.75rem 0.4rem;
   border: 3px solid currentColor;
   border-radius: 10px;
   background: var(--panel);
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 2rem;
+  font-size: 1.5rem;
   letter-spacing: -0.03em;
   line-height: 1;
   transform: rotate(-4deg);
-  animation: stamp 0.65s var(--ease-pop) 0.2s backwards;
-  transition: transform 0.35s var(--ease-pop);
+  animation: stamp 0.65s var(--ease-pop) 0.35s backwards;
 }
 
 .stamp small {
   font-family: var(--font-mono);
-  font-size: 0.58rem;
+  font-size: 0.55rem;
   letter-spacing: 0.18em;
   font-weight: 500;
   text-transform: uppercase;
@@ -2434,12 +2639,13 @@ main:focus {
 .result__body {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.7rem;
   min-width: 0;
 }
 
 .result__headline {
   font-family: var(--font-display);
+  white-space: nowrap;
   font-weight: 600;
   font-size: 2.1rem;
   letter-spacing: -0.035em;
@@ -2468,7 +2674,6 @@ main:focus {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1.4rem;
-  margin-top: 0.2rem;
 }
 
 .result__meta .eyebrow strong {
@@ -2478,19 +2683,32 @@ main:focus {
 
 .result__actions {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 0.75rem;
+  margin-top: 0.4rem;
+}
+
+/* A miss gets no pick card: just the stamp beside the text */
+.result--lost {
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1.5rem 2.25rem;
+  padding: 1.35rem 1.75rem;
+}
+
+.result--lost .stamp {
+  position: static;
+  transform: rotate(-4deg);
+  font-size: 2rem;
 }
 
 @media (max-width: 760px) {
   .result {
-    grid-template-columns: auto minmax(0, 1fr);
-    padding: 1.35rem 1.25rem;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 1.6rem 1.25rem 1.35rem;
   }
-  .result__actions {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    flex-wrap: wrap;
+  .slip {
+    width: min(100%, 26rem);
+    margin: 0 auto;
   }
   .result__actions .btn {
     flex: 1 1 auto;

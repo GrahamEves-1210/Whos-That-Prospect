@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useMagnetic } from '../hooks/usePointerFx';
+import { Countdown } from './Countdown';
 import { FilmRoomIcon, HelpIcon, StatsIcon, UserIcon } from './icons';
 import { Logo } from './Logo';
 
@@ -11,6 +12,9 @@ interface Props {
   openMenu: MenuName | null;
   onToggle: (menu: MenuName) => void;
   onHome: () => void;
+  /** Next midnight Eastern (UTC ms), for the "next prospect" clock */
+  nextReset: number;
+  onCountdownComplete: () => void;
 }
 
 const ITEMS: Array<{ id: MenuName; label: string; Icon: typeof HelpIcon; tone: string }> = [
@@ -40,12 +44,17 @@ function ToolbarItem({ active, tone, onClick, children }: { active: boolean; ton
   );
 }
 
-export function GameHeader({ openMenu, menuClosing = false, onToggle, onHome }: Props) {
+export function GameHeader({ openMenu, menuClosing = false, onToggle, onHome, nextReset, onCountdownComplete }: Props) {
   return (
     <header className="header">
       <button type="button" className="header__home" onClick={onHome} aria-label="Back to the start screen">
         <Logo className="header__logo" />
       </button>
+
+      <p className="header__clock">
+        <span className="eyebrow">Next prospect in</span>
+        <Countdown target={nextReset} onComplete={onCountdownComplete} />
+      </p>
 
       <nav className={`toolbar ${openMenu ? 'toolbar--open' : ''} ${menuClosing ? 'toolbar--closing' : ''}`} aria-label="Menu">
         {ITEMS.map(({ id, label, Icon, tone }) => (

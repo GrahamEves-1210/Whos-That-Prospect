@@ -331,6 +331,8 @@ export default function App() {
           menuClosing={menuClosing}
           onToggle={toggleMenu}
           onHome={handleLogo}
+          nextReset={nextReset}
+          onCountdownComplete={game.markNewPuzzleAvailable}
         />
 
         {openMenu && <button type="button" className="drawer-scrim" aria-label="Close menu" onClick={closeMenu} />}
@@ -371,11 +373,10 @@ export default function App() {
                 <ResultPanel
                   state={state}
                   prospect={prospect}
-                  nextReset={nextReset}
                   onShare={handleShare}
                   onOpenFilmRoom={handleOpenFilmRoom}
                   onReturnToDaily={handleReturnToDaily}
-                  onCountdownComplete={game.markNewPuzzleAvailable}
+                  username={auth.profile?.username ?? null}
                 />
               </Reveal>
             </div>
