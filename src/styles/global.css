@@ -967,19 +967,19 @@ blockquote {
     /* second shadow fills the 3px gap at the seam with the sheet's right shadow */
     box-shadow: var(--shadow-sm), 3px 0 0 var(--shadow-ink);
   }
-  /* Closing: the bar re-forms while the sheet sinks into it (top line back, corners round off smoothly)
-     instead of snapping back when the sheet unmounts. */
-  .toolbar {
-    transition:
-      border-top-left-radius 0.26s var(--ease),
-      border-top-right-radius 0.26s var(--ease);
-  }
+  /* Closing: the bar keeps its open shape while the sheet sinks, so its corners never fold in. The sheet's
+     rounded top edge drops onto the bar and becomes its top: the bar takes the same edge (top line +
+     round corners) the moment the sheet lands (sheet sink = 0.3s). */
   .toolbar--open.toolbar--closing {
     border-top-width: 2px;
     padding-top: 5px;
     border-top-left-radius: 1.75rem;
     border-top-right-radius: 1.75rem;
-    transition-delay: 0.08s;
+    transition:
+      border-top-width 0s linear 0.29s,
+      padding-top 0s linear 0.29s,
+      border-top-left-radius 0s linear 0.29s,
+      border-top-right-radius 0s linear 0.29s;
   }
   .toolbar__item {
     flex: 1 1 0;
@@ -3642,8 +3642,8 @@ td.board-table__num {
    "Animation effects" off, which Chrome reports as prefers-reduced-motion, and these are short,
    gentle movements. Must come after the global reduced-motion rule above. */
 @media (prefers-reduced-motion: reduce) {
-  .toolbar {
-    transition-duration: 0.26s !important;
+  .toolbar--open.toolbar--closing {
+    transition-delay: 0.29s !important;
   }
   .drawer__inner {
     animation-duration: 0.38s !important;
