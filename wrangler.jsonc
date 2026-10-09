@@ -1,0 +1,11 @@
+// Cloudflare Workers deploy config: serves the Vite build (dist/) as static files.
+// Build: `npm run build`   Deploy: `npx wrangler deploy`
+{
+  "name": "whos-that-prospect",
+  "compatibility_date": "2025-09-01",
+  "assets": {
+    "directory": "./dist",
+    // Any unknown path serves index.html (the game is a single page)
+    "not_found_handling": "single-page-application"
+  }
+}
