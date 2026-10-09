@@ -72,7 +72,7 @@ export function MysteryPlayerCard({
 
       {beforeReport}
 
-      <ScoutingReportCard excerpts={excerpts} wrongGuesses={wrongGuesses} revealAll={finished} newStep={newStep}>
+      <ScoutingReportCard excerpts={excerpts} prospect={prospect} wrongGuesses={wrongGuesses} revealAll={finished} newStep={newStep}>
         <ClueBoard prospect={prospect} wrongGuesses={wrongGuesses} revealAll={finished} newStep={newStep} />
       </ScoutingReportCard>
     </>

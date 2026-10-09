@@ -3,7 +3,7 @@
 export const GAME_TITLE = "Who's That Prospect?";
 export const SITE_URL = 'whosthatprospect.com';
 
-export const MAX_GUESSES = 6;
+export const MAX_GUESSES = 5;
 
 /** Daily puzzles reset at midnight in this time zone. */
 export const TIME_ZONE = 'America/New_York';

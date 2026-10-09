@@ -1834,6 +1834,8 @@ main:focus {
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
+  /* One unbroken line, even under letters that hang below (the p) */
+  text-decoration-skip-ink: none;
   cursor: pointer;
 }
 
@@ -3029,22 +3031,38 @@ td.board-table__num {
   transition: filter 1s var(--ease);
 }
 
-.headshot--hidden {
-  filter: brightness(0);
-  transition:
-    filter 0.22s var(--ease),
-    transform 0.22s var(--ease);
+/* Hidden state: the image itself is a pre-rendered black silhouette (blurred or sharp), so no
+   CSS filter is involved. A quick fade softens the swap when "Show silhouette" is pressed. */
+.headshot--silhouette {
+  animation: silhouette-in 0.22s var(--ease);
 }
 
-/* Default hidden state: a blurred shape. "Show silhouette" sharpens it. */
-.headshot--blurred {
-  filter: brightness(0) blur(14px);
-  transform: scale(1.06);
+@keyframes silhouette-in {
+  from {
+    opacity: 0.6;
+  }
 }
 
-.headshot--revealed {
-  filter: none;
-  animation: develop 1s var(--ease);
+/* Silhouette and photo share one frame; the photo sits on top and fades in once loaded,
+   so the frame is never empty while it downloads. */
+.headshot-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.headshot-stack > .headshot {
+  position: absolute;
+  inset: 0;
+}
+
+.headshot--photo {
+  opacity: 0;
+  transition: opacity 0.35s var(--ease);
+}
+
+.headshot--photo.is-loaded {
+  opacity: 1;
 }
 
 .headshot--missing {
@@ -3384,3 +3402,15 @@ td.board-table__num {
   background: var(--page-bg);
 }
 
+
+/* A player's name inside a scouting quote, blacked out until the game ends.
+   The bar is empty: the name isn't in the page, so it can't be selected or read. */
+.name-bar {
+  display: inline-block;
+  width: calc(var(--len) * 0.56em);
+  height: 0.95em;
+  margin: 0 0.05em;
+  border-radius: 2px;
+  background: var(--redact);
+  vertical-align: -0.12em;
+}

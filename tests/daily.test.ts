@@ -58,12 +58,14 @@ describe('getFilmRoomDays', () => {
   });
 
   it('never shows a prospect pinned to a later day', () => {
-    const upcoming = Object.entries(PINNED_PUZZLES).filter(([d]) => Number(d) > 8).map(([, id]) => id);
-    for (const n of getFilmRoomDays(8)) expect(upcoming).not.toContain(getDailyProspect(n).id);
+    for (const today of [9, 12, 20]) {
+      const upcoming = Object.entries(PINNED_PUZZLES).filter(([d]) => Number(d) > today).map(([, id]) => id);
+      for (const n of getFilmRoomDays(today)) expect(upcoming).not.toContain(getDailyProspect(n).id);
+    }
   });
 
-  it('lists the pinned past days', () => {
-    expect(getFilmRoomDays(8)).toEqual([7, 6]);
+  it('shows no past days on Oct 9 (today is the only day so far)', () => {
+    expect(getFilmRoomDays(9)).toEqual([]);
   });
 });
 

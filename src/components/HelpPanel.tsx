@@ -9,10 +9,9 @@ interface Props {
 const LADDER: Array<[string, string]> = [
   ['Start', 'One scouting-report quote'],
   ['Miss 1', 'Position and a second quote'],
-  ['Miss 2', 'Height and weight'],
-  ['Miss 3', 'Combine testing'],
-  ['Miss 4', 'Conference, draft class, hometown'],
-  ['Miss 5', 'College, draft pick, honors'],
+  ['Miss 2', 'Measurables: size, length and combine testing'],
+  ['Miss 3', 'Background: conference, draft class, hometown, college honors'],
+  ['Miss 4', 'Draft: college, draft pick, the team that drafted him'],
 ];
 
 /** How to play, what each miss unlocks, and the source credit (this used to be a separate About panel). */

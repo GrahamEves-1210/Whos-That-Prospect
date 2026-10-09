@@ -3,7 +3,7 @@ import { MAX_GUESSES } from './config';
 import type { Clue } from './types';
 
 /** The final clue step (everything is revealed after this many misses). */
-export const FINAL_STEP = MAX_GUESSES - 1; // 5
+export const FINAL_STEP = MAX_GUESSES - 1; // 4
 
 // ---------- formatting helpers ----------
 
@@ -61,13 +61,12 @@ export function hasTestingData(prospect: Prospect): boolean {
 /**
  * Build the full clue ladder for a prospect.
  *
- * Default schedule (unlockAt = number of wrong guesses):
+ * Default schedule (unlockAt = number of wrong guesses; 5 guesses, so steps 0-4):
  *   0  Scouting excerpt #1
  *   1  Position + scouting excerpt #2
- *   2  Height + weight
- *   3  Combine / testing data (or a prospect-specific clue if no testing)
- *   4  Conference + draft year
- *   5  College + draft round/pick + everything else
+ *   2  Measurables: height, weight, length and combine testing
+ *   3  Background: conference, draft class, hometown, college honors
+ *   4  Draft: college, draft round/pick, drafted by, remaining excerpts and extras
  *
  * Prospect-specific `clues` with an explicit `unlockAt` slot in where asked;
  * the rest land in the final step. If any middle step would otherwise reveal
@@ -76,6 +75,10 @@ export function hasTestingData(prospect: Prospect): boolean {
  */
 /** Wrong guesses needed before the position is shown (it unlocks with excerpt #2). */
 export const POSITION_STEP = 1;
+/** Measurables and combine testing unlock together. */
+export const MEASURABLES_STEP = 2;
+/** Conference, draft class, hometown and college honors. */
+export const BACKGROUND_STEP = 3;
 
 export function buildClues(prospect: Prospect): Clue[] {
   const clues: Clue[] = [];
@@ -105,7 +108,7 @@ export function buildClues(prospect: Prospect): Clue[] {
     label: 'Measurables',
     value: `${formatHeight(prospect.height)} · ${formatWeight(prospect.weight)}`,
     details: [`Height ${formatHeight(prospect.height)}`, `Weight ${formatWeight(prospect.weight)}`],
-    unlockAt: 2,
+    unlockAt: MEASURABLES_STEP,
   });
 
   if (hasTestingData(prospect)) {
@@ -120,7 +123,7 @@ export function buildClues(prospect: Prospect): Clue[] {
       label: 'Testing',
       value: headline,
       details: lines,
-      unlockAt: 3,
+      unlockAt: MEASURABLES_STEP,
     });
   }
 
@@ -129,7 +132,7 @@ export function buildClues(prospect: Prospect): Clue[] {
     kind: 'conference',
     label: 'Conference',
     value: prospect.conference,
-    unlockAt: 4,
+    unlockAt: BACKGROUND_STEP,
   });
 
   clues.push({
@@ -137,7 +140,7 @@ export function buildClues(prospect: Prospect): Clue[] {
     kind: 'draftYear',
     label: 'Draft Year',
     value: String(prospect.draftYear),
-    unlockAt: 4,
+    unlockAt: BACKGROUND_STEP,
   });
 
   clues.push({
@@ -182,10 +185,9 @@ export function buildClues(prospect: Prospect): Clue[] {
       label: 'Accolades',
       value: prospect.accolades[0],
       details: prospect.accolades.length > 1 ? prospect.accolades.slice(1) : undefined,
-      unlockAt: FINAL_STEP,
+      unlockAt: BACKGROUND_STEP,
     };
     clues.push(clue);
-    floating.push(clue);
   }
   if (prospect.hometown) {
     const clue: Clue = {
@@ -193,10 +195,9 @@ export function buildClues(prospect: Prospect): Clue[] {
       kind: 'hometown',
       label: 'Hometown',
       value: prospect.hometown,
-      unlockAt: FINAL_STEP,
+      unlockAt: BACKGROUND_STEP,
     };
     clues.push(clue);
-    floating.push(clue);
   }
 
   // Guarantee every step 1..FINAL_STEP-1 reveals something.

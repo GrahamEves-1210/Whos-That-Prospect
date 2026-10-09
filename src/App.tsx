@@ -16,7 +16,7 @@ import { Reveal } from './components/Reveal';
 import { SplashScreen } from './components/SplashScreen';
 import { StatsPanel } from './components/StatsPanel';
 import { DEFAULT_EXCERPT_SOURCE, EXCERPT_SOURCE_URL } from './data/prospects';
-import { getCluesForStep, getExcerptClues } from './game/clues';
+import { BACKGROUND_STEP, MEASURABLES_STEP, getCluesForStep, getExcerptClues } from './game/clues';
 import { MAX_GUESSES } from './game/config';
 import { generateShareText, shareText } from './game/share';
 import { getNextResetTime } from './game/time';
@@ -24,23 +24,33 @@ import { useAuth } from './hooks/useAuth';
 import { useGame } from './hooks/useGame';
 import { fetchUserStats, prefetchLeaderboard, saveUserStats, submitResult } from './lib/supabase';
 import type { Stats } from './game/types';
+import { normalizeStats } from './game/storage';
 
 const NOTIFICATION_MS = 4200;
 const MENU_CLOSE_MS = 420;
 
 /** How each clue kind is named in the "new clue" toast. */
+// Named by prospect-card section, so each miss reads as one clue: "New clue: measurables."
 const CLUE_NAMES: Record<string, string> = {
   position: 'position',
-  excerpt: 'a scouting excerpt',
-  measurables: 'height and weight',
-  testing: 'testing',
-  conference: 'conference',
-  draftYear: 'draft year',
-  college: 'college',
-  draftSlot: 'draft pick',
-  accolades: 'accolades',
-  hometown: 'hometown',
+  excerpt: 'another scouting quote',
+  measurables: 'measurables',
+  testing: 'measurables',
+  conference: 'background and honors',
+  draftYear: 'background and honors',
+  hometown: 'background and honors',
+  accolades: 'background and honors',
+  college: 'draft info',
+  draftSlot: 'draft info',
 };
+
+/** Prospect-specific clues take the name of the section they unlock with. */
+function clueName(c: { kind: string; label: string; unlockAt: number }): string {
+  if (c.kind !== 'custom') return CLUE_NAMES[c.kind] ?? c.label.toLowerCase();
+  if (c.unlockAt <= MEASURABLES_STEP) return 'measurables';
+  if (c.unlockAt === BACKGROUND_STEP) return 'background and honors';
+  return 'draft info';
+}
 
 /** True when stats a reflect more play than stats b (more games, or the same games but a later finish). */
 function moreComplete(a: Stats, b: Stats): boolean {
@@ -119,9 +129,11 @@ export default function App() {
 
     if (o.kind === 'wrong' && !o.gameOver) {
       const unlocked = getCluesForStep(prospect, o.unlockedStep);
-      const labels = Array.from(new Set(unlocked.map((c) => CLUE_NAMES[c.kind] ?? c.label.toLowerCase())));
+      const QUOTE = CLUE_NAMES.excerpt;
+      // Card sections first, the scouting quote last: "New clues: draft info and another scouting quote."
+      const labels = Array.from(new Set(unlocked.map(clueName))).sort((x, y) => Number(x === QUOTE) - Number(y === QUOTE));
       notify({
-        text: labels.length > 2 ? `${labels.length} new clues unlocked.` : `New clue: ${labels.join(' and ')}.`,
+        text: labels.length === 1 ? `New clue: ${labels[0]}.` : `New clues: ${labels.slice(0, -1).join(', ')} and ${labels[labels.length - 1]}.`,
         tone: 'neutral',
       });
     }
@@ -210,7 +222,7 @@ export default function App() {
         if (cancelled) return;
         const local = game.stats;
         const remoteWins = remote != null && moreComplete(remote, local);
-        if (remoteWins) game.replaceStats(remote);
+        if (remoteWins) game.replaceStats(normalizeStats(remote));
         else void saveUserStats(uid, local);
         setStatsSynced(uid);
       })

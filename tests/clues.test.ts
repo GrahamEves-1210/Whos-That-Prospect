@@ -12,6 +12,7 @@ import {
   getUnlockedClues,
 } from '../src/game/clues';
 import { getCardRows } from '../src/game/columns';
+import { splitQuoteOnName } from '../src/game/redact';
 import { FIXTURES, fixture } from './fixtures';
 
 const real = (id: string): Prospect => {
@@ -31,7 +32,7 @@ describe('formatting', () => {
   it('formats draft slots including undrafted', () => {
     expect(formatDraftSlot(fixture('marcus-vale'))).toBe('Round 1, Pick 6');
     expect(formatDraftSlot(fixture('zeke-thornbury'))).toBe('Undrafted');
-    expect(formatDraftSlot(real('isaiah-likely'))).toBe('Round 4, Pick 139');
+    expect(formatDraftSlot(real('navorro-bowman'))).toBe('Round 3, Pick 91');
   });
 });
 
@@ -50,9 +51,9 @@ describe('clue ladder', () => {
       'excerpt-0': 0,
       'excerpt-1': 1,
       measurables: 2,
-      testing: 3,
-      conference: 4,
-      draftYear: 4,
+      testing: 2,
+      conference: 3,
+      draftYear: 3,
       college: FINAL_STEP,
       draftSlot: FINAL_STEP,
       'excerpt-2': FINAL_STEP,
@@ -76,7 +77,9 @@ describe('clue ladder', () => {
       for (const k of ['position', 'excerpt', 'measurables', 'conference', 'draftYear', 'college', 'draftSlot']) {
         expect(kinds.has(k as never), `${p.name} missing ${k}`).toBe(true);
       }
+      // Quotes are checked separately (they may name the player; the UI blacks it out)
       const text = getUnlockedClues(p, FINAL_STEP)
+        .filter((c) => c.kind !== 'excerpt')
         .map((c) => `${c.value} ${(c.details ?? []).join(' ')}`)
         .join(' ');
       expect(text, `${p.name} leaks name`).not.toContain(p.name);
@@ -146,11 +149,11 @@ describe('prospect card rows', () => {
   });
 
   it('unlocks rows on the documented steps and groups them in report order', () => {
-    const rows = getCardRows(real('jordan-howard'));
+    const rows = getCardRows(real('navorro-bowman'));
     const steps = Object.fromEntries(rows.map((r) => [r.id, r.step]));
-    expect(steps).toMatchObject({ measurables: 2, forty: 3, conference: 4, draftYear: 4, college: 5, draftSlot: 5 });
+    expect(steps).toMatchObject({ measurables: 2, forty: 2, conference: 3, draftYear: 3, hometown: 3, college: 4, draftSlot: 4 });
     const groups = rows.map((r) => r.group);
-    const order = ['measurables', 'workout', 'background', 'draft'];
+    const order = ['measurables', 'background', 'draft'];
     expect([...groups].sort((a, b) => order.indexOf(a) - order.indexOf(b))).toEqual(groups);
   });
 
@@ -158,7 +161,7 @@ describe('prospect card rows', () => {
     for (const p of PROSPECTS) {
       const rows = getCardRows(p);
       if (p.hometown) expect(row(p, 'hometown')?.value).toBe(p.hometown);
-      if (p.accolades?.length) expect(row(p, 'accolades')?.group).toBe('draft');
+      if (p.accolades?.length) expect(row(p, 'accolades')?.group).toBe('background');
       expect(rows.map((r) => r.value).join(' '), p.name).not.toContain(p.name);
       expect(rows.every((r) => r.step >= 2 && r.step <= FINAL_STEP), p.name).toBe(true);
     }
@@ -166,8 +169,8 @@ describe('prospect card rows', () => {
 });
 
 describe('prospect data sanity', () => {
-  it('has the five real prospects with unique ids and names', () => {
-    expect(PROSPECTS).toHaveLength(5);
+  it('has unique ids and names', () => {
+    expect(PROSPECTS.length).toBeGreaterThan(0);
     expect(new Set(PROSPECTS.map((p) => p.id)).size).toBe(PROSPECTS.length);
     expect(new Set(PROSPECTS.map((p) => p.name)).size).toBe(PROSPECTS.length);
   });
@@ -178,15 +181,56 @@ describe('prospect data sanity', () => {
     }
   });
 
-  it('every prospect has at least two excerpts and none leaks the name or college', () => {
+  it('every prospect has at least two excerpts; what players see never shows the name or college', () => {
     for (const p of PROSPECTS) {
       expect(p.scoutingExcerpts.length, p.name).toBeGreaterThanOrEqual(2);
       const nameParts = p.name.toLowerCase().split(/\s+/);
       for (const ex of p.scoutingExcerpts) {
-        const lower = ex.toLowerCase();
+        // The quote as shown while playing: name mentions are blacked out
+        const lower = splitQuoteOnName(ex, p)
+          .filter((s) => !s.isName)
+          .map((s) => s.text)
+          .join('')
+          .toLowerCase();
         for (const part of nameParts) expect(lower, `${p.name} excerpt leaks "${part}"`).not.toContain(part);
         expect(lower, `${p.name} excerpt leaks college`).not.toContain(p.college.toLowerCase());
       }
     }
+  });
+});
+
+describe('silhouettes', () => {
+  it('every prospect has pre-rendered silhouettes (run `npm run silhouettes` after adding prospects)', async () => {
+    const { SILHOUETTES } = await import('../src/data/silhouettes');
+    const files = Object.keys(import.meta.glob('/public/silhouettes/*.png')).map((f) => f.split('/').pop());
+    for (const p of PROSPECTS) {
+      const hash = SILHOUETTES[p.id];
+      expect(hash, `${p.name} has no silhouette`).toBeTruthy();
+      expect(files, `${p.name} sharp silhouette`).toContain(`${hash}.png`);
+      expect(files, `${p.name} blurred silhouette`).toContain(`${hash}-blur.png`);
+      expect(hash, 'filename must not contain the name').not.toContain(p.id);
+    }
+  });
+});
+
+describe('quote name redaction', () => {
+  const p = { name: 'NaVorro Bowman', aliases: ['Navorro Bowman'] };
+  const hidden = (t: string) =>
+    splitQuoteOnName(t, p)
+      .filter((s) => s.isName)
+      .map((s) => s.text);
+
+  it('blacks out the full name, the last name and the first name, any capitalization', () => {
+    expect(hidden('NaVorro Bowman hits hard. bowman again. Navorro too.')).toEqual(['NaVorro Bowman', 'bowman', 'Navorro']);
+  });
+
+  it('catches the name inside nicknames and possessives but not inside other words', () => {
+    expect(hidden('“Big Play” Bowman and Bowman’s motor')).toEqual(['Bowman', 'Bowman']);
+    expect(hidden('A bowmanship test')).toEqual([]);
+  });
+
+  it('keeps all the other text', () => {
+    const t = 'There’s every reason to think that Bowman will develop.';
+    expect(splitQuoteOnName(t, p).map((s) => s.text).join('')).toBe(t);
   });
 });

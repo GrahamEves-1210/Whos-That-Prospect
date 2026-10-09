@@ -7,7 +7,7 @@ import type { GameState } from './types';
  * Share text for a finished game. Never includes the answer.
  *
  *   Who's That Prospect? #42
- *   🟥🟥🟥🟩 4/6 · ⏱️ 1:42
+ *   🟥🟥🟥🟩 4/5 · ⏱️ 1:42
  *   whosthatprospect.com
  */
 export function generateShareText(

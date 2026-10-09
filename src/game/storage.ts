@@ -111,13 +111,24 @@ export function createEmptyStats(): Stats {
 }
 
 export function loadStats(storage: StorageLike = getDefaultStorage()): Stats {
-  const saved = readJson<Partial<Stats>>(storage, STORAGE_KEYS.stats);
+  return normalizeStats(readJson<Partial<Stats>>(storage, STORAGE_KEYS.stats));
+}
+
+/**
+ * Clean up stats from storage or another device. If they were saved when the game allowed more
+ * guesses (it used to be 6), wins on those extra guesses fold into the last bar so nothing is lost.
+ */
+export function normalizeStats(saved: Partial<Stats> | null | undefined): Stats {
   const empty = createEmptyStats();
   if (!saved || typeof saved !== 'object') return empty;
   const dist = Array.isArray(saved.guessDistribution)
     ? saved.guessDistribution.map((n) => (typeof n === 'number' && n >= 0 ? n : 0))
     : [];
   while (dist.length < MAX_GUESSES) dist.push(0);
+  if (dist.length > MAX_GUESSES) {
+    const extra = dist.splice(MAX_GUESSES).reduce((a, b) => a + b, 0);
+    dist[MAX_GUESSES - 1] += extra;
+  }
   return {
     played: typeof saved.played === 'number' ? saved.played : 0,
     wins: typeof saved.wins === 'number' ? saved.wins : 0,
@@ -136,7 +147,7 @@ export function saveStats(stats: Stats, storage: StorageLike = getDefaultStorage
 export interface ResultRecord {
   puzzleNumber: number;
   won: boolean;
-  /** Number of guesses used (1–6). Required when `won` is true. */
+  /** Number of guesses used (1 to MAX_GUESSES). Required when `won` is true. */
   guessCount: number;
 }
 

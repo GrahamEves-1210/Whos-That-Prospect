@@ -119,16 +119,16 @@ describe('storage', () => {
     stats = recordResult(stats, { puzzleNumber: 1, won: true, guessCount: 3 });
     stats = recordResult(stats, { puzzleNumber: 2, won: true, guessCount: 1 });
     expect(stats).toMatchObject({ played: 2, wins: 2, currentStreak: 2, maxStreak: 2 });
-    expect(stats.guessDistribution).toEqual([1, 0, 1, 0, 0, 0]);
+    expect(stats.guessDistribution).toEqual([1, 0, 1, 0, 0]);
 
     // skipped day 3 → streak restarts at 1 on day 4
-    stats = recordResult(stats, { puzzleNumber: 4, won: true, guessCount: 6 });
+    stats = recordResult(stats, { puzzleNumber: 4, won: true, guessCount: 5 });
     expect(stats.currentStreak).toBe(1);
     expect(stats.maxStreak).toBe(2);
 
-    stats = recordResult(stats, { puzzleNumber: 5, won: false, guessCount: 6 });
+    stats = recordResult(stats, { puzzleNumber: 5, won: false, guessCount: 5 });
     expect(stats).toMatchObject({ played: 4, wins: 3, currentStreak: 0, maxStreak: 2 });
-    expect(stats.guessDistribution).toEqual([1, 0, 1, 0, 0, 1]);
+    expect(stats.guessDistribution).toEqual([1, 0, 1, 0, 1]);
 
     const storage = createMemoryStorage();
     saveStats(stats, storage);
@@ -165,7 +165,7 @@ describe('skip', () => {
   it('shows skips as white squares in the share text', () => {
     const s0 = applySkip(createGame(prospect, 'daily', 42)).state;
     const s = applyGuess(s0, prospect, prospect.name).state;
-    expect(generateShareText({ ...s, startedAt: 0, finishedAt: 5_000 })).toBe(`Who's That Prospect? #42\n⬜🟩 2/6 · ⏱️ 0:05\nwhosthatprospect.com`);
+    expect(generateShareText({ ...s, startedAt: 0, finishedAt: 5_000 })).toBe(`Who's That Prospect? #42\n⬜🟩 2/5 · ⏱️ 0:05\nwhosthatprospect.com`);
   });
 });
 
@@ -173,19 +173,29 @@ describe('share text', () => {
   it('formats a win without the answer', () => {
     const s = applyGuess(playWrong(createGame(prospect, 'daily', 42), 3), prospect, prospect.name).state;
     const text = generateShareText({ ...s, startedAt: 0, finishedAt: 102_000 });
-    expect(text).toBe(`Who's That Prospect? #42\n🟥🟥🟥🟩 4/6 · ⏱️ 1:42\nwhosthatprospect.com`);
+    expect(text).toBe(`Who's That Prospect? #42\n🟥🟥🟥🟩 4/5 · ⏱️ 1:42\nwhosthatprospect.com`);
     expect(text).not.toContain(prospect.name);
   });
 
   it('formats a loss', () => {
     const s = playWrong(createGame(prospect, 'daily', 42), MAX_GUESSES);
     expect(generateShareText({ ...s, startedAt: 0, finishedAt: 3_725_000 })).toBe(
-      `Who's That Prospect? #42\n🟥🟥🟥🟥🟥🟥 X/6 · ⏱️ 1:02:05\nwhosthatprospect.com`,
+      `Who's That Prospect? #42\n🟥🟥🟥🟥🟥 X/5 · ⏱️ 1:02:05\nwhosthatprospect.com`,
     );
   });
 
   it('labels practice games', () => {
     const s = applyGuess(createGame(prospect, 'practice', 0), prospect, prospect.name).state;
-    expect(generateShareText({ ...s, startedAt: 0, finishedAt: 9_000 })).toBe(`Who's That Prospect? Practice\n🟩 1/6 · ⏱️ 0:09\nwhosthatprospect.com`);
+    expect(generateShareText({ ...s, startedAt: 0, finishedAt: 9_000 })).toBe(`Who's That Prospect? Practice\n🟩 1/5 · ⏱️ 0:09\nwhosthatprospect.com`);
+  });
+});
+
+describe('stats from the six-guess era', () => {
+  it('folds old guess-6 wins into the last bar instead of dropping them', async () => {
+    const { normalizeStats } = await import('../src/game/storage');
+    const old = { played: 9, wins: 7, currentStreak: 2, maxStreak: 4, guessDistribution: [1, 1, 2, 1, 1, 1], lastCompletedPuzzle: 8 };
+    const s = normalizeStats(old);
+    expect(s.guessDistribution).toEqual([1, 1, 2, 1, 2]);
+    expect(s.guessDistribution.reduce((a, b) => a + b, 0)).toBe(7);
   });
 });

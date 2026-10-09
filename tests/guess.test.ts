@@ -75,10 +75,8 @@ describe('checkGuess', () => {
     for (const p of PROSPECTS) {
       expect(checkGuess(p.name.toLowerCase(), p), p.name).toBe(true);
     }
-    const likely = PROSPECTS.find((p) => p.id === 'isaiah-likely');
-    expect(likely && checkGuess('Isaiah Likley', likely)).toBe(true);
-    const oluokun = PROSPECTS.find((p) => p.id === 'foyesade-oluokun');
-    expect(oluokun && checkGuess('Foye Oluokun', oluokun)).toBe(true);
+    const bowman = PROSPECTS.find((p) => p.id === 'navorro-bowman');
+    expect(bowman && checkGuess('navorro bowmen', bowman)).toBe(true);
   });
 
   it('does not accept one prospect as another', () => {
