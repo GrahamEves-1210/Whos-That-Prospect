@@ -1,0 +1,10 @@
+{
+  "name": "Who's That Prospect? Daily NFL Draft Prospect Guessing Game",
+  "short_name": "Who's That Prospect",
+  "description": "Read a real pre-draft scouting report and guess the NFL prospect. Five guesses, new every day.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f1e6",
+  "theme_color": "#f6f1e6",
+  "icons": [{ "src": "/mark.png", "sizes": "528x528", "type": "image/png", "purpose": "any" }]
+}

@@ -1,0 +1,5 @@
+# Who's That Prospect?
+User-agent: *
+Allow: /
+
+Sitemap: https://whosthatprospect.com/sitemap.xml

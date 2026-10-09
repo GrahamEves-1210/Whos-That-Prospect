@@ -560,7 +560,7 @@ blockquote {
   bottom: max(1.25rem, env(safe-area-inset-bottom));
   padding: 0 1.25rem;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 1.15rem;
   line-height: 1.45;
   color: var(--ink-2);
   animation: reveal-up 0.9s var(--ease) 0.5s both;
@@ -725,7 +725,7 @@ blockquote {
     gap: 1.25rem;
   }
   .splash__credit {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
   .splash__logo {
     width: 100%;
@@ -2999,7 +2999,7 @@ td.board-table__num {
 .footer__credit {
   text-align: center;
   color: var(--ink-2);
-  font-size: 1.05rem;
+  font-size: 1.3rem;
   font-weight: 500;
 }
 
@@ -3413,4 +3413,22 @@ td.board-table__num {
   border-radius: 2px;
   background: var(--redact);
   vertical-align: -0.12em;
+}
+
+/* Text shown before the game's JavaScript loads (for search engines); the game replaces it. */
+.seo-intro {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 4rem 1.25rem;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+.seo-intro h1 {
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.seo-intro p + p {
+  margin-top: 0.75rem;
 }
