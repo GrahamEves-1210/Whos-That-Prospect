@@ -42,7 +42,8 @@ export function SplashScreen({ prospect, puzzleNumber, leaving, onPlay }: Props)
       </div>
 
       <p className="splash__credit">
-        All scouting report excerpts are sourced from{' '}
+        <span className="credit-long">All scouting report excerpts are sourced from</span>
+        <span className="credit-short">Scouting quotes from</span>{' '}
         <a href={EXCERPT_SOURCE_URL} target="_blank" rel="noopener noreferrer">
           {DEFAULT_EXCERPT_SOURCE}
         </a>

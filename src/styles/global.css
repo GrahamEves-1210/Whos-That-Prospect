@@ -19,10 +19,12 @@
   --redact: #1a1b22;
 
   /* One accent: pigskin orange. Everything else is warm neutral. */
-  --accent: #2f6fd6; /* primary blue (matches the logo) */
-  --accent-ink: var(--accent); /* orange text uses the signature orange too (no darker brown shade) */
-  --accent-soft: #cad4e2; /* primary blue at ~22% on paper */
-  --accent-tint: #e0e3e4; /* primary blue at ~11% on paper */
+  /* NFL Draft colors: navy #013369 (primary) and light blue #0080c5 (headshot + logo card) */
+  --accent: #013369;
+  --accent-ink: var(--accent);
+  --draft-blue: #0080c5;
+  --accent-soft: #c5dadf; /* draft light blue at ~20% on paper */
+  --accent-tint: #dde5e3; /* draft light blue at ~10% on paper */
 
   /* Status only (never decoration): a correct guess / a miss */
   --ok: #3d7a59;
@@ -47,7 +49,7 @@
   --red-soft: var(--bad-soft);
   --manila: #efe7d6;
   --page-bg: #f6f1e6;
-  --photo-gold: #a9d6f5; /* headshot backdrop: light blue (was yellow #f2b630) */
+  --photo-gold: var(--draft-blue); /* headshot backdrop: NFL Draft light blue */
 
   /* Layers */
   --z-raised: 3;
@@ -227,8 +229,33 @@ blockquote {
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
+  /* One unbroken underline, even under letters that hang below the line (p, q, y) */
+  text-decoration-skip-ink: none;
   cursor: pointer;
   transition: color 0.25s var(--ease);
+}
+
+/* Start-screen credit: full sentence on wide screens, a short one-line version on phones */
+.credit-short {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .credit-long {
+    display: none;
+  }
+  .credit-short {
+    display: inline;
+  }
+  .splash__credit {
+    white-space: nowrap;
+    font-size: min(1rem, 4.2vw) !important;
+  }
+}
+
+.footer__credit a,
+.splash__credit a {
+  text-decoration-skip-ink: none;
 }
 
 @media (hover: hover) {
@@ -364,7 +391,7 @@ blockquote {
   }
 
   .btn--primary:hover {
-    background: #2862c2;
+    background: #0b4688;
   }
 
   .btn--ghost:hover {
@@ -389,12 +416,12 @@ blockquote {
 
 .btn--primary {
   background: var(--orange);
-  color: var(--ink);
+  color: #fff;
 }
 
 .btn--primary .btn__orb {
-  background: var(--ink);
-  color: #fff;
+  background: #fff;
+  color: var(--accent);
 }
 
 .btn--ghost {
@@ -2994,6 +3021,10 @@ td.board-table__num {
   .footer__credit {
     order: -1;
   }
+  /* Phones: credit, then the midnight note, then Request a prospect last */
+  .footer__request {
+    order: 1;
+  }
 }
 
 .footer__credit {
@@ -3416,19 +3447,3 @@ td.board-table__num {
 }
 
 /* Text shown before the game's JavaScript loads (for search engines); the game replaces it. */
-.seo-intro {
-  max-width: 40rem;
-  margin: 0 auto;
-  padding: 4rem 1.25rem;
-  color: var(--ink-2);
-  line-height: 1.6;
-}
-.seo-intro h1 {
-  margin-bottom: 1rem;
-  font-size: 1.6rem;
-  line-height: 1.2;
-  color: var(--ink);
-}
-.seo-intro p + p {
-  margin-top: 0.75rem;
-}

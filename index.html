@@ -28,6 +28,11 @@
     <link rel="icon" type="image/png" href="/mark.png" />
     <link rel="apple-touch-icon" href="/mark.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <!-- Search-engine fallback text stays in the HTML but never flashes on screen -->
+    <style>
+      html { background: #f6f1e6; }
+      .seo-intro { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    </style>
 
     <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

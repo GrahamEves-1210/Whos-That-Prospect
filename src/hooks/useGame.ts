@@ -46,7 +46,9 @@ function createPreviewSession(puzzleNumber: number): Session {
 }
 
 export function useGame() {
-  const [todayPuzzleNumber] = useState(() => getPuzzleNumber());
+  // Today's puzzle number. Re-checked when the player goes back to today, so a tab left open past
+  // midnight Eastern moves on to the new prospect.
+  const [todayPuzzleNumber, setTodayPuzzleNumber] = useState(() => getPuzzleNumber());
 
   const [session, setSession] = useState<Session>(() => {
     const preview = getPreviewPuzzleFromUrl();
@@ -155,9 +157,12 @@ export function useGame() {
   );
 
   const returnToDaily = useCallback(() => {
+    const today = getPuzzleNumber();
+    setTodayPuzzleNumber(today);
+    setNewPuzzleAvailable(false);
     setPuzzleUrlParam(null);
-    replaceSession(loadDailySession(todayPuzzleNumber));
-  }, [replaceSession, todayPuzzleNumber]);
+    replaceSession(loadDailySession(today));
+  }, [replaceSession]);
 
   /** Replace stats wholesale (used when syncing a signed-in player's stats from another device). */
   const replaceStats = useCallback((next: Stats) => {

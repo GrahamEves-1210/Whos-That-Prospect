@@ -293,7 +293,8 @@ export default function App() {
   const handleLogo = useCallback(() => {
     setOpenMenu(null);
     setConfetti(0);
-    if (game.mode !== 'daily') game.returnToDaily();
+    // Always reload today's game: leaves Film room, and picks up a new day if midnight has passed
+    game.returnToDaily();
     setSplash('open');
     window.scrollTo({ top: 0 });
   }, [game]);
