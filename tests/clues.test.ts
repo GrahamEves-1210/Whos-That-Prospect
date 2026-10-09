@@ -31,7 +31,7 @@ describe('formatting', () => {
   it('formats draft slots including undrafted', () => {
     expect(formatDraftSlot(fixture('marcus-vale'))).toBe('Round 1, Pick 6');
     expect(formatDraftSlot(fixture('zeke-thornbury'))).toBe('Undrafted');
-    expect(formatDraftSlot(real('shedeur-sanders'))).toBe('Round 5, Pick 144');
+    expect(formatDraftSlot(real('isaiah-likely'))).toBe('Round 4, Pick 139');
   });
 });
 
@@ -44,7 +44,7 @@ describe('clue ladder', () => {
   });
 
   it('follows the default schedule for a fully-populated prospect', () => {
-    const steps = Object.fromEntries(buildClues(real('xavier-worthy')).map((c) => [c.id, c.unlockAt]));
+    const steps = Object.fromEntries(buildClues(real('ladd-mcconkey')).map((c) => [c.id, c.unlockAt]));
     expect(steps).toMatchObject({
       position: 1,
       'excerpt-0': 0,
@@ -84,8 +84,8 @@ describe('clue ladder', () => {
   });
 
   it('uses a prospect-specific clue when a player did not test', () => {
-    for (const id of ['ashton-jeanty', 'shedeur-sanders']) {
-      const p = real(id);
+    for (const id of ['rafael-quintero']) {
+      const p = fixture(id);
       expect(buildClues(p).some((c) => c.kind === 'testing'), id).toBe(false);
       const step3 = buildClues(p).filter((c) => c.unlockAt === 3);
       expect(step3.some((c) => c.kind === 'custom'), id).toBe(true);
@@ -134,19 +134,19 @@ describe('prospect card rows', () => {
   const row = (p: Prospect, id: string) => getCardRows(p).find((r) => r.id === id);
 
   it('combines height and weight into one measurables row', () => {
-    expect(row(real('xavier-worthy'), 'measurables')?.value).toBe(`5'11", 165 lbs`);
-    expect(getCardRows(real('xavier-worthy')).some((r) => r.id === 'height' || r.id === 'weight')).toBe(false);
+    expect(row(real('ladd-mcconkey'), 'measurables')?.value).toBe(`6'0", 186 lbs`);
+    expect(getCardRows(real('ladd-mcconkey')).some((r) => r.id === 'height' || r.id === 'weight')).toBe(false);
   });
 
   it('splits workout numbers into separate rows, or says "Did not test"', () => {
-    expect(row(real('xavier-worthy'), 'forty')?.value).toBe('4.21s');
-    expect(row(real('xavier-worthy'), 'vertical')).toBeDefined();
-    expect(row(real('ashton-jeanty'), 'combine')?.value).toBe('Did not test');
-    expect(row(real('ashton-jeanty'), 'forty')).toBeUndefined();
+    expect(row(real('ladd-mcconkey'), 'forty')?.value).toBe('4.39s');
+    expect(row(real('ladd-mcconkey'), 'vertical')).toBeDefined();
+    expect(row(fixture('rafael-quintero'), 'combine')?.value).toBe('Did not test');
+    expect(row(fixture('rafael-quintero'), 'forty')).toBeUndefined();
   });
 
   it('unlocks rows on the documented steps and groups them in report order', () => {
-    const rows = getCardRows(real('quinyon-mitchell'));
+    const rows = getCardRows(real('jordan-howard'));
     const steps = Object.fromEntries(rows.map((r) => [r.id, r.step]));
     expect(steps).toMatchObject({ measurables: 2, forty: 3, conference: 4, draftYear: 4, college: 5, draftSlot: 5 });
     const groups = rows.map((r) => r.group);
@@ -166,8 +166,8 @@ describe('prospect card rows', () => {
 });
 
 describe('prospect data sanity', () => {
-  it('has the eleven real prospects with unique ids and names', () => {
-    expect(PROSPECTS).toHaveLength(11);
+  it('has the five real prospects with unique ids and names', () => {
+    expect(PROSPECTS).toHaveLength(5);
     expect(new Set(PROSPECTS.map((p) => p.id)).size).toBe(PROSPECTS.length);
     expect(new Set(PROSPECTS.map((p) => p.name)).size).toBe(PROSPECTS.length);
   });

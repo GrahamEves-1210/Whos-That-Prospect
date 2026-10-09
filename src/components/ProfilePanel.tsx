@@ -13,8 +13,19 @@ export function ProfilePanel({ auth }: Props) {
   return (
     <Panel className="sheet profile" aria-label="Profile">
       <h3 className="sheet__title">Profile</h3>
+      {!auth.userId && (
+        <ul className="profile__why">
+          <li>
+            <strong>Compete on the leaderboard.</strong> Every daily prospect you finish counts toward your correct guesses and
+            streak.
+          </li>
+          <li>
+            <strong>Keep your stats on every device.</strong> Your record and streak follow you from your phone to your laptop.
+          </li>
+        </ul>
+      )}
       {!auth.enabled ? (
-        <p>Accounts and the leaderboard are not switched on yet. Your stats are still saved on this device.</p>
+        <p>Profiles aren’t switched on yet. Your stats are still saved on this device.</p>
       ) : !auth.ready ? null : auth.userId ? (
         <SignedIn auth={auth} />
       ) : (
@@ -115,6 +126,7 @@ function SignedIn({ auth }: { auth: UseAuth }) {
         <span className="eyebrow">Signed in as</span>
         <span>{auth.email}</span>
       </div>
+      <p className="profile__hint">You’re on the leaderboard, and your stats sync to every device you sign in on.</p>
       <label className="field-input">
         <span className="eyebrow">Username</span>
         <input

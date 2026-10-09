@@ -22,7 +22,8 @@ import { generateShareText, shareText } from './game/share';
 import { getNextResetTime } from './game/time';
 import { useAuth } from './hooks/useAuth';
 import { useGame } from './hooks/useGame';
-import { prefetchLeaderboard, submitResult } from './lib/supabase';
+import { fetchUserStats, prefetchLeaderboard, saveUserStats, submitResult } from './lib/supabase';
+import type { Stats } from './game/types';
 
 const NOTIFICATION_MS = 4200;
 const MENU_CLOSE_MS = 420;
@@ -40,6 +41,12 @@ const CLUE_NAMES: Record<string, string> = {
   accolades: 'accolades',
   hometown: 'hometown',
 };
+
+/** True when stats a reflect more play than stats b (more games, or the same games but a later finish). */
+function moreComplete(a: Stats, b: Stats): boolean {
+  if (a.played !== b.played) return a.played > b.played;
+  return (a.lastCompletedPuzzle ?? 0) > (b.lastCompletedPuzzle ?? 0);
+}
 
 export default function App() {
   const game = useGame();
@@ -187,6 +194,36 @@ export default function App() {
     },
     [openMenu, menuClosing, closeMenu],
   );
+
+  // Cross-device stats: on sign-in, keep whichever copy (this device or the account) has more games,
+  // then keep the account copy up to date while signed in.
+  const [statsSynced, setStatsSynced] = useState<string | null>(null);
+  useEffect(() => {
+    const uid = auth.userId;
+    if (!uid) {
+      setStatsSynced(null);
+      return;
+    }
+    let cancelled = false;
+    fetchUserStats(uid)
+      .then((remote) => {
+        if (cancelled) return;
+        const local = game.stats;
+        const remoteWins = remote != null && moreComplete(remote, local);
+        if (remoteWins) game.replaceStats(remote);
+        else void saveUserStats(uid, local);
+        setStatsSynced(uid);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.userId]);
+  useEffect(() => {
+    if (auth.userId && statsSynced === auth.userId) void saveUserStats(auth.userId, game.stats);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [game.stats]);
 
   // Load the leaderboard up front so the Stats sheet opens at its final height.
   useEffect(() => {

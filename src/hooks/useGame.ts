@@ -159,6 +159,13 @@ export function useGame() {
     replaceSession(loadDailySession(todayPuzzleNumber));
   }, [replaceSession, todayPuzzleNumber]);
 
+  /** Replace stats wholesale (used when syncing a signed-in player's stats from another device). */
+  const replaceStats = useCallback((next: Stats) => {
+    statsRef.current = next;
+    setStats(next);
+    saveStats(next);
+  }, []);
+
   const markNewPuzzleAvailable = useCallback(() => setNewPuzzleAvailable(true), []);
 
   const { state, prospect } = session;
@@ -182,6 +189,7 @@ export function useGame() {
     loadPreview,
     returnToDaily,
     markNewPuzzleAvailable,
+    replaceStats,
   };
 }
 

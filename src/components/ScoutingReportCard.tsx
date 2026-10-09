@@ -23,9 +23,9 @@ export function ScoutingReportCard({ excerpts, wrongGuesses, revealAll, newStep,
   const nextLocked = excerpts.find((c) => !revealAll && c.unlockAt > wrongGuesses);
 
   return (
-    <Panel className="report" aria-label="Real pre-draft scouting report">
+    <Panel className="report" aria-label="Real pre-draft scouting quotes">
       <div className="sect-head">
-        <h3 className="sect-head__title">Real pre-draft scouting report</h3>
+        <h3 className="sect-head__title">Real pre-draft scouting quotes</h3>
       </div>
 
       <ol className="excerpts">

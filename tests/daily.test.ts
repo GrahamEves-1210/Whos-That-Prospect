@@ -24,14 +24,14 @@ describe('getDailyProspect', () => {
   it('cycles through every rotation prospect before repeating', () => {
     const n = getRotationPool().length;
     const ids = new Set<string>();
-    for (let i = 4; i < 4 + n; i++) ids.add(getDailyProspect(i).id);
+    for (let i = 20; i < 20 + n; i++) ids.add(getDailyProspect(i).id);
     expect(ids.size).toBe(n);
-    expect(getDailyProspect(4 + n).id).toBe(getDailyProspect(4).id);
+    expect(getDailyProspect(20 + n).id).toBe(getDailyProspect(20).id);
   });
 
-  it('keeps the original prospect on every non-pinned day', () => {
-    // The rotation pool is the original eight, so days 4-8 (and on) are unchanged by pinning
-    expect(getRotationPool().length).toBe(8);
+  it('falls back to rotating the whole pool when every prospect is pinned', () => {
+    expect(getRotationPool().length).toBe(PROSPECTS.length);
+    expect(() => getDailyProspect(40)).not.toThrow();
   });
 
   it('gives consecutive days different prospects', () => {
@@ -57,8 +57,13 @@ describe('getFilmRoomDays', () => {
     }
   });
 
-  it('lists every past day while the pool still covers them', () => {
-    expect(getFilmRoomDays(8)).toEqual([7, 6, 5, 4, 3, 2, 1]);
+  it('never shows a prospect pinned to a later day', () => {
+    const upcoming = Object.entries(PINNED_PUZZLES).filter(([d]) => Number(d) > 8).map(([, id]) => id);
+    for (const n of getFilmRoomDays(8)) expect(upcoming).not.toContain(getDailyProspect(n).id);
+  });
+
+  it('lists the pinned past days', () => {
+    expect(getFilmRoomDays(8)).toEqual([7, 6]);
   });
 });
 

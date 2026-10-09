@@ -20,7 +20,9 @@ function getRotation(poolSize: number, seed: number): number[] {
 export function getRotationPool(pool: readonly Prospect[] = PROSPECTS): readonly Prospect[] {
   if (pool !== PROSPECTS) return pool;
   const pinned = new Set(Object.values(PINNED_PUZZLES));
-  return pool.filter((p) => !pinned.has(p.id));
+  const unpinned = pool.filter((p) => !pinned.has(p.id));
+  // Every prospect pinned: other days rotate through the whole pool
+  return unpinned.length > 0 ? unpinned : pool;
 }
 
 /**
@@ -72,7 +74,11 @@ export function getProspectById(id: string, pool: readonly Prospect[] = PROSPECT
  * different prospect. The list can never be longer than the pool.
  */
 export function getFilmRoomDays(todayPuzzleNumber: number, pool: readonly Prospect[] = PROSPECTS): number[] {
+  // Today's prospect and anyone pinned to a future day never appear, so Film room can't spoil upcoming days
   const seen = new Set<string>([getDailyProspect(todayPuzzleNumber, pool).id]);
+  if (pool === PROSPECTS) {
+    for (const [day, id] of Object.entries(PINNED_PUZZLES)) if (Number(day) > todayPuzzleNumber) seen.add(id);
+  }
   const days: number[] = [];
   for (let n = todayPuzzleNumber - 1; n >= 1; n--) {
     const id = getDailyProspect(n, pool).id;

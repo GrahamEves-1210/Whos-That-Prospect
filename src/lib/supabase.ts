@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import type { Stats } from '../game/types';
 
 const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
@@ -58,4 +59,17 @@ export async function prefetchLeaderboard(): Promise<void> {
   } catch {
     /* the sheet will retry and show its error state */
   }
+}
+
+/** The signed-in player's stats saved in their account, or null if none yet. */
+export async function fetchUserStats(userId: string): Promise<Stats | null> {
+  if (!supabase) return null;
+  const { data, error } = await supabase.from('user_stats').select('stats').eq('user_id', userId).maybeSingle();
+  if (error) throw error;
+  return (data?.stats as Stats | undefined) ?? null;
+}
+
+export async function saveUserStats(userId: string, stats: Stats): Promise<void> {
+  if (!supabase) return;
+  await supabase.from('user_stats').upsert({ user_id: userId, stats, updated_at: new Date().toISOString() });
 }

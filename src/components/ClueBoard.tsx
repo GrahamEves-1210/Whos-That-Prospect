@@ -17,7 +17,9 @@ export function ClueBoard({ prospect, wrongGuesses, revealAll, newStep }: Props)
 
   return (
     <section className="dossier" aria-label="Prospect card">
-      <h4 className="dossier__title">Prospect card</h4>
+      <div className="sect-head">
+        <h3 className="sect-head__title">Prospect card</h3>
+      </div>
       <ol>
         {rows.map((row, i) => {
           const unlocked = revealAll || row.step <= wrongGuesses;
