@@ -154,8 +154,10 @@ export interface ResultRecord {
 /**
  * Pure: fold a finished daily game into the stats.
  * Streaks continue only when the previous completed puzzle was yesterday's and was won.
+ * Each day counts once: a day already recorded (or an older one) leaves the stats unchanged.
  */
 export function recordResult(stats: Stats, result: ResultRecord): Stats {
+  if (stats.lastCompletedPuzzle != null && result.puzzleNumber <= stats.lastCompletedPuzzle) return stats;
   const next: Stats = {
     ...stats,
     guessDistribution: [...stats.guessDistribution],

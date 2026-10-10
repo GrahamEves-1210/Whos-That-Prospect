@@ -17,7 +17,10 @@ export interface ResultRow {
 /** Record a finished daily game. Duplicates (same user + puzzle) are ignored. */
 export async function submitResult(userId: string, row: ResultRow): Promise<void> {
   if (!supabase) return;
-  await supabase.from('results').upsert({ user_id: userId, ...row }, { onConflict: 'user_id,puzzle_number', ignoreDuplicates: true });
+  const { error } = await supabase
+    .from('results')
+    .upsert({ user_id: userId, ...row }, { onConflict: 'user_id,puzzle_number', ignoreDuplicates: true });
+  if (error) throw error;
 }
 
 export interface LeaderboardEntry {

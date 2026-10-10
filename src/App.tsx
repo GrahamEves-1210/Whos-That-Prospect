@@ -74,7 +74,7 @@ export default function App() {
     if (!auth.userId || !dailyResult) return;
     submitResult(auth.userId, dailyResult)
       .then(() => setBoardRefreshKey((k) => k + 1))
-      .catch(() => {});
+      .catch((err) => console.error('Could not save result to the leaderboard', err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.userId, dailyResultKey]);
 

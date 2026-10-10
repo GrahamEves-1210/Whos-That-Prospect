@@ -135,6 +135,14 @@ describe('storage', () => {
     expect(loadStats(storage)).toEqual(stats);
   });
 
+  it('counts each day once, even if the same daily is finished again', () => {
+    let stats = createEmptyStats();
+    stats = recordResult(stats, { puzzleNumber: 9, won: true, guessCount: 2 });
+    const again = recordResult(stats, { puzzleNumber: 9, won: true, guessCount: 1 });
+    expect(again).toBe(stats);
+    expect(recordResult(stats, { puzzleNumber: 8, won: false, guessCount: 5 })).toBe(stats);
+  });
+
   it('display streak drops to zero after a missed day', () => {
     let stats = createEmptyStats();
     stats = recordResult(stats, { puzzleNumber: 10, won: true, guessCount: 2 });
