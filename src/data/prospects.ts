@@ -25,36 +25,32 @@ import type { Prospect } from './types';
  *  - "Drafted by" unlocks at miss 4 with the rest of the Draft section. Honors are college honors only.
  */
 export const PROSPECTS: Prospect[] = [
-
-
-
   {
-    id: 'ladd-mcconkey',
-    name: 'Ladd McConkey',
-    aliases: ['Ladd Mcconkey'],
+    // REAL Draft Bible quotes. 2021 had no combine: testing is from his pro day (via nflcombineresults + MockDraftable).
+    id: 'josh-palmer',
+    name: 'Josh Palmer',
+    aliases: ['Joshua Palmer'],
     position: 'WR',
-    college: 'Georgia',
+    college: 'Tennessee',
     conference: 'SEC',
-    height: '6-0',
-    weight: 186,
-    draftYear: 2024,
-    draftRound: 2,
-    draftPick: 34,
-    fortyTime: 4.39,
-    vertical: 36,
+    height: '6-1',
+    weight: 210,
+    draftYear: 2021,
+    draftRound: 3,
+    draftPick: 77,
+    fortyTime: 4.52,
+    vertical: 34,
     broadJump: 124,
-    otherTesting: { Bench: '13 reps', '3-Cone': '6.72s', Shuttle: '3.97s', 'Hand Size': '8 5/8"', 'Arm Length': '30 1/4"' },
+    otherTesting: { '3-Cone': '6.98s', Shuttle: '4.24s', 'Hand Size': '9 5/8"', 'Arm Length': '33"' },
     scoutingExcerpts: [
-      'Sudden, polished route runner who creates separation at every level and makes defenders miss after the catch.',
-      'Slight frame and short arms show up against press, and injuries limited his final season.',
-      'A key piece of back-to-back national title teams who ran in the 4.3s at the combine.',
+      'The Canadian is a very physical pass-catcher who excels in contested catch situations and high-pointing the football.',
+      'The frame and the big-play capabilities make the Ontario native an enticing Day 3 option, but he is nowhere near a finished product who should be relied on to contribute right out of the gate.',
+      'After being overshadowed much of his career by the likes of Jauan Jennings and Marquez Callaway, Palmer put together a solid senior season.',
     ],
-    clues: [
-      { label: 'Drafted by', value: 'Los Angeles Chargers', unlockAt: 4 },
-    ],
-    accolades: ['National champion (2021, 2022)'],
-    hometown: 'Chatsworth, GA',
-    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/4612826.png',
+    clues: [{ label: 'Drafted by', value: 'Los Angeles Chargers', unlockAt: 4 }],
+    accolades: ['Senior Bowl (2021)'],
+    hometown: 'Brampton, ON',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/4242433.png',
   },
   {
     // REAL quotes from The NFL Draft Bible (first real prospect). Name is blacked out in quotes while playing.
@@ -91,7 +87,7 @@ export const PROSPECTS: Prospect[] = [
  */
 export const PINNED_PUZZLES: Record<number, string> = {
   9: 'navorro-bowman',
-  10: 'ladd-mcconkey',
+  10: 'josh-palmer',
 };
 
 /** Credit shown in the footer for every scouting excerpt. */

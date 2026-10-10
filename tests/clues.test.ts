@@ -45,7 +45,7 @@ describe('clue ladder', () => {
   });
 
   it('follows the default schedule for a fully-populated prospect', () => {
-    const steps = Object.fromEntries(buildClues(real('ladd-mcconkey')).map((c) => [c.id, c.unlockAt]));
+    const steps = Object.fromEntries(buildClues(real('navorro-bowman')).map((c) => [c.id, c.unlockAt]));
     expect(steps).toMatchObject({
       position: 1,
       'excerpt-0': 0,
@@ -137,13 +137,13 @@ describe('prospect card rows', () => {
   const row = (p: Prospect, id: string) => getCardRows(p).find((r) => r.id === id);
 
   it('combines height and weight into one measurables row', () => {
-    expect(row(real('ladd-mcconkey'), 'measurables')?.value).toBe(`6'0", 186 lbs`);
-    expect(getCardRows(real('ladd-mcconkey')).some((r) => r.id === 'height' || r.id === 'weight')).toBe(false);
+    expect(row(real('navorro-bowman'), 'measurables')?.value).toBe(`6'1", 242 lbs`);
+    expect(getCardRows(real('navorro-bowman')).some((r) => r.id === 'height' || r.id === 'weight')).toBe(false);
   });
 
   it('splits workout numbers into separate rows, or says "Did not test"', () => {
-    expect(row(real('ladd-mcconkey'), 'forty')?.value).toBe('4.39s');
-    expect(row(real('ladd-mcconkey'), 'vertical')).toBeDefined();
+    expect(row(real('navorro-bowman'), 'forty')?.value).toBe('4.70s');
+    expect(row(real('navorro-bowman'), 'vertical')).toBeDefined();
     expect(row(fixture('rafael-quintero'), 'combine')?.value).toBe('Did not test');
     expect(row(fixture('rafael-quintero'), 'forty')).toBeUndefined();
   });

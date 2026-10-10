@@ -180,6 +180,12 @@ export default function App() {
   // Menus animate closed before unmounting, so they slide back up instead of vanishing.
   const [menuClosing, setMenuClosing] = useState(false);
   const closeTimer = useRef<number | null>(null);
+  const finishCloseMenu = useCallback(() => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    closeTimer.current = null;
+    setMenuClosing(false);
+    setOpenMenu(null);
+  }, []);
   const closeMenu = useCallback(() => {
     if (closeTimer.current) return;
     // Desktop: no animation, close instantly. Phones: let the sheet sink into the nav bar first.
@@ -188,12 +194,9 @@ export default function App() {
       return;
     }
     setMenuClosing(true);
-    closeTimer.current = window.setTimeout(() => {
-      closeTimer.current = null;
-      setMenuClosing(false);
-      setOpenMenu(null);
-    }, MENU_CLOSE_MS);
-  }, []);
+    // Normally finishCloseMenu runs when the sheet's sink animation ends; this is the fallback.
+    closeTimer.current = window.setTimeout(finishCloseMenu, MENU_CLOSE_MS);
+  }, [finishCloseMenu]);
   const toggleMenu = useCallback(
     (menu: MenuName) => {
       if (openMenu === menu && !menuClosing) return closeMenu();
@@ -337,7 +340,7 @@ export default function App() {
 
         {openMenu && <button type="button" className="drawer-scrim" aria-label="Close menu" onClick={closeMenu} />}
         {openMenu && (
-          <Drawer closing={menuClosing}>
+          <Drawer closing={menuClosing} onClosed={finishCloseMenu}>
             {openMenu === 'help' && <HelpPanel onClose={closeMenu} />}
             {openMenu === 'profile' && <ProfilePanel auth={auth} onClose={closeMenu} />}
             {openMenu === 'request' && <RequestPanel userId={auth.userId} onClose={closeMenu} />}
