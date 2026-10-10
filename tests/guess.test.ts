@@ -65,6 +65,12 @@ describe('checkGuess', () => {
     expect(checkGuess('Harison Delacroix', fixture('harrison-delacroix'))).toBe(true);
   });
 
+  it('accepts the last name on its own, but not the first name', () => {
+    const p = PROSPECTS.find((x) => x.id === 'navorro-bowman')!;
+    expect(checkGuess('Bowman', p)).toBe(true);
+    expect(checkGuess('NaVorro', p)).toBe(false);
+  });
+
   it('rejects wrong names and empty input', () => {
     expect(checkGuess('Tom Brady', fixture('marcus-vale'))).toBe(false);
     expect(checkGuess('', fixture('marcus-vale'))).toBe(false);

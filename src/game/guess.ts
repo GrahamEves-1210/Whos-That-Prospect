@@ -51,10 +51,11 @@ export function editDistance(a: string, b: string, max: number = Infinity): numb
   return d[a.length][b.length];
 }
 
-/** All accepted normalized answers for a prospect (name + aliases). */
+/** All accepted normalized answers for a prospect: name + aliases, and the last name on its own. */
 export function getAcceptedAnswers(prospect: Prospect): string[] {
-  const answers = [prospect.name, ...(prospect.aliases ?? [])].map(normalizeGuess).filter(Boolean);
-  return Array.from(new Set(answers));
+  const full = [prospect.name, ...(prospect.aliases ?? [])].map(normalizeGuess).filter(Boolean);
+  const lastNames = full.map((a) => a.split(' ').pop() ?? '').filter(Boolean);
+  return Array.from(new Set([...full, ...lastNames]));
 }
 
 /**

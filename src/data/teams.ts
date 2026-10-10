@@ -40,3 +40,76 @@ export const TEAM_COLORS: Record<string, TeamColors> = {
   Commanders: { primary: '#5A1414', secondary: '#FFB612' },
   Redskins: { primary: '#5A1414', secondary: '#FFB612' },
 };
+
+/**
+ * Wordmark lettering for the pick card's team name. Teams' real wordmark fonts are custom and not
+ * public, so each maps to the closest free (Google) font in the same style: slab blocks, condensed
+ * sans, wide heavy sans, collegiate block, serif, or a slanted sporty italic. Swap in real font
+ * files here if you ever have them.
+ */
+export interface TeamFont {
+  family: string;
+  /** Google Fonts weight to load */
+  weight: number;
+  /** Slant like the team's italic wordmark */
+  italic?: boolean;
+  lowercase?: boolean;
+}
+
+const SLAB: TeamFont = { family: 'Alfa Slab One', weight: 400 };
+const SLAB_ITALIC: TeamFont = { ...SLAB, italic: true };
+const CONDENSED: TeamFont = { family: 'Oswald', weight: 700 };
+const SPORT_ITALIC: TeamFont = { family: 'Teko', weight: 700, italic: true };
+const WIDE: TeamFont = { family: 'Archivo Black', weight: 400 };
+const WIDE_ITALIC: TeamFont = { ...WIDE, italic: true };
+const BLOCK: TeamFont = { family: 'Graduate', weight: 400 };
+const SERIF: TeamFont = { family: 'Playfair Display', weight: 900 };
+
+export const TEAM_FONTS: Record<string, TeamFont> = {
+  Cardinals: SLAB_ITALIC,
+  Falcons: SPORT_ITALIC,
+  Ravens: SERIF,
+  Bills: SPORT_ITALIC,
+  Panthers: SPORT_ITALIC,
+  Bears: SLAB,
+  Bengals: CONDENSED,
+  Browns: SLAB,
+  Cowboys: SLAB,
+  Broncos: SPORT_ITALIC,
+  Lions: WIDE,
+  Packers: SLAB,
+  Texans: SLAB,
+  Oilers: WIDE,
+  Colts: WIDE,
+  Jaguars: CONDENSED,
+  Chiefs: SLAB_ITALIC,
+  Raiders: BLOCK,
+  Chargers: SPORT_ITALIC,
+  Rams: WIDE,
+  Dolphins: SPORT_ITALIC,
+  Vikings: BLOCK,
+  Patriots: SPORT_ITALIC,
+  Saints: SERIF,
+  Giants: { ...WIDE_ITALIC, lowercase: true },
+  Jets: WIDE_ITALIC,
+  Eagles: SPORT_ITALIC,
+  Steelers: WIDE,
+  '49ers': SLAB_ITALIC,
+  Seahawks: WIDE_ITALIC,
+  Buccaneers: CONDENSED,
+  Titans: SPORT_ITALIC,
+  Commanders: BLOCK,
+  Redskins: BLOCK,
+};
+
+/** Load a team font from Google Fonts on demand (once), so only the shown team's font downloads. */
+export function loadTeamFont(font: TeamFont): void {
+  if (typeof document === 'undefined') return;
+  const id = `team-font-${font.family.replace(/\s+/g, '-')}-${font.weight}`;
+  if (document.getElementById(id)) return;
+  const link = document.createElement('link');
+  link.id = id;
+  link.rel = 'stylesheet';
+  link.href = `https://fonts.googleapis.com/css2?family=${font.family.replace(/\s+/g, '+')}:wght@${font.weight}&display=swap`;
+  document.head.appendChild(link);
+}

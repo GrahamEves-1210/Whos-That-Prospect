@@ -55,7 +55,7 @@ export function GuessInput({ onSubmit, onSkip, disabled, lastEvent }: Props) {
           autoCorrect="off"
           spellCheck={false}
           enterKeyHint="go"
-          placeholder={disabled ? 'Game over' : 'Type the prospect’s full name'}
+          placeholder={disabled ? 'Game over' : 'Type the prospect’s name'}
           value={value}
           disabled={disabled}
           maxLength={60}

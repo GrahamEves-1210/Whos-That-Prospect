@@ -25,7 +25,7 @@ export function HelpPanel(_props: Props) {
             Read the day’s real pre-draft scouting report and name the prospect in <strong>{MAX_GUESSES} guesses</strong>.
             Every miss unlocks another clue. A new prospect drops at <strong>midnight Eastern</strong>.
           </p>
-          <p className="help__note">Capitalization, punctuation and suffixes like Jr. don’t matter, and one typo still counts.</p>
+          <p className="help__note">The last name alone works. Capitalization, punctuation and suffixes like Jr. don’t matter, and one typo still counts.</p>
           <p className="help__note">
             Scouting report quotes are from{' '}
             <a className="link" href={EXCERPT_SOURCE_URL} target="_blank" rel="noopener noreferrer">

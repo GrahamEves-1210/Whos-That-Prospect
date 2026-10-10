@@ -1,5 +1,5 @@
-import type { CSSProperties, ReactNode } from 'react';
-import { TEAM_COLORS } from '../data/teams';
+import { useEffect, type CSSProperties, type ReactNode } from 'react';
+import { loadTeamFont, TEAM_COLORS, TEAM_FONTS } from '../data/teams';
 import type { Prospect } from '../data/types';
 import { MAX_GUESSES } from '../game/config';
 import { pickSlip } from '../game/slip';
@@ -45,6 +45,18 @@ export function ResultPanel({ state, prospect, onShare, onOpenFilmRoom, onReturn
   const slip = pickSlip(prospect);
   const colors = TEAM_COLORS[slip.nickname];
   const teamStyle = colors ? ({ '--team': colors.primary, '--team-2': colors.secondary } as CSSProperties) : undefined;
+  const font = TEAM_FONTS[slip.nickname];
+  useEffect(() => {
+    if (won && font) loadTeamFont(font);
+  }, [won, font]);
+  const wordmarkStyle: CSSProperties | undefined = font
+    ? {
+        fontFamily: `'${font.family}', 'Alfa Slab One', Georgia, serif`,
+        fontWeight: font.weight,
+        textTransform: font.lowercase ? 'lowercase' : 'uppercase',
+        transform: font.italic ? 'skewX(-10deg)' : undefined,
+      }
+    : undefined;
   const stamp = (
     <div className={`stamp ${won ? 'stamp--won' : 'stamp--lost'}`} aria-hidden>
       {won ? `${state.guesses.length}/${MAX_GUESSES}` : `X/${MAX_GUESSES}`}
@@ -71,7 +83,9 @@ export function ResultPanel({ state, prospect, onShare, onOpenFilmRoom, onReturn
             <Line label="Overall:">{slip.overall}</Line>
           </div>
           {slip.nickname && (
-            <p className="slip__team">{slip.nickname}</p>
+            <p className="slip__team" style={wordmarkStyle}>
+              {slip.nickname}
+            </p>
           )}
         </article>
       ) : (
