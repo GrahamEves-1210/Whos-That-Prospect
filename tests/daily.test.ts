@@ -29,8 +29,16 @@ describe('getDailyProspect', () => {
     expect(getDailyProspect(20 + n).id).toBe(getDailyProspect(20).id);
   });
 
-  it('falls back to rotating the whole pool when every prospect is pinned', () => {
-    expect(getRotationPool().length).toBe(PROSPECTS.length);
+  it('fills an open day with a prospect who already ran, never an upcoming one or the day before', () => {
+    const open = Object.keys(PINNED_PUZZLES).map(Number).sort((a, b) => a - b);
+    for (let n = open[0] + 1; n < open[open.length - 1]; n++) {
+      if (PINNED_PUZZLES[n]) continue;
+      const id = getDailyProspect(n).id;
+      const upcoming = Object.entries(PINNED_PUZZLES).filter(([d]) => Number(d) > n).map(([, v]) => v);
+      const ranBefore = Object.entries(PINNED_PUZZLES).some(([d, v]) => v === id && Number(d) < n);
+      expect(ranBefore || !upcoming.includes(id)).toBe(true);
+      expect(id).not.toBe(PINNED_PUZZLES[n - 1]);
+    }
     expect(() => getDailyProspect(40)).not.toThrow();
   });
 

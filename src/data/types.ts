@@ -9,6 +9,7 @@
 export type Position =
   | 'QB'
   | 'RB'
+  | 'FB'
   | 'WR'
   | 'TE'
   | 'OT'
@@ -26,6 +27,7 @@ export type Position =
 export const POSITION_NAMES: Record<Position, string> = {
   QB: 'Quarterback',
   RB: 'Running Back',
+  FB: 'Fullback',
   WR: 'Wide Receiver',
   TE: 'Tight End',
   OT: 'Offensive Tackle',
@@ -46,6 +48,7 @@ export type PositionSide = 'offense' | 'defense' | 'specialists';
 export const POSITION_SIDE: Record<Position, PositionSide> = {
   QB: 'offense',
   RB: 'offense',
+  FB: 'offense',
   WR: 'offense',
   TE: 'offense',
   OT: 'offense',
