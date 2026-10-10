@@ -969,14 +969,18 @@ blockquote {
   }
   /* Closing: the bar keeps its open shape while the sheet sinks (corners never fold in). The sheet's
      rounded top edge drops onto the bar and the menu unmounts on that same frame, so the edge becomes
-     the bar's top (see Drawer). The corners round off in a very quick transition just before it lands
-     (sheet sink = 0.3s). */
+     the bar's top (see Drawer). The corners round off in a very quick transition just before it lands,
+     and the bar's top line comes back a moment later (sheet sink = 0.3s). */
   .toolbar--open.toolbar--closing {
+    border-top-width: 2px;
+    padding-top: 5px;
     border-top-left-radius: 1.75rem;
     border-top-right-radius: 1.75rem;
     transition:
-      border-top-left-radius 0.08s var(--ease) 0.2s,
-      border-top-right-radius 0.08s var(--ease) 0.2s;
+      border-top-left-radius 0.08s var(--ease) 0.17s,
+      border-top-right-radius 0.08s var(--ease) 0.17s,
+      border-top-width 0s linear 0.26s,
+      padding-top 0s linear 0.26s;
   }
   .toolbar__item {
     flex: 1 1 0;
@@ -3640,8 +3644,8 @@ td.board-table__num {
    gentle movements. Must come after the global reduced-motion rule above. */
 @media (prefers-reduced-motion: reduce) {
   .toolbar--open.toolbar--closing {
-    transition-duration: 0.08s !important;
-    transition-delay: 0.2s !important;
+    transition-duration: 0.08s, 0.08s, 0s, 0s !important;
+    transition-delay: 0.17s, 0.17s, 0.26s, 0.26s !important;
   }
   .drawer__inner {
     animation-duration: 0.38s !important;
