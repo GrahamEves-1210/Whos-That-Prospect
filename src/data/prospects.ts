@@ -68,7 +68,7 @@ export const PROSPECTS: Prospect[] = [
     otherTesting: { Bench: '17 reps', '3-Cone': '7.31s', Shuttle: '4.46s', 'Hand Size': '9 1/2"', 'Arm Length': '31 3/8"' },
     scoutingExcerpts: [
       'Reagor has an unreal third gear which allows him to break down and stack any cornerback he faces up against. His video game style moves and elite speed strike up visions of Pro Bowl wide receiver DeSean Jackson.',
-      'What was it like playing against Jeff Gladney every day? I feel like that’s the best corner in this draft. He’s very underrated, but, like I said, that’s what made me the receiver I am today, just going up against him since I was a freshman. It’s good to go up against a great player every day.',
+      'What was it like playing against Jeff Gladney every day? I feel like that’s the best corner in this draft.',
       'His father, Montae Reagor, played nine seasons in the NFL and was a member of the 2006 Indianapolis Colts who won Super Bowl XLI.',
     ],
     clues: [{ label: 'Drafted by', value: 'Philadelphia Eagles', unlockAt: 4 }],
