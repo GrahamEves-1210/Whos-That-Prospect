@@ -977,8 +977,8 @@ blockquote {
     border-top-left-radius: 1.75rem;
     border-top-right-radius: 1.75rem;
     transition:
-      border-top-left-radius 0.08s var(--ease) 0.19s,
-      border-top-right-radius 0.08s var(--ease) 0.19s,
+      border-top-left-radius 0.08s var(--ease) 0.18s,
+      border-top-right-radius 0.08s var(--ease) 0.18s,
       border-top-width 0s linear 0.26s,
       padding-top 0s linear 0.26s;
   }
@@ -3645,7 +3645,7 @@ td.board-table__num {
 @media (prefers-reduced-motion: reduce) {
   .toolbar--open.toolbar--closing {
     transition-duration: 0.08s, 0.08s, 0s, 0s !important;
-    transition-delay: 0.19s, 0.19s, 0.26s, 0.26s !important;
+    transition-delay: 0.18s, 0.18s, 0.26s, 0.26s !important;
   }
   .drawer__inner {
     animation-duration: 0.38s !important;
