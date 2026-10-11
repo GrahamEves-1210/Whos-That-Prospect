@@ -976,9 +976,12 @@ blockquote {
     padding-top: 5px;
     border-top-left-radius: 1.75rem;
     border-top-right-radius: 1.75rem;
+    /* the open bar's extra seam shadow goes with the square corners */
+    box-shadow: var(--shadow-sm), 0 0 0 var(--shadow-ink);
     transition:
       border-top-left-radius 0.08s var(--ease) 0.145s,
       border-top-right-radius 0.08s var(--ease) 0.145s,
+      box-shadow 0.08s var(--ease) 0.145s,
       border-top-width 0s linear 0.26s,
       padding-top 0s linear 0.26s;
   }
@@ -3644,8 +3647,8 @@ td.board-table__num {
    gentle movements. Must come after the global reduced-motion rule above. */
 @media (prefers-reduced-motion: reduce) {
   .toolbar--open.toolbar--closing {
-    transition-duration: 0.08s, 0.08s, 0s, 0s !important;
-    transition-delay: 0.145s, 0.145s, 0.26s, 0.26s !important;
+    transition-duration: 0.08s, 0.08s, 0.08s, 0s, 0s !important;
+    transition-delay: 0.145s, 0.145s, 0.145s, 0.26s, 0.26s !important;
   }
   .drawer__inner {
     animation-duration: 0.38s !important;
