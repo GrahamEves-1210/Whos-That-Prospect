@@ -961,7 +961,8 @@ blockquote {
   /* Menu open: only the top edge changes, and it's covered by the sheet growing out of it */
   .toolbar--open {
     border-top-width: 0;
-    padding-top: 7px;
+    /* trimmed top while open (closed: 5px + 2px border) */
+    padding-top: 3px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     /* second shadow fills the 3px gap at the seam with the sheet's right shadow */
@@ -971,20 +972,6 @@ blockquote {
      rounded top edge drops onto the bar and the menu unmounts on that same frame, so the edge becomes
      the bar's top (see Drawer). The corners round off in a very quick transition just before it lands,
      and the bar's top line comes back a moment later (sheet sink = 0.3s). */
-  .toolbar--open.toolbar--closing {
-    border-top-width: 2px;
-    padding-top: 5px;
-    border-top-left-radius: 1.75rem;
-    border-top-right-radius: 1.75rem;
-    /* the open bar's extra seam shadow goes with the square corners */
-    box-shadow: var(--shadow-sm), 0 0 0 var(--shadow-ink);
-    transition:
-      border-top-left-radius 0.08s var(--ease) 0.145s,
-      border-top-right-radius 0.08s var(--ease) 0.145s,
-      box-shadow 0.08s var(--ease) 0.145s,
-      border-top-width 0s linear 0.26s,
-      padding-top 0s linear 0.26s;
-  }
   .toolbar__item {
     flex: 1 1 0;
     min-width: 0;
@@ -1185,7 +1172,8 @@ blockquote {
     z-index: var(--z-sheet);
     left: 0.75rem;
     right: calc(0.75rem - 3px);
-    bottom: calc(0.9rem + env(safe-area-inset-bottom) + 3.2rem + 12px);
+    /* = the open bar's height (3.2rem + 3px + 5px + 2px border) minus a 2px overlap */
+    bottom: calc(0.9rem + env(safe-area-inset-bottom) + 3.2rem + 8px);
     margin: 0;
     padding-right: 3px; /* room for the sheet's right shadow inside the clip */
     max-height: calc(100dvh - 7rem - env(safe-area-inset-bottom) - env(safe-area-inset-top));
@@ -1201,8 +1189,14 @@ blockquote {
     box-shadow: 3px 0 0 var(--shadow-ink);
     animation: sheet-rise 0.38s cubic-bezier(0.32, 0.72, 0, 1) both;
   }
+  /* Closing = opening in reverse: same keyframes, duration and curve, played backwards */
   .drawer--closing .drawer__inner {
-    animation: sheet-sink 0.3s cubic-bezier(0.4, 0, 0.7, 1) both;
+    /* played in reverse, this curve comes out mirrored, as cubic-bezier(0.3, 0.12, 0.7, 0.325):
+       moving from the first frame and only ever speeding up, into the opening's fast landing */
+    animation: sheet-rise-back 0.33s cubic-bezier(0.3, 0.675, 0.7, 0.88) reverse both;
+  }
+  .drawer--closing .drawer__inner > * {
+    animation: sheet-content-back 0.33s cubic-bezier(0.3, 0.675, 0.7, 0.88) reverse both;
   }
   .drawer--closing ~ .drawer-scrim,
   .drawer-scrim:has(+ .drawer--closing) {
@@ -1236,14 +1230,17 @@ blockquote {
 }
 
 /* Grows up out of the nav bar's top edge */
+/* --sink (set on close) = the exact visible height, so the reversed rise lands right on the bar.
+   The -back copies are identical; closing needs its own names, or the browser treats the reversed
+   animation as the finished opening one and jumps straight to the end. */
 @keyframes sheet-rise {
   from {
-    transform: translateY(100%);
+    transform: translateY(var(--sink, 100%));
   }
 }
 
-@keyframes sheet-sink {
-  to {
+@keyframes sheet-rise-back {
+  from {
     transform: translateY(var(--sink, 100%));
   }
 }
@@ -1258,6 +1255,13 @@ blockquote {
 }
 
 @keyframes sheet-content {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+@keyframes sheet-content-back {
   from {
     opacity: 0;
     transform: translateY(28px);
@@ -3646,15 +3650,13 @@ td.board-table__num {
    "Animation effects" off, which Chrome reports as prefers-reduced-motion, and these are short,
    gentle movements. Must come after the global reduced-motion rule above. */
 @media (prefers-reduced-motion: reduce) {
-  .toolbar--open.toolbar--closing {
-    transition-duration: 0.08s, 0.08s, 0.08s, 0s, 0s !important;
-    transition-delay: 0.145s, 0.145s, 0.145s, 0.26s, 0.26s !important;
-  }
   .drawer__inner {
     animation-duration: 0.38s !important;
   }
-  .drawer--closing .drawer__inner {
-    animation-duration: 0.3s !important;
+  .drawer--closing .drawer__inner,
+  .drawer--closing .drawer__inner > * {
+    animation-duration: 0.33s !important;
+    animation-delay: 0s !important;
   }
   .drawer__inner > * {
     animation-duration: 0.42s !important;
@@ -3683,3 +3685,4 @@ td.board-table__num {
 }
 
 /* Text shown before the game's JavaScript loads (for search engines); the game replaces it. */
+
