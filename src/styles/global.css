@@ -1191,12 +1191,11 @@ blockquote {
   }
   /* Closing = opening in reverse: same keyframes, duration and curve, played backwards */
   .drawer--closing .drawer__inner {
-    /* played in reverse, this curve comes out mirrored, as cubic-bezier(0.3, 0.12, 0.7, 0.325):
-       moving from the first frame and only ever speeding up, into the opening's fast landing */
-    animation: sheet-rise-back 0.33s cubic-bezier(0.3, 0.675, 0.7, 0.88) reverse both;
+    /* Moves from the first frame and speeds up steadily (never slows) until it lands on the bar */
+    animation: sheet-sink 0.33s cubic-bezier(0.2, 0.15, 0.7, 0.6) both;
   }
   .drawer--closing .drawer__inner > * {
-    animation: sheet-content-back 0.33s cubic-bezier(0.3, 0.675, 0.7, 0.88) reverse both;
+    animation: sheet-content-sink 0.33s cubic-bezier(0.2, 0.15, 0.7, 0.6) both;
   }
   .drawer--closing ~ .drawer-scrim,
   .drawer-scrim:has(+ .drawer--closing) {
@@ -1230,17 +1229,15 @@ blockquote {
 }
 
 /* Grows up out of the nav bar's top edge */
-/* --sink (set on close) = the exact visible height, so the reversed rise lands right on the bar.
-   The -back copies are identical; closing needs its own names, or the browser treats the reversed
-   animation as the finished opening one and jumps straight to the end. */
+/* --sink = the exact visible height, so the sheet rises from (and sinks back onto) the bar's top line */
 @keyframes sheet-rise {
   from {
     transform: translateY(var(--sink, 100%));
   }
 }
 
-@keyframes sheet-rise-back {
-  from {
+@keyframes sheet-sink {
+  to {
     transform: translateY(var(--sink, 100%));
   }
 }
@@ -1261,8 +1258,8 @@ blockquote {
   }
 }
 
-@keyframes sheet-content-back {
-  from {
+@keyframes sheet-content-sink {
+  to {
     opacity: 0;
     transform: translateY(28px);
   }
