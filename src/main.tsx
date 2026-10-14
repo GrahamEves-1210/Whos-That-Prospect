@@ -5,7 +5,7 @@ import { STORAGE_KEYS } from './game/config';
 import './styles/global.css';
 
 // DEMO RECORDING: every refresh starts today's game fresh. Set to false before pushing.
-const DEMO_RESET = true;
+const DEMO_RESET = false;
 if (DEMO_RESET) {
   try {
     window.localStorage.removeItem(STORAGE_KEYS.game);

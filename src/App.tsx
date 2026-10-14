@@ -340,7 +340,7 @@ export default function App() {
 
         {openMenu && <button type="button" className="drawer-scrim" aria-label="Close menu" onClick={closeMenu} />}
         {openMenu && (
-          <Drawer closing={menuClosing} onClosed={finishCloseMenu}>
+          <Drawer closing={menuClosing} onClosed={finishCloseMenu} className={openMenu === 'flashback' ? 'drawer--film' : ''}>
             {openMenu === 'help' && <HelpPanel onClose={closeMenu} />}
             {openMenu === 'profile' && <ProfilePanel auth={auth} onClose={closeMenu} />}
             {openMenu === 'request' && <RequestPanel userId={auth.userId} onClose={closeMenu} />}

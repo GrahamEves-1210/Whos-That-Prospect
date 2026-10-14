@@ -2,6 +2,8 @@ import { useLayoutEffect, useRef, type ReactNode } from 'react';
 
 interface Props {
   closing: boolean;
+  /** Extra class on the sheet, e.g. to size a particular menu */
+  className?: string;
   /** Phones: the sheet has finished sinking into the nav bar */
   onClosed?: () => void;
   children: ReactNode;
@@ -13,7 +15,7 @@ interface Props {
  * Both travel exactly the visible height, and the menu unmounts the frame it lands, so the bar keeps
  * its open shape until then and switches back in one step (as it does when opening).
  */
-export function Drawer({ closing, onClosed, children }: Props) {
+export function Drawer({ closing, className = '', onClosed, children }: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -24,7 +26,7 @@ export function Drawer({ closing, onClosed, children }: Props) {
   }, [closing]);
 
   return (
-    <div ref={ref} className={`drawer ${closing ? 'drawer--closing' : ''}`}>
+    <div ref={ref} className={`drawer ${className} ${closing ? 'drawer--closing' : ''}`.replace(/s+/g, ' ').trim()}>
       <div
         className="drawer__inner"
         onAnimationEnd={(e) => {

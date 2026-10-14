@@ -1215,6 +1215,10 @@ blockquote {
   .drawer__inner > .stats {
     padding: 1rem 1rem 1.1rem;
   }
+  /* Film room is short on its own: open it as tall as the Profile sheet (capped at the screen like the others) */
+  .drawer--film {
+    min-height: min(37.8rem, calc(100dvh - 7rem - env(safe-area-inset-bottom) - env(safe-area-inset-top)));
+  }
   /* The drawer already scrolls; don't nest a second scroller */
   .drawer .days {
     max-height: none;
@@ -1753,7 +1757,6 @@ main:focus {
   width: 0.95rem;
   height: 0.95rem;
   color: var(--orange);
-  animation: tick-tock 2s steps(2, jump-none) infinite;
 }
 
 .timer--stopped {
@@ -1761,7 +1764,6 @@ main:focus {
 }
 
 .timer--stopped svg {
-  animation: none;
   color: var(--muted);
 }
 
@@ -3472,15 +3474,6 @@ td.board-table__num {
   50% {
     background-color: var(--gold-soft);
     transform: scale(1.12);
-  }
-}
-
-@keyframes tick-tock {
-  0% {
-    transform: rotate(-12deg);
-  }
-  100% {
-    transform: rotate(12deg);
   }
 }
 
