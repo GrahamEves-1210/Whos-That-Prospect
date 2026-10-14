@@ -26,6 +26,34 @@ import type { Prospect } from './types';
  */
 export const PROSPECTS: Prospect[] = [
   {
+    // REAL Draft Bible quotes (the second is from his interview). Testing: 2023 NFL Combine; broad jump and
+    // vertical where sources differ follow the two that agree (nflcombineresults + Wikipedia / MockDraftable).
+    id: 'emmanuel-forbes',
+    name: 'Emmanuel Forbes',
+    aliases: ['Emmanuel Forbes Jr.'],
+    position: 'CB',
+    college: 'Mississippi State',
+    conference: 'SEC',
+    height: '6-0',
+    weight: 166,
+    draftYear: 2023,
+    draftRound: 1,
+    draftPick: 16,
+    fortyTime: 4.35,
+    vertical: 37.5,
+    broadJump: 131,
+    otherTesting: { 'Hand Size': '8 1/2"', 'Arm Length': '32 1/4"' },
+    scoutingExcerpts: [
+      'He possesses elite ball skills, as evident by his 14 career interceptions. Forbes transforms into a playmaker with the ball in his hands and has three career returns for touchdowns. The high-energy leader of the Bulldogs defense has the speed to tag along with any receiver in the nation.',
+      'We came together as a team, as a family and just played in a bowl game for Coach Leach and played our tails off.',
+      'Forbes is strong in man coverage and even better in zone due to his football intelligence. His highlight-reel play makes Forbes worthy of first-round consideration.',
+    ],
+    clues: [{ label: 'Drafted by', value: 'Washington Commanders', unlockAt: 4 }],
+    accolades: ['Consensus All-American (2022)', 'First-team All-SEC (2022)', 'Second-team All-SEC (2021)', 'SEC All-Freshman (2020)'],
+    hometown: 'Grenada, MS',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/4429767.png',
+  },
+  {
     // REAL Draft Bible quotes. Testing: 2008 NFL Combine (no 3-cone, hand or arm on record). No college honors listed.
     id: 'peyton-hillis',
     name: 'Peyton Hillis',
@@ -143,6 +171,7 @@ export const PINNED_PUZZLES: Record<number, string> = {
   12: 'peyton-hillis',
   13: 'navorro-bowman',
   14: 'jalen-reagor',
+  15: 'emmanuel-forbes',
 };
 
 /** Credit shown in the footer for every scouting excerpt. */

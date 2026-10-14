@@ -56,8 +56,18 @@ export function Leaderboard({ me, refreshKey }: Props) {
                 <span className="sr-only">Rank</span>
               </th>
               <th scope="col">Player</th>
-              <th scope="col" className="board-table__num">Correct guesses</th>
-              <th scope="col" className="board-table__num">Current streak</th>
+              <th scope="col" className="board-table__num">
+                <span className="th-long">Correct guesses</span>
+                <span className="th-short" aria-hidden>
+                  Correct
+                </span>
+              </th>
+              <th scope="col" className="board-table__num">
+                <span className="th-long">Current streak</span>
+                <span className="th-short" aria-hidden>
+                  Streak
+                </span>
+              </th>
             </tr>
           </thead>
           <tbody>

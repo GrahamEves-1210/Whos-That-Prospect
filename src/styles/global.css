@@ -3007,7 +3007,7 @@ main:focus {
 
 .board-table__user {
   display: inline-block;
-  max-width: calc(100% - 3.5rem);
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: middle;
@@ -3030,6 +3030,36 @@ main:focus {
   padding-left: 1.25rem;
   text-align: right;
   white-space: nowrap;
+}
+
+/* Only leave room for the "You" badge on your own row */
+.board-table__name:has(.you) .board-table__user {
+  max-width: calc(100% - 3.5rem);
+}
+
+/* Phones: short column headers so the names keep their room */
+.th-short {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .th-long {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .th-short {
+    display: inline;
+  }
+  .board-table .board-table__num {
+    padding-left: 0.9rem;
+  }
+  .board-table__name {
+    min-width: 7rem;
+  }
 }
 
 td.board-table__num {
