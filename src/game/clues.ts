@@ -63,8 +63,8 @@ export function hasTestingData(prospect: Prospect): boolean {
  *
  * Default schedule (unlockAt = number of wrong guesses; 5 guesses, so steps 0-4):
  *   0  Scouting excerpt #1
- *   1  Position + scouting excerpt #2
- *   2  Measurables: height, weight, length and combine testing
+ *   1  Position + measurables: height, weight, length and combine testing
+ *   2  Scouting excerpt #2
  *   3  Background: conference, draft class, hometown, college honors
  *   4  Draft: college, draft round/pick, drafted by, remaining excerpts and extras
  *
@@ -73,10 +73,12 @@ export function hasTestingData(prospect: Prospect): boolean {
  * nothing (e.g. a kicker with no testing), the earliest "extra" clue is
  * promoted into it so every miss always unlocks something.
  */
-/** Wrong guesses needed before the position is shown (it unlocks with excerpt #2). */
+/** Wrong guesses needed before the position is shown (it unlocks with the measurables). */
 export const POSITION_STEP = 1;
-/** Measurables and combine testing unlock together. */
-export const MEASURABLES_STEP = 2;
+/** Measurables and combine testing unlock together, with the position. */
+export const MEASURABLES_STEP = 1;
+/** The second scouting excerpt. */
+export const QUOTE2_STEP = 2;
 /** Conference, draft class, hometown and college honors. */
 export const BACKGROUND_STEP = 3;
 
@@ -98,7 +100,7 @@ export function buildClues(prospect: Prospect): Clue[] {
       kind: 'excerpt',
       label: `Scouting Report ${i + 1}`,
       value: text,
-      unlockAt: i <= 1 ? i : FINAL_STEP,
+      unlockAt: i === 0 ? 0 : i === 1 ? QUOTE2_STEP : FINAL_STEP,
     });
   });
 

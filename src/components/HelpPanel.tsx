@@ -8,8 +8,8 @@ interface Props {
 
 const LADDER: Array<[string, string]> = [
   ['Start', 'One scouting-report quote'],
-  ['Miss 1', 'Position and a second quote'],
-  ['Miss 2', 'Measurables: size, length and combine testing'],
+  ['Miss 1', 'Position and measurables: size, length and testing'],
+  ['Miss 2', 'A second scouting-report quote'],
   ['Miss 3', 'Background: conference, draft class, hometown, college honors'],
   ['Miss 4', 'Draft: college, draft pick, the team that drafted him'],
 ];

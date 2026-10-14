@@ -22,7 +22,7 @@ export interface CardRow {
 
 export const CARD_GROUP_LABELS: Record<CardGroup, string> = {
   measurables: 'Measurables',
-  background: 'Background & honors',
+  background: 'Background',
   draft: 'Draft',
 };
 
@@ -32,7 +32,7 @@ const isLengthKey = (k: string) => /hand|arm|wing/i.test(k);
 
 /** Which card group a step belongs to. */
 function groupForStep(step: number): CardGroup {
-  if (step <= MEASURABLES_STEP) return 'measurables';
+  if (step < BACKGROUND_STEP) return 'measurables';
   if (step === BACKGROUND_STEP) return 'background';
   return 'draft';
 }

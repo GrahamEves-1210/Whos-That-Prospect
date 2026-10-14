@@ -16,7 +16,7 @@ import { Reveal } from './components/Reveal';
 import { SplashScreen } from './components/SplashScreen';
 import { StatsPanel } from './components/StatsPanel';
 import { DEFAULT_EXCERPT_SOURCE, EXCERPT_SOURCE_URL } from './data/prospects';
-import { BACKGROUND_STEP, MEASURABLES_STEP, getCluesForStep, getExcerptClues } from './game/clues';
+import { BACKGROUND_STEP, getCluesForStep, getExcerptClues } from './game/clues';
 import { MAX_GUESSES } from './game/config';
 import { generateShareText, shareText } from './game/share';
 import { getNextResetTime } from './game/time';
@@ -36,10 +36,10 @@ const CLUE_NAMES: Record<string, string> = {
   excerpt: 'another scouting quote',
   measurables: 'measurables',
   testing: 'measurables',
-  conference: 'background and honors',
-  draftYear: 'background and honors',
-  hometown: 'background and honors',
-  accolades: 'background and honors',
+  conference: 'background',
+  draftYear: 'background',
+  hometown: 'background',
+  accolades: 'background',
   college: 'draft info',
   draftSlot: 'draft info',
 };
@@ -47,8 +47,8 @@ const CLUE_NAMES: Record<string, string> = {
 /** Prospect-specific clues take the name of the section they unlock with. */
 function clueName(c: { kind: string; label: string; unlockAt: number }): string {
   if (c.kind !== 'custom') return CLUE_NAMES[c.kind] ?? c.label.toLowerCase();
-  if (c.unlockAt <= MEASURABLES_STEP) return 'measurables';
-  if (c.unlockAt === BACKGROUND_STEP) return 'background and honors';
+  if (c.unlockAt < BACKGROUND_STEP) return 'measurables';
+  if (c.unlockAt === BACKGROUND_STEP) return 'background';
   return 'draft info';
 }
 

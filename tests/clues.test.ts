@@ -37,11 +37,15 @@ describe('formatting', () => {
 });
 
 describe('clue ladder', () => {
-  it('starts with one excerpt only; position joins at the first miss', () => {
+  it('starts with one excerpt only; position and measurables join at the first miss, quote 2 at the second', () => {
     const start = getUnlockedClues(fixture('marcus-vale'), 0);
     expect(start.map((c) => c.kind)).toEqual(['excerpt']);
-    const afterOne = getUnlockedClues(fixture('marcus-vale'), 1);
-    expect(afterOne.map((c) => c.kind).sort()).toEqual(['excerpt', 'excerpt', 'position']);
+    const afterOne = getUnlockedClues(fixture('marcus-vale'), 1).map((c) => c.kind);
+    expect(afterOne).toContain('position');
+    expect(afterOne).toContain('measurables');
+    expect(afterOne.filter((k) => k === 'excerpt')).toHaveLength(1);
+    const afterTwo = getUnlockedClues(fixture('marcus-vale'), 2).map((c) => c.kind);
+    expect(afterTwo.filter((k) => k === 'excerpt')).toHaveLength(2);
   });
 
   it('follows the default schedule for a fully-populated prospect', () => {
@@ -49,9 +53,9 @@ describe('clue ladder', () => {
     expect(steps).toMatchObject({
       position: 1,
       'excerpt-0': 0,
-      'excerpt-1': 1,
-      measurables: 2,
-      testing: 2,
+      'excerpt-1': 2,
+      measurables: 1,
+      testing: 1,
       conference: 3,
       draftYear: 3,
       college: FINAL_STEP,
@@ -151,7 +155,7 @@ describe('prospect card rows', () => {
   it('unlocks rows on the documented steps and groups them in report order', () => {
     const rows = getCardRows(real('navorro-bowman'));
     const steps = Object.fromEntries(rows.map((r) => [r.id, r.step]));
-    expect(steps).toMatchObject({ measurables: 2, forty: 2, conference: 3, draftYear: 3, hometown: 3, college: 4, draftSlot: 4 });
+    expect(steps).toMatchObject({ measurables: 1, forty: 1, conference: 3, draftYear: 3, hometown: 3, college: 4, draftSlot: 4 });
     const groups = rows.map((r) => r.group);
     const order = ['measurables', 'background', 'draft'];
     expect([...groups].sort((a, b) => order.indexOf(a) - order.indexOf(b))).toEqual(groups);
@@ -163,7 +167,7 @@ describe('prospect card rows', () => {
       if (p.hometown) expect(row(p, 'hometown')?.value).toBe(p.hometown);
       if (p.accolades?.length) expect(row(p, 'accolades')?.group).toBe('background');
       expect(rows.map((r) => r.value).join(' '), p.name).not.toContain(p.name);
-      expect(rows.every((r) => r.step >= 2 && r.step <= FINAL_STEP), p.name).toBe(true);
+      expect(rows.every((r) => r.step >= 1 && r.step <= FINAL_STEP), p.name).toBe(true);
     }
   });
 });
