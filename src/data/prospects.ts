@@ -139,8 +139,10 @@ export const PROSPECTS: Prospect[] = [
 export const PINNED_PUZZLES: Record<number, string> = {
   9: 'navorro-bowman',
   10: 'jalen-reagor',
-  11: 'peyton-hillis',
-  14: 'josh-palmer',
+  11: 'josh-palmer',
+  12: 'peyton-hillis',
+  13: 'navorro-bowman',
+  14: 'jalen-reagor',
 };
 
 /** Credit shown in the footer for every scouting excerpt. */
