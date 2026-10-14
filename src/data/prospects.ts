@@ -140,7 +140,7 @@ export const PINNED_PUZZLES: Record<number, string> = {
   9: 'navorro-bowman',
   10: 'jalen-reagor',
   11: 'peyton-hillis',
-  12: 'josh-palmer',
+  13: 'josh-palmer',
 };
 
 /** Credit shown in the footer for every scouting excerpt. */
