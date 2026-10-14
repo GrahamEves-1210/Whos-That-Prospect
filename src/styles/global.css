@@ -1191,11 +1191,11 @@ blockquote {
   }
   /* Closing = opening in reverse: same keyframes, duration and curve, played backwards */
   .drawer--closing .drawer__inner {
-    /* Moves from the first frame and speeds up steadily (never slows) until it lands on the bar */
-    animation: sheet-sink 0.33s cubic-bezier(0.2, 0.15, 0.7, 0.6) both;
+    /* Standard exit: a little quicker than the entrance, on the standard accelerate curve */
+    animation: sheet-sink 0.25s cubic-bezier(0.4, 0, 1, 1) both;
   }
   .drawer--closing .drawer__inner > * {
-    animation: sheet-content-sink 0.33s cubic-bezier(0.2, 0.15, 0.7, 0.6) both;
+    animation: sheet-content-out 0.15s ease-in both;
   }
   .drawer--closing ~ .drawer-scrim,
   .drawer-scrim:has(+ .drawer--closing) {
@@ -1258,12 +1258,6 @@ blockquote {
   }
 }
 
-@keyframes sheet-content-sink {
-  to {
-    opacity: 0;
-    transform: translateY(28px);
-  }
-}
 
 /* Optically balanced: a little more room at the bottom than the top */
 .sheet {
@@ -3650,9 +3644,11 @@ td.board-table__num {
   .drawer__inner {
     animation-duration: 0.38s !important;
   }
-  .drawer--closing .drawer__inner,
+  .drawer--closing .drawer__inner {
+    animation-duration: 0.25s !important;
+  }
   .drawer--closing .drawer__inner > * {
-    animation-duration: 0.33s !important;
+    animation-duration: 0.15s !important;
     animation-delay: 0s !important;
   }
   .drawer__inner > * {
