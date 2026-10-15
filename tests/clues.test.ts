@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { PROSPECTS } from '../src/data/prospects';
-import { excerptText, type Prospect } from '../src/data/types';
+import { excerptAllText, excerptText, type Prospect } from '../src/data/types';
 import {
   FINAL_STEP,
   buildClues,
@@ -191,7 +191,7 @@ describe('prospect data sanity', () => {
       const nameParts = p.name.toLowerCase().split(/\s+/);
       for (const ex of p.scoutingExcerpts) {
         // The quote as shown while playing: name mentions are blacked out
-        const lower = splitQuoteOnName(excerptText(ex), p)
+        const lower = splitQuoteOnName(excerptAllText(ex), p)
           .filter((s) => !s.isName)
           .map((s) => s.text)
           .join('')
@@ -201,7 +201,9 @@ describe('prospect data sanity', () => {
           const escaped = part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
           expect(lower, `${p.name} excerpt leaks "${part}"`).not.toMatch(new RegExp(`(?<![\\p{L}])${escaped}(?![\\p{L}])`, 'u'));
         }
-        expect(lower, `${p.name} excerpt leaks college`).not.toContain(p.college.toLowerCase());
+        // The quote itself never names the school (a speaker's credit, like a head coach's, may)
+        const quoteOnly = splitQuoteOnName(excerptText(ex), p).filter((s) => !s.isName).map((s) => s.text).join('').toLowerCase();
+        expect(quoteOnly, `${p.name} excerpt leaks college`).not.toContain(p.college.toLowerCase());
       }
     }
   });

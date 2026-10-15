@@ -101,6 +101,7 @@ export function buildClues(prospect: Prospect): Clue[] {
       label: `Scouting Report ${i + 1}`,
       value: excerptText(excerpt),
       credit: typeof excerpt === 'string' ? undefined : excerpt.credit,
+      question: typeof excerpt === 'string' ? undefined : excerpt.question,
       unlockAt: i === 0 ? 0 : i === 1 ? QUOTE2_STEP : FINAL_STEP,
     });
   });

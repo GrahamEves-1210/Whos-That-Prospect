@@ -26,6 +26,39 @@ import type { Prospect } from './types';
  */
 export const PROSPECTS: Prospect[] = [
   {
+    // REAL Draft Bible quotes (the first from his interview with them, the last from his college coach).
+    // Testing: 2021 pro day (no combine that year); all three sources agree.
+    id: 'rashawn-slater',
+    name: 'Rashawn Slater',
+    position: 'OT',
+    college: 'Northwestern',
+    conference: 'Big Ten',
+    height: '6-4',
+    weight: 304,
+    draftYear: 2021,
+    draftRound: 1,
+    draftPick: 13,
+    fortyTime: 4.91,
+    vertical: 33,
+    broadJump: 112,
+    otherTesting: { Bench: '33 reps', '3-Cone': '7.48s', Shuttle: '4.45s', 'Hand Size': '10 1/2"', 'Arm Length': '33"' },
+    scoutingExcerpts: [
+      {
+        question: 'Obviously, a lot has been made of the length. Did you ever think that would be such a talking point? And how sick are you of hearing it and kind of going out there and proving that they are long enough?',
+        text: 'It’s definitely tiring when you put so much work in, put all that film out of you playing tackle, and then people are going to question that just based off of a measurable.',
+      },
+      'Slater was the anchor of the Wildcats offensive line. He made a smooth transition to left tackle in 2019 after starting the previous two seasons at right tackle and laid down some highly impressive film against Ohio State DE Chase Young.',
+      {
+        text: 'Amazing family, dad played in the NBA. Really athletic, just needed to get stronger and to Rashawn’s credit, my goodness is he a freak in the weight room. He’s going to have one heck of a pro day.',
+        credit: 'Northwestern Head Coach Pat Fitzgerald',
+      },
+    ],
+    clues: [{ label: 'Drafted by', value: 'Los Angeles Chargers', unlockAt: 4 }],
+    accolades: ['Third-team All-Big Ten (2018)'],
+    hometown: 'Sugar Land, TX',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/4242283.png',
+  },
+  {
     // REAL Draft Bible quotes. Testing: 2008 NFL Combine (his 4.58 forty and 42" vertical were from Ohio State's
     // pro day, so not used). Arm length left off: the sources disagree (33 1/8" vs 34").
     id: 'vernon-gholston',
@@ -283,10 +316,11 @@ export const PINNED_PUZZLES: Record<number, string> = {
   13: 'navorro-bowman',
   14: 'jalen-reagor',
   15: 'chad-henne',
-  16: 'emmanuel-forbes',
+  16: 'rashawn-slater',
   17: 'jason-pierre-paul',
-  18: 'rock-ya-sin',
+  18: 'emmanuel-forbes',
   19: 'vernon-gholston',
+  20: 'rock-ya-sin',
 };
 
 /** Credit shown in the footer for every scouting excerpt. */

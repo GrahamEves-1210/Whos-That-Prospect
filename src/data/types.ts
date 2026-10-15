@@ -82,6 +82,8 @@ export interface CustomClue {
 
 /** A quote with a credit line shown under it, e.g. who said it */
 export interface ScoutingExcerpt {
+  /** Interview quotes: the interviewer's question, shown in bold before the answer */
+  question?: string;
   text: string;
   /** Shown as "- {credit}" under the quote */
   credit?: string;
@@ -90,6 +92,12 @@ export interface ScoutingExcerpt {
 /** The quote text of an excerpt, whichever form it's written in */
 export function excerptText(excerpt: string | ScoutingExcerpt): string {
   return typeof excerpt === 'string' ? excerpt : excerpt.text;
+}
+
+/** Everything a player reads in an excerpt (question, answer, credit), for leak checks */
+export function excerptAllText(excerpt: string | ScoutingExcerpt): string {
+  if (typeof excerpt === 'string') return excerpt;
+  return [excerpt.question, excerpt.text, excerpt.credit].filter(Boolean).join(' ');
 }
 
 export interface Prospect {
