@@ -198,8 +198,8 @@ export const PINNED_PUZZLES: Record<number, string> = {
   12: 'peyton-hillis',
   13: 'navorro-bowman',
   14: 'jalen-reagor',
-  15: 'emmanuel-forbes',
-  16: 'chad-henne',
+  15: 'chad-henne',
+  16: 'emmanuel-forbes',
 };
 
 /** Credit shown in the footer for every scouting excerpt. */

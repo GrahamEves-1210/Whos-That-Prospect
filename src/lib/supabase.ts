@@ -37,10 +37,10 @@ export interface PlayRow {
  */
 export async function submitPlay(clientId: string, userId: string | null, row: PlayRow): Promise<void> {
   if (!supabase) return;
-  const { error } = await supabase
-    .from('plays')
-    .upsert({ client_id: clientId, user_id: userId, ...row }, { onConflict: 'client_id,puzzle_number', ignoreDuplicates: true });
-  if (error) throw error;
+  // Plain insert: an upsert needs read access to the table, which the public deliberately doesn't have.
+  const { error } = await supabase.from('plays').insert({ client_id: clientId, user_id: userId, ...row });
+  // 23505 = this browser already counted today: expected on reloads, not an error
+  if (error && error.code !== '23505') throw error;
 }
 
 export interface LeaderboardEntry {
