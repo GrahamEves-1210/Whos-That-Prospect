@@ -45,6 +45,17 @@ export function HelpPanel(_props: Props) {
               </li>
             ))}
           </ol>
+          <p className="help__note">
+            Check out my other games:{' '}
+            <a className="link" href="https://build-a-player.com" target="_blank" rel="noopener">
+              build-a-player.com
+            </a>{' '}
+            and{' '}
+            <a className="link" href="https://32-0game.com" target="_blank" rel="noopener">
+              32-0game.com
+            </a>
+            .
+          </p>
         </div>
       </div>
     </Panel>
