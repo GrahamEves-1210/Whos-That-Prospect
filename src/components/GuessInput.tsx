@@ -55,7 +55,7 @@ export function GuessInput({ onSubmit, onSkip, disabled, lastEvent }: Props) {
           autoCorrect="off"
           spellCheck={false}
           enterKeyHint="go"
-          placeholder={disabled ? 'Game over' : 'Type the prospect’s name'}
+          placeholder={disabled ? 'Game over' : 'Last name or full name'}
           value={value}
           disabled={disabled}
           maxLength={60}
@@ -85,7 +85,7 @@ export function GuessInput({ onSubmit, onSkip, disabled, lastEvent }: Props) {
       </div>
       <div className="guessform__foot">
         <span id="guess-help" className="guessform__help">
-          Punctuation and one typo are forgiven.
+          Last name works. One typo is forgiven.
         </span>
       </div>
       <p id="guess-error" className="form-error" role="alert" aria-live="assertive">
