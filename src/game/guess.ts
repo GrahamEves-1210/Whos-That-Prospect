@@ -51,10 +51,23 @@ export function editDistance(a: string, b: string, max: number = Infinity): numb
   return d[a.length][b.length];
 }
 
+/**
+ * The last name of a written name, ignoring suffixes (Jr., III). A hyphenated last name stays whole
+ * (Ya-Sin, not Sin) and also counts written without the hyphen (Yasin).
+ */
+function lastNameForms(raw: string): string[] {
+  const parts = raw.trim().split(/\s+/);
+  while (parts.length > 1 && !normalizeGuess(parts[parts.length - 1])) parts.pop();
+  if (parts.length < 2) return [];
+  const last = normalizeGuess(parts[parts.length - 1]);
+  return last ? [last, last.replace(/ /g, '')] : [];
+}
+
 /** All accepted normalized answers for a prospect: name + aliases, and the last name on its own. */
 export function getAcceptedAnswers(prospect: Prospect): string[] {
-  const full = [prospect.name, ...(prospect.aliases ?? [])].map(normalizeGuess).filter(Boolean);
-  const lastNames = full.map((a) => a.split(' ').pop() ?? '').filter(Boolean);
+  const names = [prospect.name, ...(prospect.aliases ?? [])];
+  const full = names.map(normalizeGuess).filter(Boolean);
+  const lastNames = names.flatMap(lastNameForms);
   return Array.from(new Set([...full, ...lastNames]));
 }
 

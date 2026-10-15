@@ -441,14 +441,28 @@ export default function App() {
             >
               Request a prospect
             </button>
-            <p className="footer__credit">
-              All scouting report excerpts are sourced from{' '}
-              <a href={EXCERPT_SOURCE_URL} target="_blank" rel="noopener noreferrer">
-                {source}
-              </a>
-              .
-            </p>
-            <span className="footer__note">New prospect every day at midnight Eastern</span>
+            <div className="footer__center">
+              <p className="footer__credit">
+                All scouting report excerpts are sourced from{' '}
+                <a href={EXCERPT_SOURCE_URL} target="_blank" rel="noopener noreferrer">
+                  {source}
+                </a>
+                .
+              </p>
+              <p className="footer__games">
+                Check out my other games:{' '}
+                <a className="link" href="https://build-a-player.com" target="_blank" rel="noopener">
+                  build-a-player.com
+                </a>{' '}
+                and{' '}
+                <a className="link" href="https://32-0game.com" target="_blank" rel="noopener">
+                  32-0game.com
+                </a>
+                .
+              </p>
+            </div>
+            {/* keeps the credit centered between the columns on desktop */}
+            <span className="footer__spacer" aria-hidden />
         </footer>
       </div>
 

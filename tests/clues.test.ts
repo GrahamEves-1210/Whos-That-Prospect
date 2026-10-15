@@ -196,7 +196,11 @@ describe('prospect data sanity', () => {
           .map((s) => s.text)
           .join('')
           .toLowerCase();
-        for (const part of nameParts) expect(lower, `${p.name} excerpt leaks "${part}"`).not.toContain(part);
+        // Whole words, like the blackout itself ("rocked-up" isn't the name Rock)
+        for (const part of nameParts) {
+          const escaped = part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          expect(lower, `${p.name} excerpt leaks "${part}"`).not.toMatch(new RegExp(`(?<![\\p{L}])${escaped}(?![\\p{L}])`, 'u'));
+        }
         expect(lower, `${p.name} excerpt leaks college`).not.toContain(p.college.toLowerCase());
       }
     }

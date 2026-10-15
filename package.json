@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "silhouettes": "node scripts/make-silhouettes.mjs"
+    "silhouettes": "node scripts/make-silhouettes.mjs",
+    "draft-names": "node scripts/build-draft-names.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

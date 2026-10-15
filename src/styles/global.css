@@ -792,6 +792,29 @@ blockquote {
   padding: 1.25rem 0 0.9rem;
 }
 
+.header__brand {
+  position: relative;
+}
+
+.header__tagline {
+  position: absolute;
+  /* lines up with the left edge of the logo card */
+  left: calc(var(--logo-w) * 0.032);
+  top: calc(var(--logo-h) * 0.73 + 0.35rem);
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--muted);
+}
+
+/* Desktop: an open menu sheet sweeps across this strip, so the line steps aside while it's open */
+@media (min-width: 701px) {
+  .app:has(.drawer) .header__tagline {
+    visibility: hidden;
+  }
+}
+
 .header__home {
   display: flex;
   flex-direction: column;
@@ -1180,6 +1203,20 @@ blockquote {
     overflow-y: auto;
     overscroll-behavior: contain;
     animation: none;
+  }
+  /* Once open, the sheet's look (side borders, paper, right shadow) is also painted on the drawer behind it,
+     lower half only. When a bounce at the bottom pulls the sheet up, the space it opens shows more sheet,
+     as if it stretched down to the nav bar, instead of a gap. (The drawer's own background stays put.) */
+  .drawer--settled {
+    background:
+      linear-gradient(
+        to right,
+        var(--ink) 0 2px,
+        var(--paper) 2px calc(100% - 5px),
+        var(--ink) calc(100% - 5px) calc(100% - 3px),
+        var(--shadow-ink) calc(100% - 3px) 100%
+      )
+      0 100% / 100% 50% no-repeat;
   }
   .drawer__inner {
     border: 2px solid var(--ink);
@@ -1780,6 +1817,10 @@ main:focus {
    -------------------------------------------------------------------------- */
 
 .guessform {
+  /* Its own layer above the scouting card below, so the name suggestions always sit on top (the shake
+     animation after a miss would otherwise trap them underneath) */
+  position: relative;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
@@ -1821,6 +1862,58 @@ main:focus {
   gap: 0.65rem;
 }
 
+/* Name suggestions under the guess box */
+.suggest {
+  position: absolute;
+  z-index: var(--z-toast);
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 4px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Not enough room below: open above the box instead */
+.suggest--up {
+  top: auto;
+  bottom: calc(100% + 6px);
+}
+
+.suggest__item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: calc(var(--radius) - 4px);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.suggest__item.is-active {
+  background: var(--accent-tint);
+}
+
+.suggest__name {
+  font-weight: 600;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.suggest__year {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
 .guessform--shake .guessform__row {
   animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
@@ -1829,7 +1922,15 @@ main:focus {
   animation: flash-bad 0.9s var(--ease);
 }
 
+/* Input + its suggestion list */
+.guessform__field {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
 .guessform__input {
+  width: 100%;
   flex: 1;
   min-width: 0;
   height: 3.25rem;
@@ -3280,15 +3381,17 @@ td.board-table__num {
   justify-self: start;
 }
 
-.footer__note {
-  justify-self: end;
-  text-align: right;
+.footer__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
 }
 
-@media (min-width: 1100px) {
-  .footer__note {
-    white-space: nowrap;
-  }
+.footer__games {
+  text-align: center;
+  font-size: 0.92rem;
+  color: var(--ink-2);
 }
 
 @media (max-width: 860px) {
@@ -3297,15 +3400,17 @@ td.board-table__num {
     justify-items: center;
     text-align: center;
   }
-  .footer__request,
-  .footer__note {
+  .footer__request {
     justify-self: center;
     text-align: center;
   }
-  .footer__credit {
+  .footer__center {
     order: -1;
   }
-  /* Phones: credit, then the midnight note, then Request a prospect last */
+  .footer__spacer {
+    display: none;
+  }
+  /* Phones: credit and other games first, Request a prospect last */
   .footer__request {
     order: 1;
   }

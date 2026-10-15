@@ -21,7 +21,9 @@ describe('getDailyProspect', () => {
     for (const [n, id] of Object.entries(PINNED_PUZZLES)) expect(getDailyProspect(Number(n)).id).toBe(id);
   });
 
-  it('cycles through every rotation prospect before repeating', () => {
+  // Only meaningful while some prospects are unpinned; when every prospect is pinned, open days reuse past
+  // players instead (covered by the open-day test below).
+  it.skipIf(Object.keys(PINNED_PUZZLES).length >= PROSPECTS.length)('cycles through every rotation prospect before repeating', () => {
     const n = getRotationPool().length;
     const ids = new Set<string>();
     for (let i = 20; i < 20 + n; i++) ids.add(getDailyProspect(i).id);

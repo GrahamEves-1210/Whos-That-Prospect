@@ -47,9 +47,12 @@ function ToolbarItem({ active, tone, onClick, children }: { active: boolean; ton
 export function GameHeader({ openMenu, menuClosing = false, onToggle, onHome, nextReset, onCountdownComplete }: Props) {
   return (
     <header className="header">
-      <button type="button" className="header__home" onClick={onHome} aria-label="Back to the start screen">
-        <Logo className="header__logo" />
-      </button>
+      <div className="header__brand">
+        <button type="button" className="header__home" onClick={onHome} aria-label="Back to the start screen">
+          <Logo className="header__logo" />
+        </button>
+        <p className="header__tagline">New prospect every day at midnight Eastern</p>
+      </div>
 
       <p className="header__clock">
         <span className="eyebrow">Next prospect in</span>

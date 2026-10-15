@@ -26,6 +26,90 @@ import type { Prospect } from './types';
  */
 export const PROSPECTS: Prospect[] = [
   {
+    // REAL Draft Bible quotes. Testing: 2008 NFL Combine (his 4.58 forty and 42" vertical were from Ohio State's
+    // pro day, so not used). Arm length left off: the sources disagree (33 1/8" vs 34").
+    id: 'vernon-gholston',
+    name: 'Vernon Gholston',
+    position: 'EDGE',
+    college: 'Ohio State',
+    conference: 'Big Ten',
+    height: '6-3',
+    weight: 266,
+    draftYear: 2008,
+    draftRound: 1,
+    draftPick: 6,
+    fortyTime: 4.65,
+    vertical: 35.5,
+    broadJump: 125,
+    otherTesting: { Bench: '37 reps', '3-Cone': '7.12s', Shuttle: '4.40s', 'Hand Size': '10"' },
+    scoutingExcerpts: [
+      'Built like a chiseled sculpture, Gholston combines power and agility: a physical specimen who is all muscle. He anticipates the snap as well as anyone and possesses the lightning quick first step to make opponents pay.',
+      'When you play at a football school, even potential NFL stars can be overshadowed by some of their teammates. However, by draft day everyone will know who Gholston is. He had 14 sacks this past season, including a marquee effort against highly touted Michigan offensive tackle Jake Long.',
+      'Gholston proved he is more than a workout warrior, rushing the edge for the past two seasons on a Buckeyes team that made it to back-to-back BCS Championship games.',
+    ],
+    clues: [{ label: 'Drafted by', value: 'New York Jets', unlockAt: 4 }],
+    accolades: ['Second-team All-American (2007)', 'Big Ten Defensive Lineman of the Year (2007)', 'First-team All-Big Ten (2007)', 'Second-team All-Big Ten (2006)'],
+    hometown: 'Detroit, MI',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/11240.png',
+  },
+  {
+    // REAL Draft Bible quotes. Testing: 2010 NFL Combine (nflcombineresults); 3-cone, hand and arm from his
+    // Wikipedia pre-draft table (it mixes combine and pro day, so the combine numbers win where they differ).
+    // Junior college at Canyons and Fort Scott, then one season at South Florida.
+    id: 'jason-pierre-paul',
+    name: 'Jason Pierre-Paul',
+    aliases: ['JPP'],
+    position: 'EDGE',
+    college: 'South Florida',
+    conference: 'Big East',
+    height: '6-5',
+    weight: 270,
+    draftYear: 2010,
+    draftRound: 1,
+    draftPick: 15,
+    fortyTime: 4.71,
+    vertical: 30.5,
+    broadJump: 115,
+    otherTesting: { Bench: '19 reps', '3-Cone': '7.18s', Shuttle: '4.67s', 'Hand Size': '10 3/8"', 'Arm Length': '34 3/4"' },
+    scoutingExcerpts: [
+      'In the 75-year history of the NFL Draft, no single player may have blazed a faster trail to the first round based on pure potential than Pierre-Paul.',
+      'A fast-riser leading up to the draft, Pierre-Paul is one of the more impressive athletes you will ever see; he owns an 81” wingspan and is notorious for his practice video in which he did 13 consecutive backflips.',
+      'The Florida native is behind in the learning curve when it comes to technique, particularly when he needs to use his hands in the trenches. He is not very stout at the point of attack and can get pushed around.',
+    ],
+    clues: [{ label: 'Drafted by', value: 'New York Giants', unlockAt: 4 }],
+    accolades: ['First-team All-American (2009)', 'First-team All-Big East (2009)'],
+    hometown: 'Deerfield Beach, FL',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/13256.png',
+  },
+  {
+    // REAL Draft Bible quotes. Testing: 2019 NFL Combine; where sources differ (3-cone, shuttle), the two that
+    // agree. Started at Presbyterian (FCS), transferred to Temple for 2018.
+    id: 'rock-ya-sin',
+    name: 'Rock Ya-Sin',
+    aliases: ['Rock Yasin'],
+    position: 'CB',
+    college: 'Temple',
+    conference: 'AAC',
+    height: '5-11',
+    weight: 192,
+    draftYear: 2019,
+    draftRound: 2,
+    draftPick: 34,
+    fortyTime: 4.51,
+    vertical: 39.5,
+    broadJump: 120,
+    otherTesting: { Bench: '18 reps', '3-Cone': '6.97s', Shuttle: '4.31s', 'Hand Size': '9 7/8"', 'Arm Length': '32"' },
+    scoutingExcerpts: [
+      'While the added exposure in Philadelphia certainly helped, savvy scouts were already aware of Ya-Sin, who had started the previous three seasons at Presbyterian and had already tied conference records for the most interceptions in a single season (five).',
+      'Aptly-named given his rocked-up frame, a testament to a lot of time spent in the weight-room.',
+      'Comparison: Craig Mager, Denver Broncos. The 5-11, 200 pound Mager was originally drafted in the third round three years ago by the Chargers. Like Ya-Sin, Mager spent much of his college career at a lower level (Texas State), earning a draft pick based on his size and athleticism but sticking because of his grit.',
+    ],
+    clues: [{ label: 'Drafted by', value: 'Indianapolis Colts', unlockAt: 4 }],
+    accolades: ['First-team All-AAC (2018)', 'First-team All-Big South (2017)'],
+    hometown: 'Decatur, GA',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/3910229.png',
+  },
+  {
     // REAL Draft Bible quotes (the first is from USC's defensive coordinator). Testing: 2008 NFL Combine;
     // the 40 follows the two sources that agree (4.92). College honors only (no NFL titles).
     id: 'chad-henne',
@@ -200,6 +284,9 @@ export const PINNED_PUZZLES: Record<number, string> = {
   14: 'jalen-reagor',
   15: 'chad-henne',
   16: 'emmanuel-forbes',
+  17: 'jason-pierre-paul',
+  18: 'rock-ya-sin',
+  19: 'vernon-gholston',
 };
 
 /** Credit shown in the footer for every scouting excerpt. */

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, type ReactNode } from 'react';
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 
 interface Props {
   closing: boolean;
@@ -17,6 +17,8 @@ interface Props {
  */
 export function Drawer({ closing, className = '', onClosed, children }: Props) {
   const ref = useRef<HTMLDivElement>(null);
+  // Opening animation done: the sheet can now "stretch" during a bounce (see .drawer--settled)
+  const [settled, setSettled] = useState(false);
 
   useLayoutEffect(() => {
     const el = ref.current;
@@ -26,11 +28,13 @@ export function Drawer({ closing, className = '', onClosed, children }: Props) {
   }, [closing]);
 
   return (
-    <div ref={ref} className={['drawer', className, closing ? 'drawer--closing' : ''].filter(Boolean).join(' ')}>
+    <div ref={ref} className={['drawer', className, closing ? 'drawer--closing' : settled ? 'drawer--settled' : ''].filter(Boolean).join(' ')}>
       <div
         className="drawer__inner"
         onAnimationEnd={(e) => {
-          if (closing && e.target === e.currentTarget) onClosed?.();
+          if (e.target !== e.currentTarget) return;
+          if (closing) onClosed?.();
+          else setSettled(true);
         }}
       >
         {children}
