@@ -26,6 +26,33 @@ import type { Prospect } from './types';
  */
 export const PROSPECTS: Prospect[] = [
   {
+    // REAL Draft Bible quotes (the first is from USC's defensive coordinator). Testing: 2008 NFL Combine;
+    // the 40 follows the two sources that agree (4.92). College honors only (no NFL titles).
+    id: 'chad-henne',
+    name: 'Chad Henne',
+    position: 'QB',
+    college: 'Michigan',
+    conference: 'Big Ten',
+    height: '6-3',
+    weight: 230,
+    draftYear: 2008,
+    draftRound: 2,
+    draftPick: 57,
+    fortyTime: 4.92,
+    vertical: 25.5,
+    broadJump: 106,
+    otherTesting: { '3-Cone': '7.17s', Shuttle: '4.40s', 'Hand Size': '9"', 'Arm Length': '31 5/8"' },
+    scoutingExcerpts: [
+      'He makes tough throws, he stands in the pocket, and he just has the confidence in his team. He’ll stay in the pocket, he’ll take a lick. He doesn’t really get sacked that much but he’ll take a good hit as long as he gets the ball off.',
+      'Henne was hoping for a possible Heisman campaign and national championship run. He has struggled in some big games; that creates doubt in the minds of NFL evaluators.',
+      'He has also enjoyed the benefit of playing with such illustrious receivers such as Braylon Edwards, Mario Manningham and Adrian Arrington while at Ann Arbor. However, the Pennsylvania quarterback has never beaten Ohio State (0-4) and had just one Bowl win in four tries.',
+    ],
+    clues: [{ label: 'Drafted by', value: 'Miami Dolphins', unlockAt: 4 }],
+    accolades: ['First-team All-Big Ten (2007)', 'Second-team All-Big Ten (2006)'],
+    hometown: 'Wyomissing, PA',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/11291.png',
+  },
+  {
     // REAL Draft Bible quotes (the second is from his interview). Testing: 2023 NFL Combine; broad jump and
     // vertical where sources differ follow the two that agree (nflcombineresults + Wikipedia / MockDraftable).
     id: 'emmanuel-forbes',
@@ -172,6 +199,7 @@ export const PINNED_PUZZLES: Record<number, string> = {
   13: 'navorro-bowman',
   14: 'jalen-reagor',
   15: 'emmanuel-forbes',
+  16: 'chad-henne',
 };
 
 /** Credit shown in the footer for every scouting excerpt. */

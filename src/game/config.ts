@@ -18,6 +18,8 @@ export const STORAGE_KEYS = {
   game: 'wtp:daily-game:v1',
   stats: 'wtp:stats:v1',
   seenHowTo: 'wtp:seen-how-to:v1',
+  /** Anonymous per-browser id for play stats (one count per device per day) */
+  clientId: 'wtp:client-id:v1',
 } as const;
 
 /** Typo forgiveness: guesses within this many edits of a long name count. */

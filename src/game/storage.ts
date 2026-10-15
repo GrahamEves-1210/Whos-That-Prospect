@@ -203,3 +203,16 @@ export function markHowToPlaySeen(storage: StorageLike = getDefaultStorage()): v
     /* ignore */
   }
 }
+
+/** Anonymous id for this browser, created once (used only to count each device once per day in play stats). */
+export function getClientId(storage: StorageLike = getDefaultStorage()): string {
+  try {
+    const saved = storage.getItem(STORAGE_KEYS.clientId);
+    if (saved && /^[0-9a-f-]{36}$/i.test(saved)) return saved;
+    const id = crypto.randomUUID();
+    storage.setItem(STORAGE_KEYS.clientId, id);
+    return id;
+  } catch {
+    return crypto.randomUUID();
+  }
+}

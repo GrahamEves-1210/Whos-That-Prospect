@@ -22,9 +22,9 @@ import { generateShareText, shareText } from './game/share';
 import { getNextResetTime } from './game/time';
 import { useAuth } from './hooks/useAuth';
 import { useGame } from './hooks/useGame';
-import { fetchUserStats, prefetchLeaderboard, saveUserStats, submitResult } from './lib/supabase';
+import { fetchUserStats, prefetchLeaderboard, saveUserStats, submitPlay, submitResult } from './lib/supabase';
 import type { Stats } from './game/types';
-import { normalizeStats } from './game/storage';
+import { getClientId, normalizeStats } from './game/storage';
 
 const NOTIFICATION_MS = 4200;
 const MENU_CLOSE_MS = 420;
@@ -77,6 +77,16 @@ export default function App() {
       .catch((err) => console.error('Could not save result to the leaderboard', err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.userId, dailyResultKey]);
+
+  // Every finished daily game also counts toward the public solve-rate stats, signed in or not
+  // (one per browser per day; repeats are ignored server-side).
+  useEffect(() => {
+    if (!dailyResult) return;
+    submitPlay(getClientId(), auth.userId ?? null, { ...dailyResult, prospect_id: prospect.id }).catch((err) =>
+      console.error('Could not record play stats', err),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dailyResultKey]);
 
   const [splash, setSplash] = useState<'open' | 'leaving' | 'gone'>('open');
   const [openMenu, setOpenMenu] = useState<MenuName | null>(null);

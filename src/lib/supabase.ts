@@ -23,6 +23,26 @@ export async function submitResult(userId: string, row: ResultRow): Promise<void
   if (error) throw error;
 }
 
+export interface PlayRow {
+  puzzle_number: number;
+  prospect_id: string;
+  won: boolean;
+  guesses: number;
+  time_ms: number;
+}
+
+/**
+ * Record a finished daily game for the solve-rate stats, signed in or not (see supabase/plays.sql).
+ * One row per browser per day; repeats are ignored by the database.
+ */
+export async function submitPlay(clientId: string, userId: string | null, row: PlayRow): Promise<void> {
+  if (!supabase) return;
+  const { error } = await supabase
+    .from('plays')
+    .upsert({ client_id: clientId, user_id: userId, ...row }, { onConflict: 'client_id,puzzle_number', ignoreDuplicates: true });
+  if (error) throw error;
+}
+
 export interface LeaderboardEntry {
   username: string;
   correct_guesses: number;

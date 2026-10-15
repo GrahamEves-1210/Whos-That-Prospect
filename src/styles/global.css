@@ -1218,6 +1218,12 @@ blockquote {
   /* Film room is short on its own: open it as tall as the Profile sheet (capped at the screen like the others) */
   .drawer--film {
     min-height: min(37.8rem, calc(100dvh - 7rem - env(safe-area-inset-bottom) - env(safe-area-inset-top)));
+    display: flex;
+    flex-direction: column;
+  }
+  /* The visible card (.drawer__inner) fills that full height; the extra room is just empty card */
+  .drawer--film .drawer__inner {
+    flex: 1 1 auto;
   }
   /* The drawer already scrolls; don't nest a second scroller */
   .drawer .days {
