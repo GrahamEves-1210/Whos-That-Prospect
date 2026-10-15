@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { PROSPECTS } from '../src/data/prospects';
-import type { Prospect } from '../src/data/types';
+import { excerptText, type Prospect } from '../src/data/types';
 import {
   FINAL_STEP,
   buildClues,
@@ -191,7 +191,7 @@ describe('prospect data sanity', () => {
       const nameParts = p.name.toLowerCase().split(/\s+/);
       for (const ex of p.scoutingExcerpts) {
         // The quote as shown while playing: name mentions are blacked out
-        const lower = splitQuoteOnName(ex, p)
+        const lower = splitQuoteOnName(excerptText(ex), p)
           .filter((s) => !s.isName)
           .map((s) => s.text)
           .join('')

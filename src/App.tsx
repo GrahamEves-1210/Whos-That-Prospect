@@ -96,7 +96,8 @@ export default function App() {
   const [revealReady, setRevealReady] = useState(() => finished);
   const notificationTimer = useRef<number | null>(null);
 
-  const nextReset = useMemo(() => getNextResetTime(), []);
+  // Next midnight Eastern; moves on once the player opens the new day
+  const [nextReset, setNextReset] = useState(() => getNextResetTime());
   const source = prospect.excerptSource ?? DEFAULT_EXCERPT_SOURCE;
   const excerptClues = useMemo(() => getExcerptClues(prospect), [prospect]);
   // Silhouette hint: hidden (blurred) until the player asks; resets with each new prospect.
@@ -170,16 +171,26 @@ export default function App() {
     };
   }, [lastEvent, prospect, notify, dismissNotification]);
 
-  // Day rollover notice.
+  // Day rollover notice. "Open it" switches straight to the new day's prospect, from anywhere (today's
+  // finished game, Film room, the start screen), and restarts the countdown for the next midnight.
+  const openNewDay = useCallback(() => {
+    dismissNotification();
+    setOpenMenu(null);
+    setConfetti(0);
+    game.returnToDaily();
+    setNextReset(getNextResetTime());
+    setSplash('gone');
+    window.scrollTo({ top: 0 });
+  }, [game, dismissNotification]);
   useEffect(() => {
     if (!game.newPuzzleAvailable) return;
     notify({
       text: 'A new mystery prospect just dropped.',
       tone: 'success',
       sticky: true,
-      action: { label: 'Open it', onClick: () => window.location.reload() },
+      action: { label: 'Open it', onClick: openNewDay },
     });
-  }, [game.newPuzzleAvailable, notify]);
+  }, [game.newPuzzleAvailable, notify, openNewDay]);
 
   const handlePlay = useCallback(() => {
     game.markStarted();

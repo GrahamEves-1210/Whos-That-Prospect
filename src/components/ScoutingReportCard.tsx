@@ -58,6 +58,7 @@ export function ScoutingReportCard({ excerpts, prospect, wrongGuesses, revealAll
               <p>
                 “<Quote text={clue.value} prospect={prospect} reveal={revealAll} />”
               </p>
+              {clue.credit && <p className="excerpt__credit">- {clue.credit}</p>}
             </blockquote>
           </li>
         ))}

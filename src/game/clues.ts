@@ -1,4 +1,4 @@
-import { POSITION_NAMES, type Prospect } from '../data/types';
+import { POSITION_NAMES, excerptText, type Prospect } from '../data/types';
 import { MAX_GUESSES } from './config';
 import type { Clue } from './types';
 
@@ -94,12 +94,13 @@ export function buildClues(prospect: Prospect): Clue[] {
     unlockAt: POSITION_STEP,
   });
 
-  prospect.scoutingExcerpts.forEach((text, i) => {
+  prospect.scoutingExcerpts.forEach((excerpt, i) => {
     clues.push({
       id: `excerpt-${i}`,
       kind: 'excerpt',
       label: `Scouting Report ${i + 1}`,
-      value: text,
+      value: excerptText(excerpt),
+      credit: typeof excerpt === 'string' ? undefined : excerpt.credit,
       unlockAt: i === 0 ? 0 : i === 1 ? QUOTE2_STEP : FINAL_STEP,
     });
   });

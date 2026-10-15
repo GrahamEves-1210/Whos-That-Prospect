@@ -52,6 +52,8 @@ export interface Clue {
   value: string;
   /** Optional secondary line(s) */
   details?: string[];
+  /** Scouting quotes: who said it, shown under the quote */
+  credit?: string;
   /** Number of wrong guesses needed to unlock this clue (0 = visible at start) */
   unlockAt: number;
 }

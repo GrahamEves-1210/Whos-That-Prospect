@@ -80,6 +80,18 @@ export interface CustomClue {
   unlockAt?: number;
 }
 
+/** A quote with a credit line shown under it, e.g. who said it */
+export interface ScoutingExcerpt {
+  text: string;
+  /** Shown as "- {credit}" under the quote */
+  credit?: string;
+}
+
+/** The quote text of an excerpt, whichever form it's written in */
+export function excerptText(excerpt: string | ScoutingExcerpt): string {
+  return typeof excerpt === 'string' ? excerpt : excerpt.text;
+}
+
 export interface Prospect {
   /** Stable unique id — used for persistence, so never change it once published */
   id: string;
@@ -112,7 +124,7 @@ export interface Prospect {
    * unlocks after the first wrong guess, remaining excerpts unlock in the
    * final step and on the result card.
    */
-  scoutingExcerpts: string[];
+  scoutingExcerpts: Array<string | ScoutingExcerpt>;
   /** Optional extra clue cards specific to this prospect */
   clues?: CustomClue[];
   accolades?: string[];

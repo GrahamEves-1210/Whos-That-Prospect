@@ -43,7 +43,7 @@ export const PROSPECTS: Prospect[] = [
     broadJump: 106,
     otherTesting: { '3-Cone': '7.17s', Shuttle: '4.40s', 'Hand Size': '9"', 'Arm Length': '31 5/8"' },
     scoutingExcerpts: [
-      'He makes tough throws, he stands in the pocket, and he just has the confidence in his team. He’ll stay in the pocket, he’ll take a lick. He doesn’t really get sacked that much but he’ll take a good hit as long as he gets the ball off.',
+      { text: 'He makes tough throws, he stands in the pocket, and he just has the confidence in his team. He’ll stay in the pocket, he’ll take a lick. He doesn’t really get sacked that much but he’ll take a good hit as long as he gets the ball off.', credit: 'USC Defensive Coordinator' },
       'Henne was hoping for a possible Heisman campaign and national championship run. He has struggled in some big games; that creates doubt in the minds of NFL evaluators.',
       'He has also enjoyed the benefit of playing with such illustrious receivers such as Braylon Edwards, Mario Manningham and Adrian Arrington while at Ann Arbor. However, the Pennsylvania quarterback has never beaten Ohio State (0-4) and had just one Bowl win in four tries.',
     ],
