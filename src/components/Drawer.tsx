@@ -26,7 +26,7 @@ export function Drawer({ closing, className = '', onClosed, children }: Props) {
   }, [closing]);
 
   return (
-    <div ref={ref} className={`drawer ${className} ${closing ? 'drawer--closing' : ''}`.replace(/s+/g, ' ').trim()}>
+    <div ref={ref} className={['drawer', className, closing ? 'drawer--closing' : ''].filter(Boolean).join(' ')}>
       <div
         className="drawer__inner"
         onAnimationEnd={(e) => {
