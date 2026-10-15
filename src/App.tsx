@@ -451,6 +451,8 @@ export default function App() {
               </p>
               <p className="footer__games">
                 Check out my other games:{' '}
+                {/* phones: the links start on their own line */}
+                <br className="footer__games-break" />
                 <a className="link" href="https://build-a-player.com" target="_blank" rel="noopener">
                   build-a-player.com
                 </a>{' '}

@@ -3394,6 +3394,16 @@ td.board-table__num {
   color: var(--ink-2);
 }
 
+.footer__games-break {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .footer__games-break {
+    display: inline;
+  }
+}
+
 @media (max-width: 860px) {
   .footer {
     grid-template-columns: 1fr;
