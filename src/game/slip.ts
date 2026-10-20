@@ -12,7 +12,7 @@ export interface PickSlip {
   first: string;
   position: string;
   school: string;
-  /** "San Francisco" / "49ers"; empty when there's no "Drafted by" clue */
+  /** "San Francisco" / "49ers"; empty when there's no "Drafted by" / "Signed by" clue */
   city: string;
   nickname: string;
 }
@@ -34,7 +34,8 @@ export function splitTeam(team: string): { city: string; nickname: string } {
 
 /** The draft-day card a team hands in, filled out for this prospect. */
 export function pickSlip(prospect: Prospect): PickSlip {
-  const team = prospect.clues?.find((c) => c.label.toLowerCase() === 'drafted by')?.value ?? '';
+  // "Drafted by" for picks, "Signed by" for undrafted free agents
+  const team = prospect.clues?.find((c) => ['drafted by', 'signed by'].includes(c.label.toLowerCase()))?.value ?? '';
   return {
     year: prospect.draftYear,
     round: prospect.draftRound != null ? String(prospect.draftRound) : 'Undrafted',

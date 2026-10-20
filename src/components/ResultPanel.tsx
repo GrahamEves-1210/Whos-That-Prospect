@@ -19,12 +19,12 @@ interface Props {
   username: string | null;
 }
 
-function Line({ label, children, under, aside }: { label: string; children?: ReactNode; under?: string[]; aside?: string }) {
+function Line({ label, children, under, aside, small }: { label: string; children?: ReactNode; under?: string[]; aside?: string; small?: boolean }) {
   return (
     <div className="slip__row">
       <span className="slip__label">{label}</span>
       <span className="slip__line">
-        <span className={`slip__pen ${under ? 'slip__pen--split' : ''}`}>{children}</span>
+        <span className={['slip__pen', under ? 'slip__pen--split' : '', small ? 'slip__pen--small' : ''].filter(Boolean).join(' ')}>{children}</span>
         {under && (
           <span className="slip__under" aria-hidden>
             {under.map((u) => (
@@ -74,7 +74,8 @@ export function ResultPanel({ state, prospect, onShare, onOpenFilmRoom, onReturn
               {slip.round}
             </Line>
             <Line label="Choice From:">{username ?? undefined}</Line>
-            <Line label="Name:" under={['(last)', '(first)']}>
+            {/* long names write smaller so both fit on the line */}
+            <Line label="Name:" under={['(last)', '(first)']} small={slip.last.length + slip.first.length > 15}>
               <span>{slip.last}</span>
               <span>{slip.first}</span>
             </Line>

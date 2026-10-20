@@ -16,10 +16,13 @@ function getRotation(poolSize: number, seed: number): number[] {
   return order;
 }
 
+/** Open days' picks, by puzzle number (the real pool and seed only; it never changes at runtime). */
+const openDayCache = new Map<number, string>();
+
 /**
  * The prospects the daily rotation cycles through: the pool minus anyone pinned to a fixed day.
  * When every prospect is pinned, an open day (pass its puzzle number) reuses only prospects that have
- * already run, never one pinned to a later day, and not the one from the day before.
+ * already run, never one pinned to a later day, and never the prospect of the day before or the day after.
  */
 export function getRotationPool(pool: readonly Prospect[] = PROSPECTS, puzzleNumber?: number): readonly Prospect[] {
   if (pool !== PROSPECTS) return pool;
@@ -28,10 +31,15 @@ export function getRotationPool(pool: readonly Prospect[] = PROSPECTS, puzzleNum
   if (unpinned.length > 0 || puzzleNumber == null) return unpinned.length > 0 ? unpinned : pool;
   const ranBefore = (p: Prospect) =>
     Object.entries(PINNED_PUZZLES).some(([day, id]) => id === p.id && Number(day) < puzzleNumber);
-  const yesterday = PINNED_PUZZLES[puzzleNumber - 1];
+  // The day before may itself be open, so look up what it actually shows
+  const neighbors = new Set<string>();
+  if (puzzleNumber > 1) neighbors.add(getDailyProspect(puzzleNumber - 1).id);
+  const tomorrow = PINNED_PUZZLES[puzzleNumber + 1];
+  if (tomorrow) neighbors.add(tomorrow);
   const past = pool.filter(ranBefore);
-  const fresh = past.filter((p) => p.id !== yesterday);
-  return fresh.length > 0 ? fresh : past.length > 0 ? past : pool;
+  const base = past.length > 0 ? past : pool;
+  const fresh = base.filter((p) => !neighbors.has(p.id));
+  return fresh.length > 0 ? fresh : base;
 }
 
 /**
@@ -57,10 +65,15 @@ export function getDailyProspect(
     const pinned = pinnedId ? pool.find((p) => p.id === pinnedId) : undefined;
     if (pinned) return pinned;
   }
+  const cacheable = pool === PROSPECTS && seed === ROTATION_SEED;
+  const cached = cacheable ? openDayCache.get(puzzleNumber) : undefined;
+  if (cached) return pool.find((p) => p.id === cached)!;
   const rotation = getRotationPool(pool, puzzleNumber);
   const order = getRotation(rotation.length, seed);
   const idx = ((puzzleNumber - 1) % rotation.length + rotation.length) % rotation.length;
-  return rotation[order[idx]];
+  const pick = rotation[order[idx]];
+  if (cacheable) openDayCache.set(puzzleNumber, pick.id);
+  return pick;
 }
 
 /** A random prospect for practice mode, avoiding `excludeId` when possible. */

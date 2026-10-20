@@ -26,6 +26,124 @@ import type { Prospect } from './types';
  */
 export const PROSPECTS: Prospect[] = [
   {
+    // REAL Draft Bible quotes. UNDRAFTED (2021 class, left TCU after 2020); signed with Baltimore. Testing:
+    // 2021 pro day (no combine that year); 40 from NFL.com (4.61, MockDraftable has 4.62), the rest agree.
+    id: 'ardarius-washington',
+    name: 'Ar’Darius Washington',
+    aliases: ["Ar'Darius Washington", 'ArDarius Washington'],
+    position: 'S',
+    college: 'TCU',
+    conference: 'Big 12',
+    height: '5-8',
+    weight: 176,
+    draftYear: 2021,
+    draftRound: null,
+    draftPick: null,
+    fortyTime: 4.61,
+    vertical: 37.5,
+    broadJump: 127,
+    otherTesting: { Bench: '17 reps', '3-Cone': '7.06s', Shuttle: '4.10s', 'Hand Size': '9 1/2"', 'Arm Length': '29 1/4"' },
+    scoutingExcerpts: [
+      'In 2019, he earned Freshman All-America accolades while being named the Big 12 Defensive Freshman of the Year. Diminutive stature did not stop him from being No. 23 on Bruce Feldman’s Freak List due to other-worldly weight-room numbers.',
+      'Those numbers transfer to the playing field, as he shows noticeable play strength when he is able to stop the ball-carrier’s momentum on tackles. Explosive feats of range when playing reps as the kind of single-high safety who has the ability to be an eraser on the back end. Plays with controlled discipline, transferring his eyes with ease, which allows him to be a ball-hawk with A-list ball skills.',
+      'Lack of size will be a natural concern for teams when determining where he best fits in a defense. Stops his feet in man coverage in an attempt to guess and sit on routes. Washington makes up for his stature with high-end athleticism and tackling abilities. He may be worthy of a Day 2 selection as a result of premium ball skills and the versatility he can provide as a nickel/safety fit for a defense.',
+    ],
+    clues: [{ label: 'Signed by', value: 'Baltimore Ravens', unlockAt: 4 }],
+    accolades: ['Big 12 Defensive Freshman of the Year (2019)', 'Freshman All-American (2019)'],
+    hometown: 'Shreveport, LA',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/4362492.png',
+  },
+  {
+    // REAL Draft Bible quotes (PDF "!" apostrophes fixed; credits for Jimmy Johnson and Florida teammate
+    // Riley Cooper). Testing: 2010 NFL Combine (nflcombineresults and MockDraftable agree; he didn't bench).
+    // Born in the Philippines, raised in Jacksonville.
+    id: 'tim-tebow',
+    name: 'Tim Tebow',
+    aliases: ['Timothy Tebow'],
+    position: 'QB',
+    college: 'Florida',
+    conference: 'SEC',
+    height: '6-3',
+    weight: 236,
+    draftYear: 2010,
+    draftRound: 1,
+    draftPick: 25,
+    fortyTime: 4.71,
+    vertical: 38.5,
+    broadJump: 115,
+    otherTesting: { '3-Cone': '6.66s', Shuttle: '4.17s', 'Hand Size': '10 1/8"', 'Arm Length': '31 3/4"' },
+    scoutingExcerpts: [
+      {
+        text: 'Some teams are going to want to move him to a new position, and I don’t know what position I’d move him to. I don’t know that he runs well enough to be an H-back or a tight end. I don’t know. I don’t think Tebow can play in a pro-style offense.',
+        credit: 'Jimmy Johnson',
+      },
+      '‘I’ve worked to improve my mechanics, but I haven’t changed them too much,’ Tebow informed everyone at Indianapolis.',
+      {
+        text: 'I don’t really like seeing people pick him apart like that, because he’s my quarterback. He doesn’t talk to me about it at all, but just knowing him, I know it’s firing him up. Every morning he’s waking up and getting ready to throw and he’s probably thinking about all those people talking trash about him, so he’s going to be fine.',
+        credit: 'Riley Cooper',
+      },
+    ],
+    clues: [{ label: 'Drafted by', value: 'Denver Broncos', unlockAt: 4 }],
+    accolades: ['Heisman Trophy (2007)', 'BCS national champion (2006, 2008)', 'Consensus All-American (2007)'],
+    hometown: 'Jacksonville, FL',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/13200.png',
+  },
+  {
+    // REAL Draft Bible quotes (PDF "!" apostrophes fixed). Testing: 2010 NFL Combine (nflcombineresults and
+    // MockDraftable agree); 3-cone from his Wikipedia pre-draft table.
+    id: 'kam-chancellor',
+    name: 'Kam Chancellor',
+    aliases: ['Kameron Chancellor'],
+    position: 'S',
+    college: 'Virginia Tech',
+    conference: 'ACC',
+    height: '6-3',
+    weight: 231,
+    draftYear: 2010,
+    draftRound: 5,
+    draftPick: 133,
+    fortyTime: 4.62,
+    vertical: 32,
+    broadJump: 116,
+    otherTesting: { Bench: '22 reps', '3-Cone': '7.36s', Shuttle: '4.41s', 'Hand Size': '9 1/2"', 'Arm Length': '33"' },
+    scoutingExcerpts: [
+      'Bottom line: Chancellor isn’t very instinctive. He will struggle in man coverage and doesn’t have good ball skills. He can give up the big play as the last line of defense.',
+      'Some teams view Chancellor as a strong safety, while others will consider moving him to linebacker à la Thomas Davis. He’s an intriguing talent, but there is a boom or bust factor with the former Hokie.',
+      'He has the skill set to be a special teams demon. Chancellor is durable and was honored for his leadership skills at Tech. He’s an impressive athlete for his size and can lay the wood. He possesses the size and strength to play in the box and disengage from blocks.',
+    ],
+    clues: [{ label: 'Drafted by', value: 'Seattle Seahawks', unlockAt: 4 }],
+    accolades: ['Second-team All-ACC (2009)'],
+    hometown: 'Norfolk, VA',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/13336.png',
+  },
+  {
+    // REAL Draft Bible quotes. Testing: 2008 NFL Combine (MockDraftable/nflcombineresults agree except the 40:
+    // 4.42 vs 4.46, MockDraftable's official time used). 3-cone, hand and arm from his Wikipedia pre-draft table.
+    id: 'ray-rice',
+    name: 'Ray Rice',
+    position: 'RB',
+    college: 'Rutgers',
+    conference: 'Big East',
+    height: '5-8',
+    weight: 199,
+    draftYear: 2008,
+    draftRound: 2,
+    draftPick: 55,
+    fortyTime: 4.42,
+    vertical: 31.5,
+    broadJump: 119,
+    otherTesting: { Bench: '23 reps', '3-Cone': '6.65s', Shuttle: '4.20s', 'Hand Size': '9 1/4"', 'Arm Length': '30 1/4"' },
+    scoutingExcerpts: [
+      'A very natural and instinctive rusher (best three-cone time at the Scouting Combine), the New Rochelle product is a good read and react runner who stays inside and lets his blocks develop before making his move.',
+      'He had a storied career as a Scarlet Knight during the best three-year run in school history. As a freshman, Rice supplanted Brian Leonard (St. Louis Rams) as the primary ball carrier, improving each subsequent season while leaving the birthplace of college football with nearly every school rushing record.',
+      'A powerful runner for his size, Rice shows good hands out of the backfield and flashes more speed once he hits the open field than his 40-time would indicate. Not a future premiere feature back in the NFL by any stretch, but would be a steal should he fall into round three.',
+    ],
+    clues: [{ label: 'Drafted by', value: 'Baltimore Ravens', unlockAt: 4 }],
+    accolades: ['First-team All-American (2007)', 'Second-team All-American (2006)', 'First-team All-Big East (2006, 2007)'],
+    hometown: 'New Rochelle, NY',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/11289.png',
+  },
+  {
     // REAL Draft Bible quotes (the first from his interview with them, the last from his college coach).
     // Testing: 2021 pro day (no combine that year); all three sources agree.
     id: 'rashawn-slater',
@@ -321,6 +439,10 @@ export const PINNED_PUZZLES: Record<number, string> = {
   18: 'emmanuel-forbes',
   19: 'vernon-gholston',
   20: 'rock-ya-sin',
+  21: 'tim-tebow',
+  22: 'ray-rice',
+  23: 'kam-chancellor',
+  24: 'ardarius-washington',
 };
 
 /** Credit shown in the footer for every scouting excerpt. */

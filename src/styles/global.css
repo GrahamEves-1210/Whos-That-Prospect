@@ -2666,6 +2666,17 @@ main:focus {
   text-overflow: ellipsis;
 }
 
+/* Long names write smaller so last and first both fit on the line */
+.slip__pen.slip__pen--small {
+  font-size: 1.4rem;
+}
+
+@media (max-width: 480px) {
+  .slip__pen.slip__pen--small {
+    font-size: 1.15rem;
+  }
+}
+
 /* Last and first written over their own (last) / (first) captions */
 .slip__pen--split {
   display: flex;
