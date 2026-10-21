@@ -22,6 +22,7 @@ import { generateShareText, shareText } from './game/share';
 import { getNextResetTime } from './game/time';
 import { useAuth } from './hooks/useAuth';
 import { useGame } from './hooks/useGame';
+import { isNewerVersionLive, reloadToLatest } from './lib/version';
 import { fetchUserStats, prefetchLeaderboard, saveUserStats, submitPlay, submitResult } from './lib/supabase';
 import type { Stats } from './game/types';
 import { getClientId, normalizeStats } from './game/storage';
@@ -173,7 +174,9 @@ export default function App() {
 
   // Day rollover notice. "Open it" switches straight to the new day's prospect, from anywhere (today's
   // finished game, Film room, the start screen), and restarts the countdown for the next midnight.
-  const openNewDay = useCallback(() => {
+  const openNewDay = useCallback(async () => {
+    // A tab left open across a deploy would play the old schedule: load the new build instead
+    if (await isNewerVersionLive()) return reloadToLatest();
     dismissNotification();
     setOpenMenu(null);
     setConfetti(0);
@@ -182,6 +185,16 @@ export default function App() {
     setSplash('gone');
     window.scrollTo({ top: 0 });
   }, [game, dismissNotification]);
+  // Coming back to a tab left open: pick up a newer build if one went live (the game in progress is saved)
+  useEffect(() => {
+    const onVisible = () => {
+      if (document.visibilityState !== 'visible') return;
+      isNewerVersionLive().then((newer) => newer && reloadToLatest());
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => document.removeEventListener('visibilitychange', onVisible);
+  }, []);
+
   useEffect(() => {
     if (!game.newPuzzleAvailable) return;
     notify({
@@ -319,6 +332,8 @@ export default function App() {
     setConfetti(0);
     // Always reload today's game: leaves Film room, and picks up a new day if midnight has passed
     game.returnToDaily();
+    // ...on the newest build, if one went live since this tab loaded
+    isNewerVersionLive().then((newer) => newer && reloadToLatest());
     setSplash('open');
     window.scrollTo({ top: 0 });
   }, [game]);
@@ -327,6 +342,7 @@ export default function App() {
     setOpenMenu(null);
     setConfetti(0);
     game.returnToDaily();
+    isNewerVersionLive().then((newer) => newer && reloadToLatest());
     window.scrollTo({ top: 0 });
   }, [game]);
 

@@ -29,7 +29,8 @@ create policy "Anyone records a finished daily game" on public.plays
 
 grant insert on public.plays to anon, authenticated;
 
--- Per-day totals, readable by anyone (no individual rows exposed).
+-- Per-day totals, one row per day AND prospect, readable by anyone (no individual rows exposed). A day can
+-- have a second, small row when someone played it in a tab still running an older schedule.
 create or replace function public.puzzle_stats(p_puzzle int default null)
 returns table (
   puzzle_number int,
@@ -48,7 +49,7 @@ set search_path = public
 as $$
   select
     puzzle_number,
-    max(prospect_id) as prospect_id,
+    prospect_id,
     count(*) as players,
     count(*) filter (where won) as solved,
     round(100.0 * count(*) filter (where won) / count(*), 1) as solve_rate,
@@ -61,8 +62,8 @@ as $$
     round((percentile_cont(0.5) within group (order by time_ms) / 1000.0)::numeric, 0) as median_time_s
   from public.plays
   where p_puzzle is null or puzzle_number = p_puzzle
-  group by puzzle_number
-  order by puzzle_number desc;
+  group by puzzle_number, prospect_id
+  order by puzzle_number desc, count(*) desc;
 $$;
 
 grant execute on function public.puzzle_stats(int) to anon, authenticated;
