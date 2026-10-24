@@ -26,6 +26,117 @@ import type { Prospect } from './types';
  */
 export const PROSPECTS: Prospect[] = [
   {
+    // REAL Draft Bible quotes. Testing: 2019 NFL Combine; all three sources agree.
+    id: 'devin-singletary',
+    name: 'Devin Singletary',
+    position: 'RB',
+    college: 'Florida Atlantic',
+    conference: 'C-USA',
+    height: '5-7',
+    weight: 203,
+    draftYear: 2019,
+    draftRound: 3,
+    draftPick: 74,
+    fortyTime: 4.66,
+    vertical: 35,
+    broadJump: 117,
+    otherTesting: { Bench: '15 reps', '3-Cone': '7.32s', Shuttle: '4.40s', 'Hand Size': '8 1/2"', 'Arm Length': '28 7/8"' },
+    scoutingExcerpts: [
+      'Size and top end speed are the glaring weaknesses of his game when compared to other running backs but he makes up for it with his short area quickness.',
+      'The “Motor” man just doesn’t stop, running hard between the tackles or on the edge. In addition to his power running style, Singletary shows exceptional change of direction capability and gains a tremendous amount of yardage after contact.',
+      'He nearly broke the 2,000-yard rushing mark in 2017 and is widely regarded as the best player in FAU history. Playing in Conference USA does dim his accomplishments somewhat. He’s viewed as a potential feature back in a pass heavy offense where he can use his change of direction and ability in space.',
+    ],
+    clues: [{ label: 'Drafted by', value: 'Buffalo Bills', unlockAt: 4 }],
+    accolades: ['Second-team All-American (2018)', 'Third-team All-American (2017)', 'C-USA MVP (2017)', 'First-team All-C-USA (2017, 2018)'],
+    hometown: 'Deerfield Beach, FL',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/4040761.png',
+  },
+  {
+    // REAL Draft Bible quotes (PDF "!" apostrophes fixed). Testing: 2010 NFL Combine; nflcombineresults and
+    // MockDraftable agree (Wikipedia's 208 lbs / 4.49 differ). Quote 3 names Texas, but it unlocks last,
+    // together with the college.
+    id: 'earl-thomas',
+    name: 'Earl Thomas',
+    aliases: ['Earl Thomas III'],
+    position: 'S',
+    college: 'Texas',
+    conference: 'Big 12',
+    height: '5-10',
+    weight: 202,
+    draftYear: 2010,
+    draftRound: 1,
+    draftPick: 14,
+    fortyTime: 4.43,
+    vertical: 32,
+    broadJump: 113,
+    otherTesting: { Bench: '21 reps', 'Hand Size': '9 3/8"', 'Arm Length': '31 1/4"' },
+    scoutingExcerpts: [
+      'Despite being undersized (5’10”, 197) Thomas is a bull against the run; he has shown no fear of mixing it up with the big boys when asked to drop down into the box. Perhaps even more impressive is his play against the pass.',
+      'If not for the all-world prospect that is Eric Berry, Thomas would be far and away the best safety prospect in this year’s draft.',
+      'Thomas also displays excellent technique when playing cornerback, with a smooth, efficient backpedal and excellent short-area quickness. The Texas product plays to the whistle and he loves the game.',
+    ],
+    clues: [{ label: 'Drafted by', value: 'Seattle Seahawks', unlockAt: 4 }],
+    accolades: ['Consensus All-American (2009)', 'First-team All-Big 12 (2009)'],
+    hometown: 'Orange, TX',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/13251.png',
+  },
+  {
+    // REAL Draft Bible quotes. UNDRAFTED (2026), signed with Carolina. Started at Texas A&M (2020-22), then
+    // Georgia Tech (2023-25). Testing: 2026 NFL Combine (MockDraftable and Wikipedia agree).
+    id: 'haynes-king',
+    name: 'Haynes King',
+    position: 'QB',
+    college: 'Georgia Tech',
+    conference: 'ACC',
+    height: '6-2',
+    weight: 212,
+    draftYear: 2026,
+    draftRound: null,
+    draftPick: null,
+    fortyTime: 4.46,
+    vertical: 33.5,
+    broadJump: 116,
+    otherTesting: { '3-Cone': '6.89s', Shuttle: '4.17s', 'Hand Size': '9"', 'Arm Length': '31 7/8"' },
+    scoutingExcerpts: [
+      'A vocal leader and team captain, the Texas native holds teammates accountable and steps up in clutch moments. As a runner, he exhibits excellent vision, spotting openings and letting blocks develop.',
+      'A true gamer, King is a dual-threat quarterback who thrives in a run-first offense due to his running ability, displaying physicality and fearlessness.',
+      'Cool in the pocket, King makes precise reads and throws with accuracy, even on the move, or off-axis. His passes showcase both touch and zip, anticipating his wideouts’ positioning.',
+    ],
+    clues: [{ label: 'Signed by', value: 'Carolina Panthers', unlockAt: 4 }],
+    accolades: ['ACC Player of the Year (2025)', 'ACC Offensive Player of the Year (2025)', 'First-team All-ACC (2025)', 'Earl Campbell Tyler Rose Award (2025)'],
+    hometown: 'Longview, TX',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/4428993.png',
+  },
+  {
+    // REAL Draft Bible quotes (the first from FSU's head coach). 2026 combine: measured only, no drills
+    // (MockDraftable and Wikipedia agree). Arm length 30 7/8" is the short-arms debate in quote 2.
+    // College written "Miami (FL)" (not Miami of Ohio); quote 3's "Miami native" is his hometown.
+    id: 'rueben-bain-jr',
+    name: 'Rueben Bain Jr.',
+    aliases: ['Reuben Bain Jr.'],
+    position: 'EDGE',
+    college: 'Miami (FL)',
+    conference: 'ACC',
+    height: '6-2',
+    weight: 263,
+    draftYear: 2026,
+    draftRound: 1,
+    draftPick: 15,
+    otherTesting: { 'Arm Length': '30 7/8"', 'Hand Size': '9 1/8"' },
+    scoutingExcerpts: [
+      {
+        text: 'He’s playing hard against the run, he’s been great against the pass. You see the complete player that he is, and he’s positioned himself as one of the best defensive ends in the country.',
+        credit: 'FSU Head Coach Mike Norvell',
+      },
+      'One of the most fascinating prospects in this year’s draft class, Bain brings unprecedented arm size to the defensive end position. A topic of much debate revolves around whether Bain can sustain his dominance in the pros with severely short arms. Up to this point, it has not been an issue.',
+      'The Miami native has remained adamant about playing defensive end, as kicking inside is something he has shot down in the past. However, we did see glimpses of Bain playing three-tech during the national championship game in January.',
+    ],
+    clues: [{ label: 'Drafted by', value: 'Tampa Bay Buccaneers', unlockAt: 4 }],
+    accolades: ['Ted Hendricks Award (2025)', 'ACC Defensive Rookie of the Year (2023)'],
+    hometown: 'Miami, FL',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/4870617.png',
+  },
+  {
     // REAL Draft Bible quotes. UNDRAFTED (2021 class, left TCU after 2020); signed with Baltimore. Testing:
     // 2021 pro day (no combine that year); 40 from NFL.com (4.61, MockDraftable has 4.62), the rest agree.
     id: 'ardarius-washington',
@@ -443,6 +554,10 @@ export const PINNED_PUZZLES: Record<number, string> = {
   22: 'ray-rice',
   23: 'kam-chancellor',
   24: 'ardarius-washington',
+  25: 'rueben-bain-jr',
+  26: 'earl-thomas',
+  27: 'devin-singletary',
+  28: 'haynes-king',
 };
 
 /** Credit shown in the footer for every scouting excerpt. */

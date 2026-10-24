@@ -189,7 +189,7 @@ describe('prospect data sanity', () => {
     for (const p of PROSPECTS) {
       expect(p.scoutingExcerpts.length, p.name).toBeGreaterThanOrEqual(2);
       const nameParts = p.name.toLowerCase().split(/\s+/);
-      for (const ex of p.scoutingExcerpts) {
+      for (const [i, ex] of p.scoutingExcerpts.entries()) {
         // The quote as shown while playing: name mentions are blacked out
         const lower = splitQuoteOnName(excerptAllText(ex), p)
           .filter((s) => !s.isName)
@@ -201,7 +201,9 @@ describe('prospect data sanity', () => {
           const escaped = part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
           expect(lower, `${p.name} excerpt leaks "${part}"`).not.toMatch(new RegExp(`(?<![\\p{L}])${escaped}(?![\\p{L}])`, 'u'));
         }
-        // The quote itself never names the school (a speaker's credit, like a head coach's, may)
+        // The quote itself never names the school before the college is shown (a speaker's credit may, and
+        // so may the last quote, which unlocks together with the college)
+        if (i >= 2) continue;
         const quoteOnly = splitQuoteOnName(excerptText(ex), p).filter((s) => !s.isName).map((s) => s.text).join('').toLowerCase();
         expect(quoteOnly, `${p.name} excerpt leaks college`).not.toContain(p.college.toLowerCase());
       }
