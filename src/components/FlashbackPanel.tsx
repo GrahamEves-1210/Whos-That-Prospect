@@ -14,7 +14,7 @@ interface Props {
 
 /** Film room: every day from No. 1 to today, oldest first. Today (peach) goes back to the daily game. */
 export function FlashbackPanel({ todayPuzzleNumber, mode, currentPuzzleNumber, onPlay, onReturnToDaily }: Props) {
-  // Oldest first, and only as far back as there are different prospects
+  // Oldest first, one day per prospect (a rerun's earlier days are left out)
   const past = getFilmRoomDays(todayPuzzleNumber).reverse();
 
   return (

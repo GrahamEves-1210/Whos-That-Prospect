@@ -91,9 +91,9 @@ export function getProspectById(id: string, pool: readonly Prospect[] = PROSPECT
 }
 
 /**
- * Past puzzle numbers Film room offers, newest first: walks back from yesterday and stops at the
- * first day whose prospect repeats one already covered (today included), so every listed day is a
- * different prospect. The list can never be longer than the pool.
+ * Past puzzle numbers Film room offers, newest first: walks back from yesterday and skips any day whose
+ * prospect repeats one already covered (today included), so every listed day is a different prospect and
+ * a rerun shows only on its latest day. The list can never be longer than the pool.
  */
 export function getFilmRoomDays(todayPuzzleNumber: number, pool: readonly Prospect[] = PROSPECTS): number[] {
   // Today's prospect and anyone pinned to a future day never appear, so Film room can't spoil upcoming days
@@ -104,7 +104,7 @@ export function getFilmRoomDays(todayPuzzleNumber: number, pool: readonly Prospe
   const days: number[] = [];
   for (let n = todayPuzzleNumber - 1; n >= 1; n--) {
     const id = getDailyProspect(n, pool).id;
-    if (seen.has(id)) break;
+    if (seen.has(id)) continue;
     seen.add(id);
     days.push(n);
   }

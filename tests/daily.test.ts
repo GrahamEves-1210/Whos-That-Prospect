@@ -57,7 +57,7 @@ describe('getDailyProspect', () => {
 });
 
 describe('getFilmRoomDays', () => {
-  it('never lists a prospect twice, or the one from today, and stops at the first repeat', () => {
+  it('never lists a prospect twice, or the one from today', () => {
     for (const today of [2, 8, 12, 30, 200]) {
       const days = getFilmRoomDays(today);
       const ids = [today, ...days].map((n) => getDailyProspect(n).id);
@@ -71,6 +71,17 @@ describe('getFilmRoomDays', () => {
     for (const today of [9, 12, 20]) {
       const upcoming = Object.entries(PINNED_PUZZLES).filter(([d]) => Number(d) > today).map(([, id]) => id);
       for (const n of getFilmRoomDays(today)) expect(upcoming).not.toContain(getDailyProspect(n).id);
+    }
+  });
+
+  it('skips a repeated day instead of stopping there, so every earlier prospect still shows', () => {
+    for (const today of [31, 32, 40]) {
+      const upcoming = new Set(Object.entries(PINNED_PUZZLES).filter(([d]) => Number(d) > today).map(([, id]) => id));
+      const todayId = getDailyProspect(today).id;
+      const ran = new Set<string>();
+      for (let n = 1; n < today; n++) ran.add(getDailyProspect(n).id);
+      const expected = [...ran].filter((id) => id !== todayId && !upcoming.has(id)).sort();
+      expect(getFilmRoomDays(today).map((n) => getDailyProspect(n).id).sort(), `today ${today}`).toEqual(expected);
     }
   });
 

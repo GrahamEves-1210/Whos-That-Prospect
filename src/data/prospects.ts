@@ -26,6 +26,62 @@ import type { Prospect } from './types';
  */
 export const PROSPECTS: Prospect[] = [
   {
+    // REAL Draft Bible quotes. Testing: 2008 NFL Combine, no bench or agility drills found. Arm/hand from Wikipedia and NFL.com
+    // (MockDraftable has a 30 1/4" arm). Name blackout covers "Chris" as well as "Johnson".
+    id: 'chris-johnson',
+    name: 'Chris Johnson',
+    position: 'RB',
+    college: 'East Carolina',
+    conference: 'C-USA',
+    height: '5-11',
+    weight: 197,
+    draftYear: 2008,
+    draftRound: 1,
+    draftPick: 24,
+    fortyTime: 4.24,
+    vertical: 35,
+    broadJump: 130,
+    otherTesting: { 'Hand Size': '8 1/2"', 'Arm Length': '30 3/4"' },
+    scoutingExcerpts: [
+      'Johnson describes his game as a mixture of Brian Westbrook, Reggie Bush and Marshall Faulk; Chris also has a tattoo of his own face on his arm.',
+      'He can do things that simply cannot be taught. We are not sure if Johnson possesses the complete package to be an every down back at this point, but he could be a special player as a change of pace, third down runner.',
+      'Speed, speed and more speed. This Orlando native can really run (4.24 at the NFL Scouting Combine) and is capable of breaking a long one every time he touches the ball. In seven games during his senior season, Johnson had at least one run of 20-plus yards.',
+    ],
+    clues: [{ label: 'Drafted by', value: 'Tennessee Titans', unlockAt: 4 }],
+    accolades: ['C-USA Special Teams Player of the Year (2007)', 'First-team All-C-USA (2006, 2007)'],
+    hometown: 'Orlando, FL',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/11258.png',
+  },
+  {
+    // REAL Draft Bible quotes (PDF cut off quote 3 at "Senior Bow"; finished as "Senior Bowl."). Testing:
+    // 2019 NFL Combine; MockDraftable and Wikipedia agree, no bench. Quote 2's schools (Troy, NW Mississippi
+    // CC, East Carolina, Alabama) are stops before Washington State, so none leaks the college.
+    id: 'gardner-minshew',
+    name: 'Gardner Minshew',
+    aliases: ['Gardner Minshew II'],
+    position: 'QB',
+    college: 'Washington State',
+    conference: 'Pac-12',
+    height: '6-1',
+    weight: 225,
+    draftYear: 2019,
+    draftRound: 6,
+    draftPick: 178,
+    fortyTime: 4.97,
+    vertical: 33.5,
+    broadJump: 116,
+    otherTesting: { '3-Cone': '7.14s', Shuttle: '4.45s', 'Hand Size': '10 1/8"', 'Arm Length': '31 3/4"' },
+    scoutingExcerpts: [
+      'His lack of arm strength and scrawny physique are the two most glaring weaknesses that stand out about his overall game. He’ll need to shed the label of being a system quarterback.',
+      'A journey well-traveled, Minshew began as a walk-on at Troy for six months before transferring to Northwest Mississippi Community College and guiding the Rangers to the MACJC Football Championship. Next, he would take his talents to East Carolina, where he spent parts of two seasons starting before Nick Saban came calling with an opportunity to transfer to Alabama.',
+      'Having run the “Air Raid” offense since Pee Wee ball, it seemed like a logical decision. Minshew responded by tossing for 4,779 passing yards (second in the nation). He was named a team captain and starter for the Senior Bowl.',
+    ],
+    clues: [{ label: 'Drafted by', value: 'Jacksonville Jaguars', unlockAt: 4 }],
+    accolades: ['Johnny Unitas Golden Arm Award (2018)', 'Pac-12 Offensive Player of the Year (2018)', 'First-team All-Pac-12 (2018)'],
+    hometown: 'Brandon, MS',
+    headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/4038524.png',
+  },
+  {
     // REAL Draft Bible quotes. Testing: 2019 NFL Combine; all three sources agree.
     id: 'devin-singletary',
     name: 'Devin Singletary',
@@ -558,6 +614,8 @@ export const PINNED_PUZZLES: Record<number, string> = {
   26: 'earl-thomas',
   27: 'devin-singletary',
   28: 'haynes-king',
+  31: 'gardner-minshew',
+  32: 'chris-johnson',
 };
 
 /** Credit shown in the footer for every scouting excerpt. */
